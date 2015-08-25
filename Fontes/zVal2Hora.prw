@@ -1,0 +1,41 @@
+//Bibliotecas
+#Include "Protheus.ch"
+
+/*/{Protheus.doc} zVal2Hora
+Converte valor numérico (ex.: 15.30) para hora (ex.: 15:30)
+@author Atilio
+@since 20/09/2014
+@version 1.0
+	@param [nValor], Numérico, Valor numérico correspondente as horas
+	@param [cSepar], Caracter, Caracter de separação (ex.: 'h', ':', etc)
+	@return cHora, Variável que irá armazenar as horas
+	@example
+	u_zVal2Hora(1.45, 'h') //01h45
+	u_zVal2Hora(1.45, ':') //01:45
+	@see http://terminaldeinformacao.com/advpl/
+/*/
+ 
+User Function zVal2Hora(nValor, cSepar)
+	Local cHora := ""
+	Default cSepar := ":"
+	Default nValor := -1
+	
+	//Se for valores negativos, retorna a hora atual
+	If nValor < 0
+		cHora := SubStr(Time(), 1, 5)
+		cHora := StrTran(cHora, ':', cSepar)
+		
+	//Senão, transforma o valor numérico
+	Else
+		cHora := Alltrim(Transform(nValor, "@E 99.99"))
+		
+		//Se o tamanho da hora for menor que 5, adiciona zeros a esquerda
+		If Len(cHora) < 5
+			cHora := Replicate('0', 5-Len(cHora)) + cHora
+		EndIf
+		//Atualizando o separador
+		cHora := StrTran(cHora, ',', cSepar)
+	EndIf
+	
+	ConOut("> zVal2Hora: "+cHora)
+Return cHora

@@ -12,6 +12,7 @@ Retorna a data por extenso
 	@example
 	u_zDtExtenso(dDataBase, .T.) //27 de Agosto de 2014
 	u_zDtExtenso(dDataBase, .F.) //Vinte e Sete de Agosto de Dois Mil e Quatorze
+	@see http://terminaldeinformacao.com/advpl/
 /*/
 
 User Function zDtExtenso(dDataAtual, lAbreviado)
