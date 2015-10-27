@@ -10,13 +10,13 @@ Converte valor numérico (ex.: 15.30) para hora (ex.: 15:30)
 	@param [cSepar], Caracter, Caracter de separação (ex.: 'h', ':', etc)
 	@return cHora, Variável que irá armazenar as horas
 	@example
-	u_zVal2Hora(1.45, 'h') //01h45
-	u_zVal2Hora(1.45, ':') //01:45
-	@see http://terminaldeinformacao.com/advpl/
+	u_zVal2Hora(1.50, 'h') //01h30
+	u_zVal2Hora(1.50, ':') //01:30
 /*/
  
 User Function zVal2Hora(nValor, cSepar)
 	Local cHora := ""
+	Local cMinutos := ""
 	Default cSepar := ":"
 	Default nValor := -1
 	
@@ -33,6 +33,14 @@ User Function zVal2Hora(nValor, cSepar)
 		If Len(cHora) < 5
 			cHora := Replicate('0', 5-Len(cHora)) + cHora
 		EndIf
+		
+		//Fazendo tratamento para minutos
+		cMinutos := SubStr(cHora, At(',', cHora)+1, 2)
+		cMinutos := StrZero((Val(cMinutos)*60)/100, 2)
+		
+		//Atualiza a hora com os novos minutos
+		cHora := SubStr(cHora, 1, At(',', cHora))+cMinutos
+		
 		//Atualizando o separador
 		cHora := StrTran(cHora, ',', cSepar)
 	EndIf
