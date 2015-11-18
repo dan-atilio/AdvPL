@@ -655,10 +655,10 @@ Return Nil
 
 Static Function fMascara(cCampo)
 	Local cMask := ""
-	Local cTab := AliasCpo(cCampo)
+	Local cTab := SubStr(cCampo, 1, At('_', cCampo)-1)//AliasCpo(cCampo)
 	
 	//Se tiver tabela
-	If !Empty(cTab)
+	If !Empty(cTab) .And. Len(cTab) == 3
 		cMask := PesqPict(cTab, cCampo)
 	EndIf
 Return cMask
