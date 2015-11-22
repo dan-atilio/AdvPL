@@ -48,17 +48,20 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zVal2Hora.prw**: Função que converte valor numérico para hora (por exemplo, 1.50 -> 1h30)
 
 ####Projetos
-1. Relatórios Gráficos
-2. zDicionario
+1. Carga Dados Genérico
+   * **exemplos.rar**: Exemplos de arquivos para importação dos dados
+   * **zCargaGen.prw**: Fonte de Carga Dados Genérico (importação de cadastro)
+2. Dicionário de Dados
    * **zCriaTab.prw**: Função que cria tabelas "a quente" via código fonte
    * **zTstTab.prw**: Função de testes da zCriaTab.prw
-3. zExcelXML
+3. Integração com Excel
    * **teste_aux.xml**: Exemplo de arquivo do Excel, com listagem de clientes e fornecedores
    * **teste_pedido.xml**: Exemplo de arquivo do Excel, com dados de pedidos de venda
    * **teste_sb1.xml**: Exemplo de arquivo do Excel, com listagem de produtos
    * **testes.prw**: Função de testes utilizando a classe zExcelXML.prw
    * **zExcelXML.prw**: Classe criada para integração com Excel, utilizando arquivos XML
-4. zPegaWeb
+4. Integração com WebCam
    * **escapi.dll**: DLL utilizada para integração com WebCam
    * **imageload2.dll**: DLL utilizada para integração com WebCam
    * **zPegaWeb.prw**: Função responsável por fazer a integração do Protheus com WebCam
+5. Relatórios Gráficos
