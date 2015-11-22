@@ -40,11 +40,18 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
    * **zArrToTxt.prw**: Função recursiva, que transforma array em texto
+   * **zCadSX6.prw**: Função para cadastro de parâmetros (SX6), similar ao AxCadastro e mBrowse
    * **zConsMark.prw**: Consulta Específica (F3), com marcação de dados
+   * **zCpySX1.prw**: Função para cópia de grupo de perguntas
    * **zCriaLog.prw**: Função para gravar log de registro na base
    * **zDtExtenso.prw**: Função que transforma uma variável data, na forma extensa (por exemplo, 27 de Setembro de 2015)
+   * **zExcel2DBF.prw**: Função de conversão de arquivos XLS para DBF
+   * **zImpSB6.prw**: Rotina para importação de saldos de produtos sob poder de/em terceiros
    * **zPegaMac.prw**: Função que pega o MAC Address de máquinas com Windows instalado
+   * **zSM0CNPJ.prw**: Função que busca o código da filial, conforme o CNPJ
    * **zTamImg.prw**: Função que retorna o tamanho de uma imagem em pixels
+   * **zTransNum.prw**: Função que transforma uma variável numérica em texto (para exportação de arquivos)
+   * **zVerTrans.prw**: Função que verifica se um pedido já foi transmitido na filial
    * **zVal2Hora.prw**: Função que converte valor numérico para hora (por exemplo, 1.50 -> 1h30)
 
 ####Projetos
