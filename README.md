@@ -36,6 +36,8 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * 009 - Utilizando Índices e Posicionamento
       * **exemplificação.xlsx**: Exemplo de índices utilizando planilha
 	  * **zIndPos.prw**: Exemplificação de utilização de Índices e Posicionamentos
+   * 010 - Gravação de Registros via RecLock
+	  * **zGravacao.prw**: Gravação de registros no Protheus, via RecLock
 
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
