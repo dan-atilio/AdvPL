@@ -38,7 +38,13 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 	  * **zIndPos.prw**: Exemplificação de utilização de Índices e Posicionamentos
    * 010 - Gravação de Registros via RecLock
 	  * **zGravacao.prw**: Gravação de registros no Protheus, via RecLock
-
+   * 011 - Gravação de Registros via MsExecAuto
+      * **exemplo.png**: Exemplo do funcionamento de um ExecAuto
+	  * **zExecAuto.prw**: Gravação de registros no Protheus, via MsExecAuto (Cadastro de Produtos)
+   * 012 - Consultas SQL
+	  * **zEmbedd.prw**: Exemplo de Consulta SQL com Embedded
+	  * **zTCQuery.prw**: Exemplo de Consulta SQL com TCQuery
+	  
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
    * **zArrToTxt.prw**: Função recursiva, que transforma array em texto
