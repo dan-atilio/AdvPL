@@ -44,7 +44,9 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * 012 - Consultas SQL
 	  * **zEmbedd.prw**: Exemplo de Consulta SQL com Embedded
 	  * **zTCQuery.prw**: Exemplo de Consulta SQL com TCQuery
-	  
+   * 013 - Como debugar um fonte no TDS
+	  * **zDebug.prw**: Exemplo de Rotina para demonstração do Debug do TDS
+	
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
    * **zArrToTxt.prw**: Função recursiva, que transforma array em texto
