@@ -130,14 +130,16 @@ Define o arquivo xml de destino que será gerado
 @since 23/06/2015
 @version 1.0
 	@param cDestino, Caracter, Arquivo que será gerado
+	@param lSobrepoe, Lógico, Define se o arquivo será sobreposto (se já existir)
 	@return lRet, Retorna se foi possível setar o arquivo de Destino
 	@example
 	oExcelXml:SetDestino("C:\Teste\teste.xml")
 /*/
 
-Method SetDestino(cDestino) Class zExcelXML
+Method SetDestino(cDestino, lSobrepoe) Class zExcelXML
 	Local lRet			:= .T.
 	Local cMensagem	:= ""
+	Default lSobrepoe	:= .T.
 	
 	//Se não for arquivo XML
 	If SubStr(cDestino, Len(Alltrim(cDestino))-3, Len(Alltrim(cDestino))) != ".xml"
@@ -151,8 +153,13 @@ Method SetDestino(cDestino) Class zExcelXML
 		
 		//Se o arquivo de Destino existir, atualiza atributo
 		If File(cDestino)
-			cMensagem :=	"[zExcelXML][003] Arquivo de Destino já existe, será sobreposto! "+;
+			cMensagem :=	"[zExcelXML][003] Arquivo de Destino já existe! "+;
 							"Verificar! - SetDestino('"+cDestino+"') - "+dToC(dDataBase)+" "+Time()
+			
+			//Se for para sobrepor, exclui o arquivo destino
+			If lSobrepoe
+				FErase(cDestino)
+			EndIf
 		EndIf
 	EndIf
 	
@@ -166,22 +173,22 @@ Adiciona uma expressão para ser substituída dentro do arquivo
 @since 29/07/2015
 @version 1.0
 	@param cExpressao, Caracter, Expressão que será buscada dentro do arquivo xml
-	@param cConteudo, Caracter, Conteúdo que irá substituir a expressão encontrada
+	@param xConteudo, Variável, Conteúdo que irá substituir a expressão encontrada
 	@example
 	oExcelXML:AddExpression("#SB1-B1_COD", "Ok ok...")
 /*/
 
-Method AddExpression(cExpressao, cConteudo) Class zExcelXML
+Method AddExpression(cExpressao, xConteudo) Class zExcelXML
 	Local cMensagem	:= ""
 	
 	//Se tiver expressão
 	If !Empty(cExpressao) .And. !("TABELA" $ cExpressao)
-		aAdd(::aExpre, {cExpressao, cConteudo})
+		aAdd(::aExpre, {cExpressao, xConteudo})
 	
 	//Senão
 	Else
 		cMensagem :=	"[zExcelXML][013] Expressão em branco ou inválida não pode ser adicionada! "+;
-						"Verificar! - AddExpression() - "+dToC(dDataBase)+" "+Time()
+						"Verificar! - AddExpression() - "+dToC(dDataBase)+" "+Time()+"... cExpressao: "+cExpressao+";"
 	EndIf
 	
 	//Mostrando mensagem caso tenha
@@ -258,6 +265,37 @@ Method MountFile() Class zExcelXML
 		For nExpre := 1 To Len(::aExpre)
 			//Se encontrou a expressão, substitui a expressão pelo conteúdo
 			If ::aExpre[nExpre][1] $ cContAux
+				cTipoCamp1 := ValType(::aExpre[nExpre][2])
+				
+				//Se for Data
+				If cTipoCamp1 == 'D'
+					::aExpre[nExpre][2] := dToC(xConteud)
+				
+				//Senão se for numérico
+				ElseIf cTipoCamp1 == 'N'
+					cContAux := StrTran(cContAux, 'Type="String"', 'Type="Number"')
+					
+					//Se a máscara tiver em branco
+					If Empty(cMaskAux)
+						::aExpre[nExpre][2] := cValToChar(::aExpre[nExpre][2])
+						
+					//Senão, transforma o campo
+					Else
+						::aExpre[nExpre][2] := Alltrim(Transform(::aExpre[nExpre][2], cMaskAux))
+					EndIf
+					
+				//Senão se for caracter
+				ElseIf cTipoCamp1 == 'C'
+					//Se tiver máscara
+					If !Empty(cMaskAux)
+						::aExpre[nExpre][2] := Alltrim(Transform(::aExpre[nExpre][2], cMaskAux))
+					EndIf
+				
+				//Senão
+				Else
+					::aExpre[nExpre][2] := cValToChar(::aExpre[nExpre][2])
+				EndIf
+				
 				cContAux := StrTran(cContAux, ::aExpre[nExpre][1], ::aExpre[nExpre][2])
 			EndIf
 		Next
@@ -381,6 +419,8 @@ Method MountFile() Class zExcelXML
 						
 						//Senão se for numérico
 						ElseIf cTipoCamp == 'N'
+							aAux[nPosAux] := StrTran(aAux[nPosAux], 'Type="String"', 'Type="Number"')
+							
 							//Se a máscara tiver em branco
 							If Empty(cMaskAux)
 								xConteud := cValToChar(xConteud)
