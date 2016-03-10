@@ -1,4 +1,4 @@
-![Ti Logo](http://terminaldeinformacao.files.wordpress.com/2015/04/cropped-tema_site_menor_jpeg.jpg)
+![Ti Logo](http://terminaldeinformacao.com/wp-content/uploads/2016/03/tema.jpg)
 [Terminal de Informação](http://terminaldeinformacao.com)
 
 # AdvPL
