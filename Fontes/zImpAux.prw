@@ -2,7 +2,7 @@
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zImpAux
-Função que imprime os jpegs em sequencia diferente
+Função que imprime o TMSPrinter em sequencia diferente
 @type function
 @author Atilio
 @since 24/11/2015
