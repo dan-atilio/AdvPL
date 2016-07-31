@@ -56,6 +56,8 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * 017 - Conceitos MVC
 	  * **modelo_mvc.png**: Exemplo de modelo da estrutura MVC em AdvPL
 	  * **zUpdTab.prw**: Fonte para criação de tabelas que serão utilizadas como exemplo
+   * 018 - Modelo 1 em MVC
+	  * **zModel1.prw**: Exemplo de cadastro Modelo 1 em MVC
 	  
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
