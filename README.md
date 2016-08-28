@@ -14,6 +14,9 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zMVCMdX.prw**: Exemplo de cadastro MVC - Modelo X
 3. Outros
    * **zMotBaixa.prw**: Exemplo de acesso a tabela de Motivos de Baixa do Financeiro
+   * **zTstChart.prw**: Exemplo de criação de gráficos utilizando FWChartBar
+   * **zTstExcel.prw**: Exemplo de criação de arquivos do Excel utilizando FWMsExcel e FWMsExcelEx
+   * **zTstXML.prw**: Exemplo de gravação e leitura de XML (com XMLParser)
 4. Pontos de Entrada
    * **MBlkColor.prw**: Ponto de entrada MBlkColor, alterando cor de registros bloqueados nas grids
 5. Vídeo Aulas
@@ -62,31 +65,49 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
    * **zAltSC5.prw**: Função para alteração de pedido de venda já liberado / faturado
+   * **zAppend.prw**: Função para "appendar" várias tabelas de uma base para outra
    * **zArrToTxt.prw**: Função recursiva, que transforma array em texto
+   * **zCarEspec.prw**: Função que remove caracteres especiais de um campo
+   * **zCmbDesc.prw**: Função que retorna a descrição de uma opção de um campo COMBO
+   * **zCnvSoma1.prw**: Função para converter o Soma1 (9A, 9B, 9C, etc)
    * **zCodAno.prw**: Função sequencial de código / ano
    * **zConsArr.prw**: Consulta Específica (F3), com dados de Array
+   * **zConsEsp.prw**: Consulta Específica (F3), com dados de SQL e opção de LIKE
    * **zConsMark.prw**: Consulta Específica (F3), com marcação de dados
    * **zCriaLog.prw**: Função para gravar log de registro na base
    * **zDtExtenso.prw**: Função que transforma uma variável data, na forma extensa (por exemplo, 27 de Setembro de 2015)
+   * **zEditTmp.prw**: Função que edita uma tabela temporária (com opção de incluir, alterar e excluir)
    * **zExcel2DBF.prw**: Função de conversão de arquivos XLS para DBF
    * **zImpAux.prw**: Função que imprime o TMSPrinter em sequência diferente
+   * **zImpSB6.prw**: Importação de dados de Saldos de/em Terceiros
+   * **zIsLock.prw**: Função que verifica se o registro está travado
    * **zLastPerg.prw**: Função que retorna a última pergunta da memória
+   * **zLeIXBLog.prw**: Função que faz a leitura de um arquivo IXBLog e retorna apenas os ExecBlock executados
+   * **zLibPed.prw**: Função para liberar pedidos de venda - testes
    * **zLogin.prw**: Função que carrega uma tela de login
+   * **zMemoToA.prw**: Função que converte campo Memo para Array para impressão
+   * **zParUsr.prw**: Função que serve para verificar usuários dentro de um parâmetro, e editar o parâmetro
    * **zPegaMac.prw**: Função que pega o MAC Address de máquinas com Windows instalado
+   * **zSalvaProc.prw**: Função que salva a lista da pilha de Chamadas
    * **zSemanas.prw**: Função que retorna as semanas entre duas datas
    * **zSM0CNPJ.prw**: Função que busca o código da filial, conforme o CNPJ
    * **zTamImg.prw**: Função que retorna o tamanho de uma imagem em pixels
+   * **zTotPed.prw**: Função que retorna o total do pedido de venda com Impostos
    * **zTransNum.prw**: Função que transforma uma variável numérica em texto (para exportação de arquivos)
-   * **zVerTrans.prw**: Função que verifica se um pedido já foi transmitido na filial
    * **zVal2Hora.prw**: Função que converte valor numérico para hora (por exemplo, 1.50 -> 1h30)
+   * **zVerTrans.prw**: Função que verifica se um pedido já foi transmitido na filial
 
 ####Projetos
 1. Carga Dados Genérico
    * **exemplos.rar**: Exemplos de arquivos para importação dos dados
    * **zCargaGen.prw**: Fonte de Carga Dados Genérico (importação de cadastro)
 2. Dicionário de Dados
+   * **zCadSX5.prw**: Função para cadastro de tabelas genéricas (SX5), similar ao AxCadastro e mBrowse (em MVC)
    * **zCadSX6.prw**: Função para cadastro de parâmetros (SX6), similar ao AxCadastro e mBrowse
    * **zCpySX1.prw**: Função para cópia de grupo de perguntas
+   * **zCriaGat.prw**: Função que cria gatilhos "a quente" via código fonte
+   * **zCriaPar.prw**: Função que cria parâmetros "a quente" via código fonte
+   * **zCriaPasta.prw**: Função que cria abas / pastas "a quente" via código fonte
    * **zCriaTab.prw**: Função que cria tabelas "a quente" via código fonte
    * **zTstDicio.prw**: Função de testes das funções do dicionário de dados
 3. Integração com Excel
