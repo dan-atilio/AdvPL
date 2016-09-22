@@ -61,6 +61,12 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 	  * **zUpdTab.prw**: Fonte para criação de tabelas que serão utilizadas como exemplo
    * 018 - Modelo 1 em MVC
 	  * **zModel1.prw**: Exemplo de cadastro Modelo 1 em MVC
+	 019 - Validações em MVC
+	  * **zMod1b.prw**: Exemplo de Validações em MVC (bPre, bPos, bCommit e bCancel)
+	 020 - Modelo 3 em MVC
+	  * **zModel3.prw**: Exemplo de cadastro Modelo 3 em MVC (estrutura de Pai e Filho)
+	 021 - Modelo X em MVC
+	  * **zModelX.prw**: Exemplo de cadastro Modelo X em MVC (estrutura de Pai, Filho e Neto)
 	  
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
@@ -71,6 +77,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zCmbDesc.prw**: Função que retorna a descrição de uma opção de um campo COMBO
    * **zCnvSoma1.prw**: Função para converter o Soma1 (9A, 9B, 9C, etc)
    * **zCodAno.prw**: Função sequencial de código / ano
+   * **zCompacta.prw**: Função para compactação de arquivos rar / zip
    * **zConsArr.prw**: Consulta Específica (F3), com dados de Array
    * **zConsEsp.prw**: Consulta Específica (F3), com dados de SQL e opção de LIKE
    * **zConsMark.prw**: Consulta Específica (F3), com marcação de dados
@@ -94,6 +101,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zTamImg.prw**: Função que retorna o tamanho de uma imagem em pixels
    * **zTotPed.prw**: Função que retorna o total do pedido de venda com Impostos
    * **zTransNum.prw**: Função que transforma uma variável numérica em texto (para exportação de arquivos)
+   * **zTransPdf.prw**: Função que transforma imagens em pdf
    * **zVal2Hora.prw**: Função que converte valor numérico para hora (por exemplo, 1.50 -> 1h30)
    * **zVerTrans.prw**: Função que verifica se um pedido já foi transmitido na filial
 

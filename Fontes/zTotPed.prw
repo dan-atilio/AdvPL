@@ -123,26 +123,27 @@ User Function zTotPed(cNumPed, nTipo)
 		//Preenchendo o valor total
 		nTotIPI := 0
 		For nAtu := 1 To Len(aCols)
-			//Pega os tratamentos de impostos
-			SB1->(DbSeek(FWxFilial("SB1")+aCols[nAtu][GDFieldPos("C6_PRODUTO")]))
-			
-			MaFisAdd(	aCols[nAtu][GDFieldPos("C6_PRODUTO")],;                 	// 1-Codigo do Produto 				( Obrigatorio )
-						aCols[nAtu][GDFieldPos("C6_TES")],;                     	// 2-Codigo do TES 					( Opcional )
-						aCols[nAtu][GDFieldPos("C6_QTDVEN")],;		          	// 3-Quantidade 					( Obrigatorio )
-						aCols[nAtu][GDFieldPos("C6_PRCVEN")],;	              	// 4-Preco Unitario 				( Obrigatorio )
-						aCols[nAtu][GDFieldPos("C6_VALDESC")],;					// 5 desconto
-						aCols[nAtu][GDFieldPos("C6_NFORI")],;                     // 6-Numero da NF Original 			( Devolucao/Benef )
-						aCols[nAtu][GDFieldPos("C6_SERIORI")],;		            // 7-Serie da NF Original 			( Devolucao/Benef )
-						0,;			                        // 8-RecNo da NF Original no arq SD1/SD2
-						M->C5_FRETE/nNritem,;            	// 9-Valor do Frete do Item 		( Opcional )
-						M->C5_DESPESA/nNritem,;	        // 10-Valor da Despesa do item	 	( Opcional )
-						M->C5_SEGURO/nNritem,;	        // 11-Valor do Seguro do item 		( Opcional )
-						0,;							        // 12-Valor do Frete Autonomo 		( Opcional )
-						aCols[nAtu][GDFieldPos("C6_VALOR")],;                     // 13-Valor da Mercadoria 			( Obrigatorio )
-						0,;							        // 14-Valor da Embalagem 			( Opcional )
-						0,;		     				        // 15-RecNo do SB1
-						0) 							        // 16-RecNo do SF4
-			
+			If ! aCols[nAtu][Len(aHeader)+1]
+				//Pega os tratamentos de impostos
+				SB1->(DbSeek(FWxFilial("SB1")+aCols[nAtu][GDFieldPos("C6_PRODUTO")]))
+				
+				MaFisAdd(	aCols[nAtu][GDFieldPos("C6_PRODUTO")],;                 	// 1-Codigo do Produto 				( Obrigatorio )
+							aCols[nAtu][GDFieldPos("C6_TES")],;                     	// 2-Codigo do TES 					( Opcional )
+							aCols[nAtu][GDFieldPos("C6_QTDVEN")],;		          	// 3-Quantidade 					( Obrigatorio )
+							aCols[nAtu][GDFieldPos("C6_PRCVEN")],;	              	// 4-Preco Unitario 				( Obrigatorio )
+							aCols[nAtu][GDFieldPos("C6_VALDESC")],;					// 5 desconto
+							aCols[nAtu][GDFieldPos("C6_NFORI")],;                     // 6-Numero da NF Original 			( Devolucao/Benef )
+							aCols[nAtu][GDFieldPos("C6_SERIORI")],;		            // 7-Serie da NF Original 			( Devolucao/Benef )
+							0,;			                        // 8-RecNo da NF Original no arq SD1/SD2
+							M->C5_FRETE/nNritem,;            	// 9-Valor do Frete do Item 		( Opcional )
+							M->C5_DESPESA/nNritem,;	        // 10-Valor da Despesa do item	 	( Opcional )
+							M->C5_SEGURO/nNritem,;	        // 11-Valor do Seguro do item 		( Opcional )
+							0,;							        // 12-Valor do Frete Autonomo 		( Opcional )
+							aCols[nAtu][GDFieldPos("C6_VALOR")],;                     // 13-Valor da Mercadoria 			( Obrigatorio )
+							0,;							        // 14-Valor da Embalagem 			( Opcional )
+							0,;		     				        // 15-RecNo do SB1
+							0) 							        // 16-RecNo do SF4
+			EndIf
 		Next
 		
 		//Pegando totais

@@ -18,7 +18,6 @@ User Function zLibPed(cPedido)
 	Local aAreaC5   := SC5->(GetArea())
 	Local aAreaC6   := SC6->(GetArea())
 	Local aAreaC9   := SC9->(GetArea())
-	Local cPedido   := SC5->C5_NUM
 	Local aAreaAux  := {}
 	Local cBlqCred  := "  "
 	Local cBlqEst   := "  "
