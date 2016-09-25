@@ -61,11 +61,11 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 	  * **zUpdTab.prw**: Fonte para criação de tabelas que serão utilizadas como exemplo
    * 018 - Modelo 1 em MVC
 	  * **zModel1.prw**: Exemplo de cadastro Modelo 1 em MVC
-	 019 - Validações em MVC
+   * 019 - Validações em MVC
 	  * **zMod1b.prw**: Exemplo de Validações em MVC (bPre, bPos, bCommit e bCancel)
-	 020 - Modelo 3 em MVC
+   * 020 - Modelo 3 em MVC
 	  * **zModel3.prw**: Exemplo de cadastro Modelo 3 em MVC (estrutura de Pai e Filho)
-	 021 - Modelo X em MVC
+   * 021 - Modelo X em MVC
 	  * **zModelX.prw**: Exemplo de cadastro Modelo X em MVC (estrutura de Pai, Filho e Neto)
 	  
 ####Fontes
@@ -85,6 +85,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zDtExtenso.prw**: Função que transforma uma variável data, na forma extensa (por exemplo, 27 de Setembro de 2015)
    * **zEditTmp.prw**: Função que edita uma tabela temporária (com opção de incluir, alterar e excluir)
    * **zExcel2DBF.prw**: Função de conversão de arquivos XLS para DBF
+   * **zFecPSS.prw**: Função para fechar o arquivo de senhas para recuperar a senha de admin
    * **zImpAux.prw**: Função que imprime o TMSPrinter em sequência diferente
    * **zImpSB6.prw**: Importação de dados de Saldos de/em Terceiros
    * **zIsLock.prw**: Função que verifica se o registro está travado
