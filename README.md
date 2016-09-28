@@ -67,6 +67,8 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 	  * **zModel3.prw**: Exemplo de cadastro Modelo 3 em MVC (estrutura de Pai e Filho)
    * 021 - Modelo X em MVC
 	  * **zModelX.prw**: Exemplo de cadastro Modelo X em MVC (estrutura de Pai, Filho e Neto)
+   * 022 - MarkBrowse em MVC
+      * **zMkMVC.prw**: Exemplo de MarkBrowse utilizando MVC
 	  
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
