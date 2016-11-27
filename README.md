@@ -93,6 +93,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zEditTmp.prw**: Função que edita uma tabela temporária (com opção de incluir, alterar e excluir)
    * **zExcel2DBF.prw**: Função de conversão de arquivos XLS para DBF
    * **zFecPSS.prw**: Função para fechar o arquivo de senhas para recuperar a senha de admin
+   * **zFunTit.prw**: Função que retorna o título da rotina atual
    * **zImpAux.prw**: Função que imprime o TMSPrinter em sequência diferente
    * **zImpSB6.prw**: Importação de dados de Saldos de/em Terceiros
    * **zInicio.prw**: Função executada no programa inicial
