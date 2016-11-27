@@ -75,22 +75,29 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zAltSC5.prw**: Função para alteração de pedido de venda já liberado / faturado
    * **zAppend.prw**: Função para "appendar" várias tabelas de uma base para outra
    * **zArrToTxt.prw**: Função recursiva, que transforma array em texto
+   * **zAtuPerg.prw**: Função que atualiza o conteúdo de uma pergunta
    * **zCarEspec.prw**: Função que remove caracteres especiais de um campo
+   * **zCliFor.prw**: Função que cria fornecedor a partir de cliente
    * **zCmbDesc.prw**: Função que retorna a descrição de uma opção de um campo COMBO
    * **zCnvSoma1.prw**: Função para converter o Soma1 (9A, 9B, 9C, etc)
    * **zCodAno.prw**: Função sequencial de código / ano
    * **zCompacta.prw**: Função para compactação de arquivos rar / zip
+   * **zCompara.prw**: Função que gera relatório comparando Dicionário com SQL Server
    * **zConsArr.prw**: Consulta Específica (F3), com dados de Array
    * **zConsEsp.prw**: Consulta Específica (F3), com dados de SQL e opção de LIKE
    * **zConsMark.prw**: Consulta Específica (F3), com marcação de dados
+   * **zConta.prw**: Função que conta a repetição de caracteres em uma string
    * **zCriaLog.prw**: Função para gravar log de registro na base
+   * **zDiasUteis.prw**: Função que retorna os dias úteis entre duas datas
    * **zDtExtenso.prw**: Função que transforma uma variável data, na forma extensa (por exemplo, 27 de Setembro de 2015)
    * **zEditTmp.prw**: Função que edita uma tabela temporária (com opção de incluir, alterar e excluir)
    * **zExcel2DBF.prw**: Função de conversão de arquivos XLS para DBF
    * **zFecPSS.prw**: Função para fechar o arquivo de senhas para recuperar a senha de admin
    * **zImpAux.prw**: Função que imprime o TMSPrinter em sequência diferente
    * **zImpSB6.prw**: Importação de dados de Saldos de/em Terceiros
+   * **zInicio.prw**: Função executada no programa inicial
    * **zIsLock.prw**: Função que verifica se o registro está travado
+   * **zIsMDI.prw**: Função que verifica se esta utilizando o SIGAMDI
    * **zLastPerg.prw**: Função que retorna a última pergunta da memória
    * **zLeIXBLog.prw**: Função que faz a leitura de um arquivo IXBLog e retorna apenas os ExecBlock executados
    * **zLibPed.prw**: Função para liberar pedidos de venda - testes
@@ -98,6 +105,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zMemoToA.prw**: Função que converte campo Memo para Array para impressão
    * **zParUsr.prw**: Função que serve para verificar usuários dentro de um parâmetro, e editar o parâmetro
    * **zPegaMac.prw**: Função que pega o MAC Address de máquinas com Windows instalado
+   * **zRepSX3.prw**: Função que atualiza o conteúdo da SX3 conforme arquivo dbf / dtc
    * **zSalvaProc.prw**: Função que salva a lista da pilha de Chamadas
    * **zSemanas.prw**: Função que retorna as semanas entre duas datas
    * **zSM0CNPJ.prw**: Função que busca o código da filial, conforme o CNPJ
