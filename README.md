@@ -84,14 +84,18 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zCompacta.prw**: Função para compactação de arquivos rar / zip
    * **zCompara.prw**: Função que gera relatório comparando Dicionário com SQL Server
    * **zConsArr.prw**: Consulta Específica (F3), com dados de Array
-   * **zConsEsp.prw**: Consulta Específica (F3), com dados de SQL e opção de LIKE
+   * **zConsEsp.prw**: Consulta Específica (F3), com dados de SQL e opção de LIKE, enviando dados em Array
    * **zConsMark.prw**: Consulta Específica (F3), com marcação de dados
+   * **zConsSQL.prw**: Consulta Específica (F3), com dados SQL e opção de LIKE
    * **zConta.prw**: Função que conta a repetição de caracteres em uma string
+   * **zCpyReg.prw**: Função que copia um registro de uma filial para outra com opção de mudança de código
    * **zCriaLog.prw**: Função para gravar log de registro na base
    * **zDiasUteis.prw**: Função que retorna os dias úteis entre duas datas
    * **zDtExtenso.prw**: Função que transforma uma variável data, na forma extensa (por exemplo, 27 de Setembro de 2015)
    * **zEditTmp.prw**: Função que edita uma tabela temporária (com opção de incluir, alterar e excluir)
    * **zExcel2DBF.prw**: Função de conversão de arquivos XLS para DBF
+   * **zExpTabs.prw**: Função que exporta tabelas do Protheus para HTML (1 único arquivo)
+   * **zExpTab2.prw**: Função que exporta tabelas do Protheus para HTML (vários arquivos)
    * **zFecPSS.prw**: Função para fechar o arquivo de senhas para recuperar a senha de admin
    * **zFunTit.prw**: Função que retorna o título da rotina atual
    * **zImpAux.prw**: Função que imprime o TMSPrinter em sequência diferente
