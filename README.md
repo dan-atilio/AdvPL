@@ -69,6 +69,14 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 	  * **zModelX.prw**: Exemplo de cadastro Modelo X em MVC (estrutura de Pai, Filho e Neto)
    * 022 - MarkBrowse em MVC
       * **zMkMVC.prw**: Exemplo de MarkBrowse utilizando MVC
+   * 023 - Pontos de Entrada em MVC
+      * **MATA070_pe.prw**: Exemplo de ponto de entrada no padrão MVC - Cadastro de Bancos
+	  * **OS010BTN.prw**: Exemplo de ponto de entrada em MVC - Cadastro de Tabela de Preço
+   * 024 - Rotinas automáticas em MVC
+      * **zExecView.prw**: Exemplo de abertura de uma operação MVC através de outro fonte
+	  * **zRotAuto.prw**: Exemplo de ExecAuto em MVC
+   * 025 - Modelo 2 em MVC
+      * **zModel2.prw**: Exemplo de Modelo 2 em MVC
 	  
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
