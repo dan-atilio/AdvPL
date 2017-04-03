@@ -91,6 +91,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zCodAno.prw**: Função sequencial de código / ano
    * **zCompacta.prw**: Função para compactação de arquivos rar / zip
    * **zCompara.prw**: Função que gera relatório comparando Dicionário com SQL Server
+   * **zCompX3XG.prw**: Relatório que compara grupo de campos (SXG) e campos do dicionário (SX3)
    * **zConsArr.prw**: Consulta Específica (F3), com dados de Array
    * **zConsEsp.prw**: Consulta Específica (F3), com dados de SQL e opção de LIKE, enviando dados em Array
    * **zConsMark.prw**: Consulta Específica (F3), com marcação de dados
@@ -105,7 +106,9 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zExpTabs.prw**: Função que exporta tabelas do Protheus para HTML (1 único arquivo)
    * **zExpTab2.prw**: Função que exporta tabelas do Protheus para HTML (vários arquivos)
    * **zFecPSS.prw**: Função para fechar o arquivo de senhas para recuperar a senha de admin
+   * **zFTPEnv.prw**: Função que envia arquivo para um servidor FTP
    * **zFunTit.prw**: Função que retorna o título da rotina atual
+   * **zHr2Val.prw**: Função que converte hora para valor
    * **zImpAux.prw**: Função que imprime o TMSPrinter em sequência diferente
    * **zImpSB6.prw**: Importação de dados de Saldos de/em Terceiros
    * **zInicio.prw**: Função executada no programa inicial
@@ -126,8 +129,11 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zTotPed.prw**: Função que retorna o total do pedido de venda com Impostos
    * **zTransNum.prw**: Função que transforma uma variável numérica em texto (para exportação de arquivos)
    * **zTransPdf.prw**: Função que transforma imagens em pdf
+   * **zUsrFil.prw**: Função que valida se o usuário tem acesso a filial
    * **zVal2Hora.prw**: Função que converte valor numérico para hora (por exemplo, 1.50 -> 1h30)
+   * **zVazio.prw**: Função que verifica se um Array está vazio
    * **zVerTrans.prw**: Função que verifica se um pedido já foi transmitido na filial
+   * **zVldGrid.prw**: Função que executa as validações da grid
 
 ####Projetos
 1. Carga Dados Genérico
@@ -139,6 +145,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zCpySX1.prw**: Função para cópia de grupo de perguntas
    * **zCriaGat.prw**: Função que cria gatilhos "a quente" via código fonte
    * **zCriaPar.prw**: Função que cria parâmetros "a quente" via código fonte
+   * **zCriaGen.prw**: Função que cria tabelas genéricas (SX5) "a quente" via código fonte
    * **zCriaPasta.prw**: Função que cria abas / pastas "a quente" via código fonte
    * **zCriaTab.prw**: Função que cria tabelas "a quente" via código fonte
    * **zTstDicio.prw**: Função de testes das funções do dicionário de dados
@@ -155,3 +162,5 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zTstWeb.prw**: Função que testa a utilização da rotina de WebCam no cadastro de clientes pelo Ações Relacionadas
 5. ProtheusDOC
    * **PDoc_Ti.rar**: Arquivo compactado com a base do Protheus Doc
+6. Relatórios Genéricos
+   * **zReport.prw**: Função que gera relatório em TReport
