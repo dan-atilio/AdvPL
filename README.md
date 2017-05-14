@@ -80,6 +80,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 	  
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
+   * **zAltPar.prw**: Função para modificação de parâmetros (SX6)
    * **zAltSC5.prw**: Função para alteração de pedido de venda já liberado / faturado
    * **zAppend.prw**: Função para "appendar" várias tabelas de uma base para outra
    * **zArrToTxt.prw**: Função recursiva, que transforma array em texto
@@ -119,6 +120,8 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zLibPed.prw**: Função para liberar pedidos de venda - testes
    * **zLogin.prw**: Função que carrega uma tela de login
    * **zMemoToA.prw**: Função que converte campo Memo para Array para impressão
+   * **zMsgLog.prw**: Função que mostra uma mensagem ao usuário com opção de salvar
+   * **zOutlook.prw**: Função para abertura do Outlook com uma nova mensagem via AdvPL
    * **zParUsr.prw**: Função que serve para verificar usuários dentro de um parâmetro, e editar o parâmetro
    * **zPegaMac.prw**: Função que pega o MAC Address de máquinas com Windows instalado
    * **zRepSX3.prw**: Função que atualiza o conteúdo da SX3 conforme arquivo dbf / dtc

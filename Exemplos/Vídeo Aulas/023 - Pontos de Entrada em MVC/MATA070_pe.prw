@@ -1,5 +1,6 @@
 //Bibliotecas
 #Include "Protheus.ch"
+#Include "FWMVCDef.ch"
 
 /*---------------------------------------------------------------------------------------------------------------------------*
  | P.E.:  MATA070                                                                                                            |
@@ -35,8 +36,13 @@ User Function MATA070()
 		If cIdPonto == "MODELVLDACTIVE"
 			nOper := oObj:nOperation
 			
+			//Se for inclusão, define o ini padrão
+			If nOper == 3
+				oStrucSA6 := oObj:GetModel( 'MATA070_SA6' ):GetStruct()
+				oStrucSA6:SetProperty( 'A6_CONTATO', MODEL_FIELD_INIT, FwBuildFeature( STRUCT_FEATURE_INIPAD, "'AAA'" ) )
+			
 			//Se for Exclusão, não permite abrir a tela
-			If nOper == 5
+			ElseIf nOper == 5
 				xRet := .F.
 			EndIf
 		
@@ -53,8 +59,13 @@ User Function MATA070()
 			//Se for Alteração
 			If nOper == 4
 				//Não permite alteração dos campos chave
-				If cTipo == "CANSETVALUE" .And. Alltrim(cCampo) $ ("A6_COD.A6_AGENCIA.A6_NUMCON")
-					xRet := .F.
+				If cTipo == "CANSETVALUE" 
+					If Alltrim(cCampo) $ ("A6_COD.A6_AGENCIA.A6_NUMCON")
+						xRet := .F.
+					EndIf
+					
+					oModelPad  := FWModelActive()
+					oModelPad:SetValue('MATA070_SA6', 'A6_CONTATO', "BBB")
 				EndIf
 			EndIf
 		
