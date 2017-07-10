@@ -77,6 +77,8 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 	  * **zRotAuto.prw**: Exemplo de ExecAuto em MVC
    * 025 - Modelo 2 em MVC
       * **zModel2.prw**: Exemplo de Modelo 2 em MVC
+   * 026 - Temporária em MVC
+      * **zTmpCad.prw**: Exemplo de Tabela Temporária em MVC
 	  
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)

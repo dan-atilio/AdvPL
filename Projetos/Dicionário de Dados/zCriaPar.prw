@@ -20,9 +20,9 @@ Função para criação de parâmetros (SX6)
 
 User Function zCriaPar(aPars)
 	Local nAtual		:= 0
-	Local aPars		:= {}
 	Local aArea		:= GetArea()
 	Local aAreaX6		:= SX6->(GetArea())
+	Default aPars		:= {}
 	
 	DbSelectArea("SX6")
 	SX6->(DbGoTop())
