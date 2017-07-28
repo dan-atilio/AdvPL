@@ -79,6 +79,11 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
       * **zModel2.prw**: Exemplo de Modelo 2 em MVC
    * 026 - Temporária em MVC
       * **zTmpCad.prw**: Exemplo de Tabela Temporária em MVC
+   * 027 - Cópia em MVC
+      * **zCopMVC.prw**: Exemplo de função copiar (com grid) em MVC
+   * 028 - Abas em MVC
+      * **zAba1.prw**: Exemplo de criação de folders em MVC (Pai e Filhos)
+	  * **zAba2.prw**: Exemplo de criação de folders em MVC (Pai, Filhos e Netos)
 	  
 ####Fontes
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
@@ -105,7 +110,9 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zDiasUteis.prw**: Função que retorna os dias úteis entre duas datas
    * **zDtExtenso.prw**: Função que transforma uma variável data, na forma extensa (por exemplo, 27 de Setembro de 2015)
    * **zEditTmp.prw**: Função que edita uma tabela temporária (com opção de incluir, alterar e excluir)
+   * **zEnvMail.prw**: Função para disparo de e-Mail com vários anexos
    * **zExcel2DBF.prw**: Função de conversão de arquivos XLS para DBF
+   * **zExpPars.prw**: Função que exporta parâmetros do Protheus para HTML (1 único arquivo)
    * **zExpTabs.prw**: Função que exporta tabelas do Protheus para HTML (1 único arquivo)
    * **zExpTab2.prw**: Função que exporta tabelas do Protheus para HTML (vários arquivos)
    * **zFecPSS.prw**: Função para fechar o arquivo de senhas para recuperar a senha de admin
@@ -126,6 +133,8 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zOutlook.prw**: Função para abertura do Outlook com uma nova mensagem via AdvPL
    * **zParUsr.prw**: Função que serve para verificar usuários dentro de um parâmetro, e editar o parâmetro
    * **zPegaMac.prw**: Função que pega o MAC Address de máquinas com Windows instalado
+   * **zPutSX1.prw**: Função que cria um grupo de perguntas (mesmo no Protheus 12)
+   * **zQry2Excel.prw**: Função que gera um arquivo do Excel através de uma query SQL
    * **zRepSX3.prw**: Função que atualiza o conteúdo da SX3 conforme arquivo dbf / dtc
    * **zSalvaProc.prw**: Função que salva a lista da pilha de Chamadas
    * **zSemanas.prw**: Função que retorna as semanas entre duas datas
@@ -135,6 +144,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zTransNum.prw**: Função que transforma uma variável numérica em texto (para exportação de arquivos)
    * **zTransPdf.prw**: Função que transforma imagens em pdf
    * **zUsrFil.prw**: Função que valida se o usuário tem acesso a filial
+   * **zVal2Soma1.prw**: Função que converte valor numérico para o valor do Soma1
    * **zVal2Hora.prw**: Função que converte valor numérico para hora (por exemplo, 1.50 -> 1h30)
    * **zVazio.prw**: Função que verifica se um Array está vazio
    * **zVerTrans.prw**: Função que verifica se um pedido já foi transmitido na filial
