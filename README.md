@@ -93,6 +93,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zArrToTxt.prw**: Função recursiva, que transforma array em texto
    * **zAtuPerg.prw**: Função que atualiza o conteúdo de uma pergunta
    * **zCarEspec.prw**: Função que remove caracteres especiais de um campo
+   * **zChooseFile.prw**: Função para escolher o arquivo através do Windows
    * **zCliFor.prw**: Função que cria fornecedor a partir de cliente
    * **zCmbDesc.prw**: Função que retorna a descrição de uma opção de um campo COMBO
    * **zCnvSoma1.prw**: Função para converter o Soma1 (9A, 9B, 9C, etc)
@@ -110,6 +111,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zDiasUteis.prw**: Função que retorna os dias úteis entre duas datas
    * **zDtExtenso.prw**: Função que transforma uma variável data, na forma extensa (por exemplo, 27 de Setembro de 2015)
    * **zEditTmp.prw**: Função que edita uma tabela temporária (com opção de incluir, alterar e excluir)
+   * **zElemAlt.prw**: Função que altera a posição de um elemento do array
    * **zEnvMail.prw**: Função para disparo de e-Mail com vários anexos
    * **zExcel2DBF.prw**: Função de conversão de arquivos XLS para DBF
    * **zExpPars.prw**: Função que exporta parâmetros do Protheus para HTML (1 único arquivo)
@@ -128,6 +130,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zLeIXBLog.prw**: Função que faz a leitura de um arquivo IXBLog e retorna apenas os ExecBlock executados
    * **zLibPed.prw**: Função para liberar pedidos de venda - testes
    * **zLogin.prw**: Função que carrega uma tela de login
+   * **zMataTudo.prw**: Função que mata todas as conexões ativas no serviço do Protheus
    * **zMemoToA.prw**: Função que converte campo Memo para Array para impressão
    * **zMsgLog.prw**: Função que mostra uma mensagem ao usuário com opção de salvar
    * **zOutlook.prw**: Função para abertura do Outlook com uma nova mensagem via AdvPL
@@ -137,12 +140,14 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zQry2Excel.prw**: Função que gera um arquivo do Excel através de uma query SQL
    * **zRepSX3.prw**: Função que atualiza o conteúdo da SX3 conforme arquivo dbf / dtc
    * **zSalvaProc.prw**: Função que salva a lista da pilha de Chamadas
+   * **zSB1Compl.prw**: Função que cria o complemento de todos os produtos (cria SB5 através da SB1)
    * **zSemanas.prw**: Função que retorna as semanas entre duas datas
    * **zSM0CNPJ.prw**: Função que busca o código da filial, conforme o CNPJ
    * **zTamImg.prw**: Função que retorna o tamanho de uma imagem em pixels
    * **zTotPed.prw**: Função que retorna o total do pedido de venda com Impostos
    * **zTransNum.prw**: Função que transforma uma variável numérica em texto (para exportação de arquivos)
    * **zTransPdf.prw**: Função que transforma imagens em pdf
+   * **zUltNum.prw**: Função que retorna o último número (código) da tabela
    * **zUsrFil.prw**: Função que valida se o usuário tem acesso a filial
    * **zVal2Soma1.prw**: Função que converte valor numérico para o valor do Soma1
    * **zVal2Hora.prw**: Função que converte valor numérico para hora (por exemplo, 1.50 -> 1h30)

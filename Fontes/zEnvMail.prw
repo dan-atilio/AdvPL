@@ -68,7 +68,6 @@ User Function zEnvMail(cPara, cAssunto, cCorpo, aAnexos, lMostraLog, lUsaTLS)
 		oMsg:Clear()
 		
 		//Define os atributos da mensagem
-		oMsg:cDate    := cValToChar(Date())
 		oMsg:cFrom    := cFrom
 		oMsg:cTo      := cPara
 		oMsg:cSubject := cAssunto

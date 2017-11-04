@@ -40,7 +40,7 @@ User Function zAtuPerg(cPergAux, cParAux, xConteud)
 		
 		//Data
 		ElseIf ValType(xConteud) == 'D'
-			&(cParAux+" := sToD("+dToS(xConteud)+")")
+			&(cParAux+" := sToD('"+dToS(xConteud)+")'")
 			
 		//Numérico ou Lógico
 		ElseIf ValType(xConteud) == 'N' .Or. ValType(xConteud) == 'L'
