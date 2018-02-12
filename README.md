@@ -132,6 +132,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zLogin.prw**: Função que carrega uma tela de login
    * **zMataTudo.prw**: Função que mata todas as conexões ativas no serviço do Protheus
    * **zMemoToA.prw**: Função que converte campo Memo para Array para impressão
+   * **zMiniForm.prw**: Execução de fórmulas de forma compacta
    * **zMsgLog.prw**: Função que mostra uma mensagem ao usuário com opção de salvar
    * **zOutlook.prw**: Função para abertura do Outlook com uma nova mensagem via AdvPL
    * **zParUsr.prw**: Função que serve para verificar usuários dentro de um parâmetro, e editar o parâmetro
@@ -141,12 +142,14 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zRepSX3.prw**: Função que atualiza o conteúdo da SX3 conforme arquivo dbf / dtc
    * **zSalvaProc.prw**: Função que salva a lista da pilha de Chamadas
    * **zSB1Compl.prw**: Função que cria o complemento de todos os produtos (cria SB5 através da SB1)
+   * **zSearch.prw**: Função que pesquisa campos no Protheus
    * **zSemanas.prw**: Função que retorna as semanas entre duas datas
    * **zSM0CNPJ.prw**: Função que busca o código da filial, conforme o CNPJ
    * **zTamImg.prw**: Função que retorna o tamanho de uma imagem em pixels
    * **zTotPed.prw**: Função que retorna o total do pedido de venda com Impostos
    * **zTransNum.prw**: Função que transforma uma variável numérica em texto (para exportação de arquivos)
    * **zTransPdf.prw**: Função que transforma imagens em pdf
+   * **zTstEmp.prw**: Função que cria as tabelas percorrendo conforme filiais / empresas
    * **zUltNum.prw**: Função que retorna o último número (código) da tabela
    * **zUsrFil.prw**: Função que valida se o usuário tem acesso a filial
    * **zVal2Soma1.prw**: Função que converte valor numérico para o valor do Soma1
