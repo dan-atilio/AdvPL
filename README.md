@@ -108,7 +108,9 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zConta.prw**: Função que conta a repetição de caracteres em uma string
    * **zCpyReg.prw**: Função que copia um registro de uma filial para outra com opção de mudança de código
    * **zCriaLog.prw**: Função para gravar log de registro na base
+   * **zCriaCEsp.prw**: Função para criar consultas específicas via código fonte
    * **zDiasUteis.prw**: Função que retorna os dias úteis entre duas datas
+   * **zDelDoc.prw**: Função para excluir documento de entrada e pré nota
    * **zDtExtenso.prw**: Função que transforma uma variável data, na forma extensa (por exemplo, 27 de Setembro de 2015)
    * **zEditTmp.prw**: Função que edita uma tabela temporária (com opção de incluir, alterar e excluir)
    * **zElemAlt.prw**: Função que altera a posição de um elemento do array
@@ -120,13 +122,16 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zFecPSS.prw**: Função para fechar o arquivo de senhas para recuperar a senha de admin
    * **zFTPEnv.prw**: Função que envia arquivo para um servidor FTP
    * **zFunTit.prw**: Função que retorna o título da rotina atual
+   * **zGrupCod.prw**: Função que muda a inicialização do produto buscando do grupo para compor o código
    * **zHr2Val.prw**: Função que converte hora para valor
    * **zImpAux.prw**: Função que imprime o TMSPrinter em sequência diferente
    * **zImpSB6.prw**: Importação de dados de Saldos de/em Terceiros
    * **zInicio.prw**: Função executada no programa inicial
    * **zIsLock.prw**: Função que verifica se o registro está travado
    * **zIsMDI.prw**: Função que verifica se esta utilizando o SIGAMDI
+   * **zIsMVC.prw**: Função que verifica se a rotina executada é em MVC
    * **zLastPerg.prw**: Função que retorna a última pergunta da memória
+   * **zLeBalanca.prw**: Função para ler o peso da balança
    * **zLeIXBLog.prw**: Função que faz a leitura de um arquivo IXBLog e retorna apenas os ExecBlock executados
    * **zLibPed.prw**: Função para liberar pedidos de venda - testes
    * **zLogin.prw**: Função que carrega uma tela de login
@@ -135,10 +140,13 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zMiniForm.prw**: Execução de fórmulas de forma compacta
    * **zMsgLog.prw**: Função que mostra uma mensagem ao usuário com opção de salvar
    * **zOutlook.prw**: Função para abertura do Outlook com uma nova mensagem via AdvPL
+   * **zParComma.prw**: Função para editar um parâmetro com separações (como ponto e vírgula)
    * **zParUsr.prw**: Função que serve para verificar usuários dentro de um parâmetro, e editar o parâmetro
    * **zPegaMac.prw**: Função que pega o MAC Address de máquinas com Windows instalado
+   * **zPrettyXML.prw**: Função que transforma uma string XML indentando o conteúdo e as linhas
    * **zPutSX1.prw**: Função que cria um grupo de perguntas (mesmo no Protheus 12)
    * **zQry2Excel.prw**: Função que gera um arquivo do Excel através de uma query SQL
+   * **zRecurDir.prw**: Função recursiva para buscar vários arquivos em diretórios e sub diretórios
    * **zRepSX3.prw**: Função que atualiza o conteúdo da SX3 conforme arquivo dbf / dtc
    * **zSalvaProc.prw**: Função que salva a lista da pilha de Chamadas
    * **zSB1Compl.prw**: Função que cria o complemento de todos os produtos (cria SB5 através da SB1)
