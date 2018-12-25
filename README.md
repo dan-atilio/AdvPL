@@ -120,6 +120,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zExpTabs.prw**: Função que exporta tabelas do Protheus para HTML (1 único arquivo)
    * **zExpTab2.prw**: Função que exporta tabelas do Protheus para HTML (vários arquivos)
    * **zFecPSS.prw**: Função para fechar o arquivo de senhas para recuperar a senha de admin
+   * **zFindProd.prw**: Função para pesquisar produto em uma grid dentro do Pedido de Venda / Pedido de Compra
    * **zFTPEnv.prw**: Função que envia arquivo para um servidor FTP
    * **zFunTit.prw**: Função que retorna o título da rotina atual
    * **zGrupCod.prw**: Função que muda a inicialização do produto buscando do grupo para compor o código

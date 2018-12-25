@@ -1,14 +1,14 @@
 //Bibliotecas
 #Include "Protheus.ch"
 
-//Posi√ß√µes da Grid
+//PosiÁıes da Grid
 #Define POS_ITE    0001 
 #Define POS_VAR    0002
 #Define POS_ABA    0003
 #Define POS_DES    0004
 
 /*/{Protheus.doc} zSearch
-Fun√ß√£o para pesquisar campos de uma tela de cadastro
+FunÁ„o para pesquisar campos de uma tela de cadastro
 @author Atilio
 @since 01/12/2017
 @version 1.0
@@ -29,7 +29,7 @@ User Function zSearch()
 	Local nAtual       := 0
 	Local nAbaAux      := 0
 	Local cAbaAux      := ""
-	//Vari√°veis de controle
+	//Vari·veis de controle
 	Private nAtuPvt    := 0
 	Private nAbaPvt    := 0
 	Private oPai       := GetWndDefault()
@@ -59,19 +59,22 @@ User Function zSearch()
 	For nAtual := 1 To Len(aControles)
 		nAtuPvt := nAtual
 		
-		//Se tiver vari√°vel e descri√ß√£o
+		//Se tiver vari·vel e descriÁ„o
 		If Type("aControles[nAtuPvt]:cReadVar") != "U" .And. Type("aControles[nAtuPvt]:cToolTip") != "U"
-			//Somente se tiver conte√∫do
+			//Somente se tiver conte˙do
 			If ! Empty(aControles[nAtuPvt]:cReadVar) .And. ! Empty(aControles[nAtuPvt]:cToolTip) .And. 'M->' $ Upper(aControles[nAtuPvt]:cReadVar)
 				cAbaAux := GetSx3Cache(StrTran(Upper(aControles[nAtuPvt]:cReadVar), 'M->', ''), "X3_FOLDER")
 				
 				aAdd(aDadosOrig, {	nAtual,;                                                                               //ID
-									aControles[nAtual]:cReadVar,;                                                          //Vari√°vel
+									aControles[nAtual]:cReadVar,;                                                          //Vari·vel
 									cAbaAux,;                                                                              //Aba
-									GetSx3Cache(StrTran(Upper(aControles[nAtuPvt]:cReadVar), 'M->', ''), "X3_TITULO"),;    //Descri√ß√£o
-									.F.})                                                                                  //Exclu√≠do?
-									
-				cTipoAba += Iif(" " $ cTipoAba, "", Iif(cAbaAux $ cTipoAba, "", cAbaAux))
+									GetSx3Cache(StrTran(Upper(aControles[nAtuPvt]:cReadVar), 'M->', ''), "X3_TITULO"),;    //DescriÁ„o
+									.F.})                                                                                  //ExcluÌdo?
+				
+				//Somente se houver aba
+				If cAbaAux != Nil
+					cTipoAba += Iif(" " $ cTipoAba, "", Iif(cAbaAux $ cTipoAba, "", cAbaAux))
+				EndIf
 			EndIf
 		EndIf
 	Next
@@ -81,9 +84,9 @@ User Function zSearch()
 	For nAtual := 1 To Len(aControles)
 		nAtuPvt := nAtual
 		
-		//Se tiver aba, guarda a posi√ß√£o dela
+		//Se tiver aba, guarda a posiÁ„o dela
 		If Type("aControles[nAtuPvt]:aDialogs") == 'A'
-			//Somente se o tamanho dela for maior que a vari√°vel encontrada
+			//Somente se o tamanho dela for maior que a vari·vel encontrada
 			If Len(aControles[nAtuPvt]:aDialogs) >= Len(cTipoAba)
 				nAbaPvt := nAtual
 			EndIf
@@ -92,16 +95,16 @@ User Function zSearch()
 	
 	//Se tiver objetos, monta a tela
 	If Len(aDadosOrig) > 0
-		//Cabe√ßalho ... Titulo       Campo      Mask         Tamanho     Dec    Valid   Usado  Tip  F3  CBOX
+		//CabeÁalho ... Titulo       Campo      Mask         Tamanho     Dec    Valid   Usado  Tip  F3  CBOX
 		aAdd(aHeadObj, {"Item",      "XX_ITEM", "@E 9999",   0004,       0000,  ".F.",  ".F.", "N", "", ""})
-		aAdd(aHeadObj, {"Vari√°vel",  "XX_VAR",  "",          0020,       0000,  ".F.",  ".F.", "C", "", ""})
-		aAdd(aHeadObj, {"N¬∫ Aba",    "XX_ABA",  "",          0001,       0000,  ".F.",  ".F.", "C", "", ""})
-		aAdd(aHeadObj, {"T√≠tulo",    "XX_DESC", "",          0020,       0000,  ".F.",  ".F.", "C", "", ""})
+		aAdd(aHeadObj, {"Vari·vel",  "XX_VAR",  "",          0020,       0000,  ".F.",  ".F.", "C", "", ""})
+		aAdd(aHeadObj, {"N∫ Aba",    "XX_ABA",  "",          0001,       0000,  ".F.",  ".F.", "C", "", ""})
+		aAdd(aHeadObj, {"TÌtulo",    "XX_DESC", "",          0020,       0000,  ".F.",  ".F.", "C", "", ""})
 		
 		//Criando a janela
 		DEFINE MSDIALOG oDlgPesq TITLE "Pesquisar" FROM 000, 000  TO nJanAltu, nJanLarg COLORS 0, 16777215 PIXEL
 		
-			//T√≠tulo do Grupo
+			//TÌtulo do Grupo
 			@ 003, 003 GROUP oGrpPesq TO (nJanAltu/2)-1, (nJanLarg/2)-1 PROMPT "zSearch - Pesquisa de Campos: " OF oDlgPesq COLOR 0, 16777215 PIXEL
 			
 				//Campo para pesquisar
@@ -130,12 +133,12 @@ User Function zSearch()
 				oMsObj:bChange := {|| fAtuAux()}
 				oMsObj:oBrowse:blDblClick := {|| fConfirma() }
 				
-				//Criando get invis√≠vel que ter√° dados do registro posicionado
+				//Criando get invisÌvel que ter· dados do registro posicionado
 				@ (nJanAltu / 2) - 022, 005 MSGET oGetAux VAR cGetAux      SIZE 200, 18  NO BORDER  OF oDlgPesq PIXEL
 				oGetAux:setCSS("QLineEdit{color:#FF0000; background-color:#FEFEFE;}")
 				oGetAux:lActive := .F.
 				
-				//Bot√µes
+				//Botıes
 				@ (nJanAltu/2)-18, (nJanLarg/2)-((0042*1)+6) BUTTON oBtnConf PROMPT "Confirmar" SIZE 040, 013 OF oDlgPesq ACTION(fConfirma())     PIXEL
 				@ (nJanAltu/2)-18, (nJanLarg/2)-((0042*2)+6) BUTTON oBtnCanc PROMPT "Cancelar"  SIZE 040, 013 OF oDlgPesq ACTION(oDlgPesq:End())  PIXEL
 				
@@ -150,20 +153,20 @@ User Function zSearch()
 		If nAbaPvt != 0
 			nAbaAux := 0
 			
-			//Se a aba estiver em branco, ser√° a √∫ltima aba
+			//Se a aba estiver em branco, ser· a ˙ltima aba
 			If Empty(cAbaEsc)
 				nAbaAux := Len(aControles[nAbaPvt]:aDialogs)
 				
-			//Se for num√©rico, posicionar√° corretamente
+			//Se for numÈrico, posicionar· corretamente
 			ElseIf cAbaEsc $ ("0,1,2,3,4,5,6,7,8,9")
 				nAbaAux := Val(cAbaEsc)
 			
-			//Se for letra, converte para n√∫mero e posiciona corretamente
+			//Se for letra, converte para n˙mero e posiciona corretamente
 			Else
 				nAbaAux := (Asc(Upper(cAbaEsc)) - 64) + 9
 			EndIf
 			
-			//Tratativa para n√£o colocar em aba que n√£o deve
+			//Tratativa para n„o colocar em aba que n„o deve
 			If nAbaAux > Len(aControles[nAbaPvt]:aDialogs)
 				nAbaAux := Len(aControles[nAbaPvt]:aDialogs)
 			EndIf
@@ -181,7 +184,7 @@ Return
 
 /*---------------------------------------------------------------------*
  | Func:  fVldPesq                                                     |
- | Desc:  Fun√ß√£o que filtra a pesquisa na grid                         |
+ | Desc:  FunÁ„o que filtra a pesquisa na grid                         |
  *---------------------------------------------------------------------*/
 
 Static Function fVldPesq()
@@ -190,24 +193,26 @@ Static Function fVldPesq()
 	Local nAtual    := 0
 	Local cFiltro   := Alltrim(FWNoAccent(Upper(cGetPesq)))
 	
-	//Caso n√£o tenha filtro
+	//Caso n„o tenha filtro
 	If Empty(cFiltro)
 		aDadosAux := aClone(aDadosOrig)
 	Else
 		//Percorre os dados originais
 		For nAtual := 1 To Len(aDadosOrig)
-			If cFiltro $ FWNoAccent(Upper(aDadosOrig[nAtual][POS_VAR])) .Or. cFiltro $ FWNoAccent(Upper(aDadosOrig[nAtual][POS_DES]))
-				aAdd(aDadosAux, aClone(aDadosOrig[nAtual]))
+			If ! Empty(aDadosOrig[nAtual][POS_VAR]) .And. ! Empty(aDadosOrig[nAtual][POS_DES])
+				If cFiltro $ FWNoAccent(Upper(aDadosOrig[nAtual][POS_VAR])) .Or. cFiltro $ FWNoAccent(Upper(aDadosOrig[nAtual][POS_DES]))
+					aAdd(aDadosAux, aClone(aDadosOrig[nAtual]))
+				EndIf
 			EndIf
 		Next
 	EndIf
 	
-	//Se n√£o tiver dados
+	//Se n„o tiver dados
 	If Len(aDadosAux) == 0
 		aAdd(aDadosAux, {	0,;        //ID
-							"",;       //Vari√°vel
+							"",;       //Vari·vel
 							"",;       //Aba
-							"",;       //Descri√ß√£o
+							"",;       //DescriÁ„o
 							.F.}) 
 	EndIf
 	
@@ -219,7 +224,7 @@ Return lRet
 
 /*---------------------------------------------------------------------*
  | Func:  fConfirma                                                    |
- | Desc:  Fun√ß√£o que confirma para posicionar no campo pesquisado      |
+ | Desc:  FunÁ„o que confirma para posicionar no campo pesquisado      |
  *---------------------------------------------------------------------*/
 
 Static Function fConfirma()
@@ -238,7 +243,7 @@ Return
 
 /*---------------------------------------------------------------------*
  | Func:  fAtuAux                                                      |
- | Desc:  Fun√ß√£o que atualiza a descri√ß√£o                              |
+ | Desc:  FunÁ„o que atualiza a descriÁ„o                              |
  *---------------------------------------------------------------------*/
 
 Static Function fAtuAux()
