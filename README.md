@@ -172,10 +172,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zWsCliente.prw**: WebService de exemplo que traz dados de clientes
 
 ####Projetos
-1. Carga Dados Genérico
-   * **exemplos.rar**: Exemplos de arquivos para importação dos dados
-   * **zCargaGen.prw**: Fonte de Carga Dados Genérico (importação de cadastro)
-2. Dicionário de Dados
+1. Dicionário de Dados
    * **zCadSX5.prw**: Função para cadastro de tabelas genéricas (SX5), similar ao AxCadastro e mBrowse (em MVC)
    * **zCadSX6.prw**: Função para cadastro de parâmetros (SX6), similar ao AxCadastro e mBrowse
    * **zCpySX1.prw**: Função para cópia de grupo de perguntas
@@ -185,18 +182,10 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zCriaPasta.prw**: Função que cria abas / pastas "a quente" via código fonte
    * **zCriaTab.prw**: Função que cria tabelas "a quente" via código fonte
    * **zTstDicio.prw**: Função de testes das funções do dicionário de dados
-3. Integração com Excel
-   * **teste_aux.xml**: Exemplo de arquivo do Excel, com listagem de clientes e fornecedores
-   * **teste_pedido.xml**: Exemplo de arquivo do Excel, com dados de pedidos de venda
-   * **teste_sb1.xml**: Exemplo de arquivo do Excel, com listagem de produtos
-   * **testes.prw**: Função de testes utilizando a classe zExcelXML.prw
-   * **zExcelXML.prw**: Classe criada para integração com Excel, utilizando arquivos XML
-4. Integração com WebCam
+2. Integração com WebCam
    * **escapi.dll**: DLL utilizada para integração com WebCam
    * **imageload2.dll**: DLL utilizada para integração com WebCam
    * **zPegaWeb.prw**: Função responsável por fazer a integração do Protheus com WebCam
    * **zTstWeb.prw**: Função que testa a utilização da rotina de WebCam no cadastro de clientes pelo Ações Relacionadas
-5. ProtheusDOC
+3. ProtheusDOC
    * **PDoc_Ti.rar**: Arquivo compactado com a base do Protheus Doc
-6. Relatórios Genéricos
-   * **zReport.prw**: Função que gera relatório em TReport
