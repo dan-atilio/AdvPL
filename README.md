@@ -100,6 +100,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zCodAno.prw**: Função sequencial de código / ano
    * **zCompacta.prw**: Função para compactação de arquivos rar / zip
    * **zCompara.prw**: Função que gera relatório comparando Dicionário com SQL Server
+   * **zComplMsg.prw**: Função para complementar mensagens na DANFE
    * **zCompX3XG.prw**: Relatório que compara grupo de campos (SXG) e campos do dicionário (SX3)
    * **zConsArr.prw**: Consulta Específica (F3), com dados de Array
    * **zConsEsp.prw**: Consulta Específica (F3), com dados de SQL e opção de LIKE, enviando dados em Array
@@ -123,6 +124,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zFindProd.prw**: Função para pesquisar produto em uma grid dentro do Pedido de Venda / Pedido de Compra
    * **zFTPEnv.prw**: Função que envia arquivo para um servidor FTP
    * **zFunTit.prw**: Função que retorna o título da rotina atual
+   * **zGeraB9.prw**: Função que gera Saldo Inicial dos Produtos
    * **zGrupCod.prw**: Função que muda a inicialização do produto buscando do grupo para compor o código
    * **zHr2Val.prw**: Função que converte hora para valor
    * **zImpAux.prw**: Função que imprime o TMSPrinter em sequência diferente
@@ -135,11 +137,13 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zLeBalanca.prw**: Função para ler o peso da balança
    * **zLeIXBLog.prw**: Função que faz a leitura de um arquivo IXBLog e retorna apenas os ExecBlock executados
    * **zLibPed.prw**: Função para liberar pedidos de venda - testes
+   * **zLog2Excel.prw**: Função que converte um arquivo IXBLOG para Excel
    * **zLogin.prw**: Função que carrega uma tela de login
    * **zMataTudo.prw**: Função que mata todas as conexões ativas no serviço do Protheus
    * **zMemoToA.prw**: Função que converte campo Memo para Array para impressão
    * **zMiniForm.prw**: Execução de fórmulas de forma compacta
    * **zMsgLog.prw**: Função que mostra uma mensagem ao usuário com opção de salvar
+   * **zNameFile.prw**: Função que verifica se o nome do arquivo é válido
    * **zOutlook.prw**: Função para abertura do Outlook com uma nova mensagem via AdvPL
    * **zParComma.prw**: Função para editar um parâmetro com separações (como ponto e vírgula)
    * **zParUsr.prw**: Função que serve para verificar usuários dentro de um parâmetro, e editar o parâmetro
@@ -166,6 +170,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zVazio.prw**: Função que verifica se um Array está vazio
    * **zVerTrans.prw**: Função que verifica se um pedido já foi transmitido na filial
    * **zVldGrid.prw**: Função que executa as validações da grid
+   * **zWsCliente.prw**: WebService de exemplo que traz dados de clientes
 
 ####Projetos
 1. Carga Dados Genérico
