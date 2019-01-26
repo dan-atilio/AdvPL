@@ -1,5 +1,4 @@
-![Ti Logo](http://terminaldeinformacao.com/wp-content/uploads/2016/03/tema.jpg)
-[Terminal de Informação](http://terminaldeinformacao.com)
+Saiba mais sobre em - [Terminal de Informação](http://terminaldeinformacao.com)
 
 # AdvPL
 Fontes desenvolvidos utilizando a linguagem AdvPL com intuito de auxiliar e ajudar outros analistas.
