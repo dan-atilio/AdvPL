@@ -1,10 +1,12 @@
-#Include "Protheus.ch"
-#Include "TopConn.ch" 
+#include "Protheus.ch"
+#include "TopConn.ch" 
 
-#DEFINE MAXMENLIN 080 // MÃ¡ximo de caracteres por linha de dados adicionais - deixar igual o do fonte danfeii.prw
+// Má¡ximo de caracteres por linha de dados adicionais - deixar igual o do fonte danfeii.prw
+#define MAXMENLIN 088
+#define CTRF Chr(13) + Chr(10) 
 
-//1 - Criar uma FÃ³rmula (SM4), com u_zComplMsg()
-//2 - Colocar o cÃ³digo dessa fÃ³rmula no campo C5_MENPAD
+//1 - Criar uma Fórmula (SM4), com u_zComplMsg()
+//2 - Colocar o código dessa fórmula no campo C5_MENPAD
 
 User Function zComplMsg()
 	Local aArea	   := GetArea()
@@ -19,7 +21,7 @@ User Function zComplMsg()
 	Local cMens    := ""          
 	Local cAux     := ""
 	
-	cAux := "Beluguinha, BelugÃ£o... Acesse Terminal de InformaÃ§Ã£o (https://terminaldeinformacao.com)"
+	cAux := "Beluguinha, Belugão... Acesse Terminal de Informação (https://terminaldeinformacao.com)"
 	cMens += fLinhaDanfe(cAux)
 	
 	RestArea(aAreaSD2)
@@ -36,18 +38,18 @@ Return cMens
 Static Function fLinhaDanfe(cLinhaTexto)
 	Local cLinhaTrans:=""
 
-	//Se houver texto
-	If !Empty(cLinhaTexto)
-		//Enquanto o tamnho for maior que o mÃ¡ximo da linha, vai quebrando 
+	// Se houver texto.
+	If ! Empty(cLinhaTexto)
+		// Enquanto o tamnho for maior que o máximo da linha, vai quebrando. 
 		While Len(cLinhaTexto) > MAXMENLIN
-			cLinhaTrans += Substr(cLinhaTexto, 1, MAXMENLIN)
-			cLinhaTexto := Substr(cLinhaTexto, MAXMENLIN + 1, Len(cLinhaTexto) - MAXMENLIN)
+			cLinhaTrans += Substr(cLinhaTexto, 1, Rat(" ", Substr(cLinhaTexto, 1, MAXMENLIN)) - 1) + CTRF
+            cLinhaTexto := Substr(cLinhaTexto, Rat(" ", Substr(cLinhaTexto, 1, MAXMENLIN)), Len(cLinhaTexto))
 		EndDo
 		
-		//Se restou texto, incrementa
-		If cLinhaText != ""
-			cLinhaTrans += PadR(cLinhaTexto, MAXMENLIN)
-		EndIf
+		// Se restou texto, incrementa.
+		If (cLinhaTexto) != ""
+			cLinhaTrans += cLinhaTexto
+		EndIf	
 	EndIf
 	
 Return cLinhaTrans
