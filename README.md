@@ -123,6 +123,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zFindProd.prw**: Função para pesquisar produto em uma grid dentro do Pedido de Venda / Pedido de Compra
    * **zFTPEnv.prw**: Função que envia arquivo para um servidor FTP
    * **zFunTit.prw**: Função que retorna o título da rotina atual
+   * **zGerDanfe.prw**: Função para gerar DANFE em um diretório junto com XML
    * **zGeraB9.prw**: Função que gera Saldo Inicial dos Produtos
    * **zGrupCod.prw**: Função que muda a inicialização do produto buscando do grupo para compor o código
    * **zHr2Val.prw**: Função que converte hora para valor
@@ -158,6 +159,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zSemanas.prw**: Função que retorna as semanas entre duas datas
    * **zSM0CNPJ.prw**: Função que busca o código da filial, conforme o CNPJ
    * **zTamImg.prw**: Função que retorna o tamanho de uma imagem em pixels
+   * **zTotPag.prw**: Função para totalizar páginas em AdvPL
    * **zTotPed.prw**: Função que retorna o total do pedido de venda com Impostos
    * **zTransNum.prw**: Função que transforma uma variável numérica em texto (para exportação de arquivos)
    * **zTransPdf.prw**: Função que transforma imagens em pdf
