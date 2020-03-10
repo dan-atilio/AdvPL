@@ -162,6 +162,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zTotPag.prw**: Função para totalizar páginas em AdvPL
    * **zTotPed.prw**: Função que retorna o total do pedido de venda com Impostos
    * **zTransNum.prw**: Função que transforma uma variável numérica em texto (para exportação de arquivos)
+   * **zTransp.prw**: Função que abre uma tela com integração com Transportadoras
    * **zTransPdf.prw**: Função que transforma imagens em pdf
    * **zTstEmp.prw**: Função que cria as tabelas percorrendo conforme filiais / empresas
    * **zUltNum.prw**: Função que retorna o último número (código) da tabela
