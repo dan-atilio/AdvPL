@@ -116,6 +116,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zElemAlt.prw**: Função que altera a posição de um elemento do array
    * **zEnvMail.prw**: Função para disparo de e-Mail com vários anexos
    * **zExcel2DBF.prw**: Função de conversão de arquivos XLS para DBF
+   * **zExpMail.prw**: Função para exportar uma lista de emails para importar na Locaweb
    * **zExpPars.prw**: Função que exporta parâmetros do Protheus para HTML (1 único arquivo)
    * **zExpTabs.prw**: Função que exporta tabelas do Protheus para HTML (1 único arquivo)
    * **zExpTab2.prw**: Função que exporta tabelas do Protheus para HTML (vários arquivos)
