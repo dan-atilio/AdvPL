@@ -168,6 +168,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zTstEmp.prw**: Função que cria as tabelas percorrendo conforme filiais / empresas
    * **zUltNum.prw**: Função que retorna o último número (código) da tabela
    * **zUsrFil.prw**: Função que valida se o usuário tem acesso a filial
+   * **zUsrSrv.prw**: Função que verifica usuários locais nos servidores
    * **zVal2Soma1.prw**: Função que converte valor numérico para o valor do Soma1
    * **zVal2Hora.prw**: Função que converte valor numérico para hora (por exemplo, 1.50 -> 1h30)
    * **zVazio.prw**: Função que verifica se um Array está vazio
