@@ -91,6 +91,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zAppend.prw**: Função para "appendar" várias tabelas de uma base para outra
    * **zArrToTxt.prw**: Função recursiva, que transforma array em texto
    * **zAtuPerg.prw**: Função que atualiza o conteúdo de uma pergunta
+   * **zBxMail.prw**: Função que acessa uma caixa de e-Mail e faz o download de anexos
    * **zCarEspec.prw**: Função que remove caracteres especiais de um campo
    * **zChooseFile.prw**: Função para escolher o arquivo através do Windows
    * **zCliFor.prw**: Função que cria fornecedor a partir de cliente
