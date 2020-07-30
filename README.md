@@ -110,6 +110,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zCpyReg.prw**: Função que copia um registro de uma filial para outra com opção de mudança de código
    * **zCriaLog.prw**: Função para gravar log de registro na base
    * **zCriaCEsp.prw**: Função para criar consultas específicas via código fonte
+   * **zDbTree.prw**: Função de cadastro utilizando o componente DbTree
    * **zDiasUteis.prw**: Função que retorna os dias úteis entre duas datas
    * **zDelDoc.prw**: Função para excluir documento de entrada e pré nota
    * **zDtExtenso.prw**: Função que transforma uma variável data, na forma extensa (por exemplo, 27 de Setembro de 2015)
@@ -159,6 +160,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zSB1Compl.prw**: Função que cria o complemento de todos os produtos (cria SB5 através da SB1)
    * **zSearch.prw**: Função que pesquisa campos no Protheus
    * **zSemanas.prw**: Função que retorna as semanas entre duas datas
+   * **zSlider.prw**: Função de slideshow de imagens
    * **zSM0CNPJ.prw**: Função que busca o código da filial, conforme o CNPJ
    * **zTamImg.prw**: Função que retorna o tamanho de uma imagem em pixels
    * **zTotPag.prw**: Função para totalizar páginas em AdvPL
