@@ -2,6 +2,7 @@ Saiba mais em - [Terminal de Informação](http://terminaldeinformacao.com)
 
 # AdvPL
 Fontes desenvolvidos utilizando a linguagem AdvPL com intuito de auxiliar e ajudar outros analistas.
+Todos esses fontes são exemplos disponibilizados no site Terminal de Informação.
 Abaixo as categorias, explicando um pouco sobre cada fonte.
 
 ####Exemplos
@@ -76,6 +77,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 	  * **zRotAuto.prw**: Exemplo de ExecAuto em MVC
    * 025 - Modelo 2 em MVC
       * **zModel2.prw**: Exemplo de Modelo 2 em MVC
+	  * **ASATF04.prw**: Exemplo de Modelo 2 em MVC (mais novo - 2020)
    * 026 - Temporária em MVC
       * **zTmpCad.prw**: Exemplo de Tabela Temporária em MVC
    * 027 - Cópia em MVC
@@ -85,6 +87,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 	  * **zAba2.prw**: Exemplo de criação de folders em MVC (Pai, Filhos e Netos)
 	  
 ####Fontes
+   * **ASOPM01.prw**: Função com exemplo de integração com a SOPHUS
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
    * **zAltPar.prw**: Função para modificação de parâmetros (SX6)
    * **zAltSC5.prw**: Função para alteração de pedido de venda já liberado / faturado
@@ -131,11 +134,13 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zGrupCod.prw**: Função que muda a inicialização do produto buscando do grupo para compor o código
    * **zHr2Val.prw**: Função que converte hora para valor
    * **zImpAux.prw**: Função que imprime o TMSPrinter em sequência diferente
+   * **zImpDoc.prw**: Função que importa documentos para o Banco de Conhecimento do Protheus
    * **zImpSB6.prw**: Importação de dados de Saldos de/em Terceiros
    * **zInicio.prw**: Função executada no programa inicial
    * **zIsLock.prw**: Função que verifica se o registro está travado
    * **zIsMDI.prw**: Função que verifica se esta utilizando o SIGAMDI
    * **zIsMVC.prw**: Função que verifica se a rotina executada é em MVC
+   * **zJotTst.prw**: Exemplo de integração com JotForms
    * **zLastPerg.prw**: Função que retorna a última pergunta da memória
    * **zLeBalanca.prw**: Função para ler o peso da balança
    * **zLeIXBLog.prw**: Função que faz a leitura de um arquivo IXBLog e retorna apenas os ExecBlock executados
@@ -163,6 +168,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zSlider.prw**: Função de slideshow de imagens
    * **zSM0CNPJ.prw**: Função que busca o código da filial, conforme o CNPJ
    * **zTamImg.prw**: Função que retorna o tamanho de uma imagem em pixels
+   * **zTelEstr.prw**: Função que cria uma Dialog e mostra a estrutura de produtos
    * **zTotPag.prw**: Função para totalizar páginas em AdvPL
    * **zTotPed.prw**: Função que retorna o total do pedido de venda com Impostos
    * **zTransNum.prw**: Função que transforma uma variável numérica em texto (para exportação de arquivos)
