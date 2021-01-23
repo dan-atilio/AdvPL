@@ -5,7 +5,7 @@ Fontes desenvolvidos utilizando a linguagem AdvPL com intuito de auxiliar e ajud
 Todos esses fontes são exemplos disponibilizados no site Terminal de Informação.
 Abaixo as categorias, explicando um pouco sobre cada fonte.
 
-####Exemplos
+###### Exemplos
 1. Dialogs
    * **zExempF1.prw**: Exemplo de Help (F1) de campo, em Dialog customizada
 2. MVC
@@ -86,7 +86,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
       * **zAba1.prw**: Exemplo de criação de folders em MVC (Pai e Filhos)
 	  * **zAba2.prw**: Exemplo de criação de folders em MVC (Pai, Filhos e Netos)
 	  
-####Fontes
+###### Fontes
    * **ASOPM01.prw**: Função com exemplo de integração com a SOPHUS
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
    * **zAltPar.prw**: Função para modificação de parâmetros (SX6)
@@ -185,7 +185,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zVldGrid.prw**: Função que executa as validações da grid
    * **zWsCliente.prw**: WebService de exemplo que traz dados de clientes
 
-####Projetos
+###### Projetos
 1. Dicionário de Dados
    * **zCadSX5.prw**: Função para cadastro de tabelas genéricas (SX5), similar ao AxCadastro e mBrowse (em MVC)
    * **zCadSX6.prw**: Função para cadastro de parâmetros (SX6), similar ao AxCadastro e mBrowse
