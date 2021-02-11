@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/10/11/como-verificar-se-um-registro-esta-travado-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
@@ -7,14 +13,14 @@
 #Define POS_RECNO 003
 
 /*/{Protheus.doc} zIsLock
-FunÃ§Ã£o que verifica se um registro esta travado na memÃ³ria (com RecLock por exemplo)
+Função que verifica se um registro esta travado na memória (com RecLock por exemplo)
 @type function
 @author Atilio
 @since 03/08/2016
 @version 1.0
-	@param cAliasLock, character, Alias da Tabela (se nÃ£o for passado nada, serÃ¡ utilizado a Ãºltima em memÃ³ria)
-	@param nRegLock, numÃ©rico, RecNo pesquisado (se nÃ£o for passado nada, serÃ¡ utilizado o Ãºltimo em memÃ³ria)
-	@return lTravado, Retorna se o registro esta travado (.T.) ou nÃ£o (.F.) na memÃ³ria
+	@param cAliasLock, character, Alias da Tabela (se não for passado nada, será utilizado a última em memória)
+	@param nRegLock, numérico, RecNo pesquisado (se não for passado nada, será utilizado o último em memória)
+	@return lTravado, Retorna se o registro esta travado (.T.) ou não (.F.) na memória
 	@example
 	DbSelectArea('SB1')
 	lLock := u_zIsLock()
@@ -39,17 +45,17 @@ User Function zIsLock(cAliasLock, nRegLock)
 		If cAliasLock == aArea[POS_ALIAS]
 			nRegLock := aArea[POS_RECNO]
 		
-		//SenÃ£o, abre a tabela e pega o RecNo atual
+		//Senão, abre a tabela e pega o RecNo atual
 		Else
 			DbSelectArea(cAliasLock)
 			nRegLock := (cAliasLock)->(RecNo())
 		EndIf
 	EndIf
 	
-	//Pegando os registros travados em memÃ³ria
+	//Pegando os registros travados em memória
 	aTravas := (cAliasLock)->(DBRLockList())
 	
-	//Se encontrar o recno nos travados na memÃ³ria, o registro estÃ¡ travado
+	//Se encontrar o recno nos travados na memória, o registro está travado
 	If aScan(aTravas,{|x| x == nRegLock }) > 0
 		lTravado := .T.
 	EndIf

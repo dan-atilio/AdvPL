@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2020/08/28/como-fazer-um-slideshow-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Totvs.ch"
 
@@ -54,14 +60,14 @@ User Function zSlider(cDirFiles)
                 @ 004, 040 SAY "Exemplo de Slideshow"                           SIZE 200, 030 FONT oFontSub  OF oDlgCom COLORS RGB(031,073,125) PIXEL
                 @ 014, 040 SAY cValToChar(Len(aImgs)) + " imagens encontradas"  SIZE 200, 030 FONT oFontSubN OF oDlgCom COLORS RGB(031,073,125) PIXEL
 
-                //BotÃ£o de Sair
+                //Botão de Sair
                 @ 006, (nJanLarg/2-001)-(0052*01) BUTTON oBtnSai    PROMPT "Sair"             SIZE 050, 018 OF oDlgCom ACTION (oDlgCom:End())                                 FONT oFontBtn PIXEL
 
-                //BotÃµes de navegaÃ§Ã£o
+                //BotÃµes de navegação
                 @ (nJanAltu/4), 003                     BUTTON oBtnEsq    PROMPT "<-"       SIZE 030, 018 OF oDlgCom ACTION (fChangeImg(-1))                                FONT oFontBtn PIXEL
                 @ (nJanAltu/4), (nJanLarg/2-003)-(0030) BUTTON oBtnDir    PROMPT "->"       SIZE 030, 018 OF oDlgCom ACTION (fChangeImg(1))                                 FONT oFontBtn PIXEL
 
-                //Get com a informaÃ§Ã£o da imagem atual
+                //Get com a informação da imagem atual
                 @ (nJanAltu/2) - 16, 003  MSGET oGetImg VAR cGetImg SIZE (nJanLarg/2)-3, 013 OF oDlgForm COLORS 0, 16777215 READONLY PIXEL
 
                 //Imagem atual
@@ -70,10 +76,10 @@ User Function zSlider(cDirFiles)
 				oBmpFoto:Refresh()
             ACTIVATE MsDialog oDlgCom CENTERED
         Else
-            MsgStop("NÃ£o foi encontrado imagens nesse diretÃ³rio!", "AtenÃ§Ã£o")
+            MsgStop("Não foi encontrado imagens nesse diretório!", "Atenção")
         EndIf
     Else
-        MsgStop("DiretÃ³rio nÃ£o existe ou invÃ¡lido!", "AtenÃ§Ã£o")
+        MsgStop("Diretório não existe ou inválido!", "Atenção")
     EndIf
 
     RestArea(aArea)
@@ -88,7 +94,7 @@ Static Function fBuscaImg(oSay)
 
     //Percorrendo as extensoes
     For nExtAtu := 1 To Len(aExtensoes)
-        oSay:SetText("Analisando extensÃ£o - " + aExtensoes[nExtAtu])
+        oSay:SetText("Analisando extensão - " + aExtensoes[nExtAtu])
 
         //Definindo o diretorio full e colocando tudo no array de arquivos
         cCamFull := cDirect + "*." + aExtensoes[nExtAtu]
@@ -97,7 +103,7 @@ Static Function fBuscaImg(oSay)
         
         //Percorrendo todos os arquivos e adicionando no nosso array de imagens
         For nFileAtu := 1 To Len(aFiles)
-            oSay:SetText("Analisando extensÃ£o - " + aExtensoes[nExtAtu] + ", arquivo " + cValToChar(nFileAtu) + " de " + cValToChar(Len(aFiles)))
+            oSay:SetText("Analisando extensão - " + aExtensoes[nExtAtu] + ", arquivo " + cValToChar(nFileAtu) + " de " + cValToChar(Len(aFiles)))
             aAdd(aImgs, aFiles[nFileAtu])
         Next
     Next
@@ -117,7 +123,7 @@ Static Function fChangeImg(nNewPos)
     If nImgAtu > Len(aImgs)
         nImgAtu := 1
 
-    //Se for menor ou igual a zero, vai para a Ãºltima
+    //Se for menor ou igual a zero, vai para a última
     ElseIf nImgAtu <= 0
         nImgAtu := Len(aImgs)
     EndIf

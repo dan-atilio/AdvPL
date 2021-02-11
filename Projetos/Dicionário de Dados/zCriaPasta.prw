@@ -1,15 +1,21 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/12/13/funcao-para-criar-pastas-abas-sxa-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zCriaPasta
-FunÃ§Ã£o que verifica se a pasta jÃ¡ existe, se nÃ£o existir, cria a pasta
+Função que verifica se a pasta já existe, se não existir, cria a pasta
 @type function
 @author Atilio
 @since 02/12/2015
 @version 1.0
-	@param cTabela, character, (DescriÃ§Ã£o do parÃ¢metro)
-	@param cDescPasta, character, (DescriÃ§Ã£o do parÃ¢metro)
-	@return cPasta, CÃ³digo da pasta criada / existente
+	@param cTabela, character, (Descrição do parÃ¢metro)
+	@param cDescPasta, character, (Descrição do parÃ¢metro)
+	@return cPasta, Código da pasta criada / existente
 	@example
 	u_zCriaPasta("SB1", "TESTE")
 /*/
@@ -29,7 +35,7 @@ User Function zCriaPasta(cTabela, cDescPasta)
 		
 		//Enquanto houver registros na tabela de pastas / abas e for a mesma tabela
 		While !SXA->(EOF()) .And. (SXA->XA_ALIAS == cTabela)
-			//Se for a mesma descriÃ§Ã£o de tabela, pega o cÃ³digo da pasta atual e sai do laÃ§o de repetiÃ§Ã£o
+			//Se for a mesma descrição de tabela, pega o código da pasta atual e sai do laço de repetição
 			If Upper(AllTrim(SXA->XA_DESCRIC)) == Upper(AllTrim(cDescPasta))
 				cPasta := SXA->XA_ORDEM
 				Exit
@@ -38,7 +44,7 @@ User Function zCriaPasta(cTabela, cDescPasta)
 			SXA->(DbSkip())
 		EndDo
 		
-		//Se ele nÃ£o encontrou a pasta
+		//Se ele não encontrou a pasta
 		If Empty(cPasta)
 			//Enquanto houver registros na tabela de pastas / abas e for a mesma tabela
 			SXA->(DbGoTop())
@@ -53,13 +59,13 @@ User Function zCriaPasta(cTabela, cDescPasta)
 			cPasta := Soma1(cPasta)
 		EndIf
 	
-	//SenÃ£o, serÃ¡ a primeira pasta
+	//Senão, será a primeira pasta
 	Else
 		cPasta := StrTran(Space(Len(SXA->XA_ORDEM)), ' ', '0')
 		cPasta := Soma1(cPasta)
 	EndIf
 
-	//Se nÃ£o conseguir posicionar na aba dessa tabela
+	//Se não conseguir posicionar na aba dessa tabela
 	If !SXA->(DbSeek(cTabela + cPasta))
 		RecLock('SXA',.T.)
 			XA_ALIAS    := cTabela

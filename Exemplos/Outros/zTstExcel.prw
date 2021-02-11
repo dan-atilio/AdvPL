@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/08/30/exemplos-de-geracao-de-arquivo-para-excel-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
@@ -6,7 +12,7 @@
 #Define STR_PULA	Chr(13)+Chr(10)
 
 /*/{Protheus.doc} zTstExc1
-FunÃ§Ã£o que cria um exemplo de FWMsExcel
+Função que cria um exemplo de FWMsExcel
 @author Atilio
 @since 06/08/2016
 @version 1.0
@@ -43,11 +49,11 @@ User Function zTstExc1()
 	cQuery += " 	SB1.B1_COD "											+ STR_PULA
 	TCQuery cQuery New Alias "QRYPRO"
 	
-	//Criando o objeto que irÃ¡ gerar o conteÃºdo do Excel
+	//Criando o objeto que irá gerar o conteúdo do Excel
 	oFWMsExcel := FWMSExcel():New()
 	
 	//Aba 01 - Teste
-	oFWMsExcel:AddworkSheet("Aba 1 Teste") //NÃ£o utilizar nÃºmero junto com sinal de menos. Ex.: 1-
+	oFWMsExcel:AddworkSheet("Aba 1 Teste") //Não utilizar número junto com sinal de menos. Ex.: 1-
 		//Criando a Tabela
 		oFWMsExcel:AddTable("Aba 1 Teste","Titulo Tabela")
 		//Criando Colunas
@@ -72,7 +78,7 @@ User Function zTstExc1()
 		oFWMsExcel:AddColumn("Aba 2 Produtos","Produtos","Grupo",1)
 		oFWMsExcel:AddColumn("Aba 2 Produtos","Produtos","Desc.Grupo",1)
 		oFWMsExcel:AddColumn("Aba 2 Produtos","Produtos","Procedencia",1)
-		//Criando as Linhas... Enquanto nÃ£o for fim da query
+		//Criando as Linhas... Enquanto não for fim da query
 		While !(QRYPRO->(EoF()))
 			oFWMsExcel:AddRow("Aba 2 Produtos","Produtos",{;
 																	QRYPRO->B1_COD,;
@@ -80,7 +86,7 @@ User Function zTstExc1()
 																	QRYPRO->B1_TIPO,;
 																	QRYPRO->BM_GRUPO,;
 																	QRYPRO->BM_DESC,;
-																	Iif(QRYPRO->BM_PROORI == '0', 'NÃ£o Original', 'Original');
+																	Iif(QRYPRO->BM_PROORI == '0', 'Não Original', 'Original');
 			})
 		
 			//Pulando Registro
@@ -92,7 +98,7 @@ User Function zTstExc1()
 	oFWMsExcel:GetXMLFile(cArquivo)
 		
 	//Abrindo o excel e abrindo o arquivo xml
-	oExcel := MsExcel():New() 			//Abre uma nova conexÃ£o com Excel
+	oExcel := MsExcel():New() 			//Abre uma nova conexão com Excel
 	oExcel:WorkBooks:Open(cArquivo) 	//Abre uma planilha
 	oExcel:SetVisible(.T.) 				//Visualiza a planilha
 	oExcel:Destroy()						//Encerra o processo do gerenciador de tarefas
@@ -102,7 +108,7 @@ User Function zTstExc1()
 Return
 
 /*/{Protheus.doc} zTstExc2
-FunÃ§Ã£o que cria um exemplo de FWMSExcelEx
+Função que cria um exemplo de FWMSExcelEx
 @author Atilio
 @since 06/08/2016
 @version 1.0
@@ -184,14 +190,14 @@ User Function zTstExc2()
 	oFWMSEx:GetXMLFile(cArquivo)
 	
 	//Abrindo o excel e abrindo o arquivo xml
-	oExcel := MsExcel():New() 			//Abre uma nova conexÃ£o com Excel
+	oExcel := MsExcel():New() 			//Abre uma nova conexão com Excel
 	oExcel:WorkBooks:Open(cArquivo) 	//Abre uma planilha
 	oExcel:SetVisible(.T.) 				//Visualiza a planilha
 	oExcel:Destroy()						//Encerra o processo do gerenciador de tarefas
 Return
 
 /*/{Protheus.doc} zTstExc3
-FunÃ§Ã£o que cria um exemplo de FWMsExcel utilizando outras cores e fontes
+Função que cria um exemplo de FWMsExcel utilizando outras cores e fontes
 @author Atilio
 @since 06/08/2016
 @version 1.0
@@ -228,7 +234,7 @@ User Function zTstExc3()
 	cQuery += " 	SB1.B1_COD "											+ STR_PULA
 	TCQuery cQuery New Alias "QRYPRO"
 	
-	//Criando o objeto que irÃ¡ gerar o conteÃºdo do Excel
+	//Criando o objeto que irá gerar o conteúdo do Excel
 	oFWMsExcel := FWMSExcel():New()
 	
 	//Alterando atributos
@@ -241,7 +247,7 @@ User Function zTstExc3()
 	oFWMsExcel:Set2LineFrColor("#ffffff")      //Cor da Fonte da segunda linha - Branco
 	
 	//Aba 01 - Teste
-	oFWMsExcel:AddworkSheet("Aba 1 Teste") //NÃ£o utilizar nÃºmero junto com sinal de menos. Ex.: 1-
+	oFWMsExcel:AddworkSheet("Aba 1 Teste") //Não utilizar número junto com sinal de menos. Ex.: 1-
 		//Criando a Tabela
 		oFWMsExcel:AddTable("Aba 1 Teste","Titulo Tabela")
 		//Criando Colunas
@@ -266,7 +272,7 @@ User Function zTstExc3()
 		oFWMsExcel:AddColumn("Aba 2 Produtos","Produtos","Grupo",1)
 		oFWMsExcel:AddColumn("Aba 2 Produtos","Produtos","Desc.Grupo",1)
 		oFWMsExcel:AddColumn("Aba 2 Produtos","Produtos","Procedencia",1)
-		//Criando as Linhas... Enquanto nÃ£o for fim da query
+		//Criando as Linhas... Enquanto não for fim da query
 		While !(QRYPRO->(EoF()))
 			oFWMsExcel:AddRow("Aba 2 Produtos","Produtos",{;
 																	QRYPRO->B1_COD,;
@@ -274,7 +280,7 @@ User Function zTstExc3()
 																	QRYPRO->B1_TIPO,;
 																	QRYPRO->BM_GRUPO,;
 																	QRYPRO->BM_DESC,;
-																	Iif(QRYPRO->BM_PROORI == '0', 'NÃ£o Original', 'Original');
+																	Iif(QRYPRO->BM_PROORI == '0', 'Não Original', 'Original');
 			})
 		
 			//Pulando Registro
@@ -286,7 +292,7 @@ User Function zTstExc3()
 	oFWMsExcel:GetXMLFile(cArquivo)
 		
 	//Abrindo o excel e abrindo o arquivo xml
-	oExcel := MsExcel():New() 			//Abre uma nova conexÃ£o com Excel
+	oExcel := MsExcel():New() 			//Abre uma nova conexão com Excel
 	oExcel:WorkBooks:Open(cArquivo) 	//Abre uma planilha
 	oExcel:SetVisible(.T.) 				//Visualiza a planilha
 	oExcel:Destroy()						//Encerra o processo do gerenciador de tarefas
@@ -296,7 +302,7 @@ User Function zTstExc3()
 Return
 
 /*/{Protheus.doc} zTstExc4
-FunÃ§Ã£o que cria um exemplo de FWMsExcel com colunas dinÃ¢micas
+Função que cria um exemplo de FWMsExcel com colunas dinÃ¢micas
 @author Atilio
 @since 06/08/2016
 @version 1.0
@@ -336,9 +342,9 @@ User Function zTstExc4()
 	TCQuery cQryCol New Alias "QRY_COL"
 	TCSetField("QRY_COL", "C5_EMISSAO", "D")
 
-	//Compondo as colunas do relatÃ³rio
+	//Compondo as colunas do relatório
 	aAdd(aColunas, "Produto")
-	aAdd(aColunas, "DescriÃ§Ã£o")
+	aAdd(aColunas, "Descrição")
 	While !QRY_COL->(EoF())
 		aAdd(aColunas, dToC(QRY_COL->C5_EMISSAO))
 		QRY_COL->(DbSkip())
@@ -359,11 +365,11 @@ User Function zTstExc4()
 	cQryPro += " 	B1_COD "
 	TCQuery cQryPro New Alias "QRY_PRO"
 	
-	//Criando o objeto que irÃ¡ gerar o conteÃºdo do Excel
+	//Criando o objeto que irá gerar o conteúdo do Excel
 	oFWMsExcel := FWMSExcel():New()
 	
 	//Aba 01 - Teste
-	oFWMsExcel:AddworkSheet(cWorkSheet) //NÃ£o utilizar nÃºmero junto com sinal de menos. Ex.: 1-
+	oFWMsExcel:AddworkSheet(cWorkSheet) //Não utilizar número junto com sinal de menos. Ex.: 1-
 		
 		//Criando a Tabela
 		oFWMsExcel:AddTable(cWorkSheet, cTable)
@@ -454,7 +460,7 @@ User Function zTstExc4()
 	oFWMsExcel:GetXMLFile(cArquivo)
 		
 	//Abrindo o excel e abrindo o arquivo xml
-	oExcel := MsExcel():New() 			//Abre uma nova conexÃ£o com Excel
+	oExcel := MsExcel():New() 			//Abre uma nova conexão com Excel
 	oExcel:WorkBooks:Open(cArquivo) 	//Abre uma planilha
 	oExcel:SetVisible(.T.) 				//Visualiza a planilha
 	oExcel:Destroy()						//Encerra o processo do gerenciador de tarefas

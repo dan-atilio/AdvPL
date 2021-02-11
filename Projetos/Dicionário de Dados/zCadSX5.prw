@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/09/27/funcao-para-cadastro-de-sx5/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include 'Protheus.ch'
 #Include 'FWMVCDef.ch'
 
-//VariÃ¡veis EstÃ¡ticas
+//Variáveis Estáticas
 Static cTitulo := ""
 
 /*/{Protheus.doc} zCadSX5
@@ -10,10 +16,10 @@ Cadastro de tabelas SX5
 @author Atilio
 @since 05/08/2016
 @version 1.0
-	@param cTabela, character, CÃ³digo da tabela genÃ©rica
+	@param cTabela, character, Código da tabela genérica
 	@param cTitRot, character, TÃ­tulo da Rotina
 	@example
-	u_zCadSX5("01", "SÃ©ries de NF")
+	u_zCadSX5("01", "Séries de NF")
 /*/
 
 User Function zCadSX5(cTabela, cTitRot)
@@ -23,7 +29,7 @@ User Function zCadSX5(cTabela, cTitRot)
 	Default cTitRot := ""
 	Private cTabX := cTabela
 	
-	//SenÃ£o tiver chave, finaliza	
+	//Senão tiver chave, finaliza	
 	If Empty(cTabela)
 		Return
 	EndIf
@@ -37,26 +43,26 @@ User Function zCadSX5(cTabela, cTitRot)
 		cTitulo := cTitRot
 	EndIf
 	
-	//Se ainda tiver em branco, pega o da prÃ³pria tabela
+	//Se ainda tiver em branco, pega o da própria tabela
 	If Empty(cTitulo)
 		//Se conseguir posicionar
 		If SX5->(DbSeek(FWxFilial("SX5") + "00" + cTabela))
 			cTitulo := SX5->X5_DESCRI
 			
 		Else
-			MsgAlert("Tabela nÃ£o encontrada!", "AtenÃ§Ã£o")
+			MsgAlert("Tabela não encontrada!", "Atenção")
 			Return
 		EndIf
 	EndIf
 	
-	//InstÃ¢nciando FWMBrowse - Somente com dicionÃ¡rio de dados
+	//InstÃ¢nciando FWMBrowse - Somente com dicionário de dados
 	SetFunName("zCadSX5")
 	oBrowse := FWMBrowse():New()
 	
 	//Setando a tabela de cadastro de Autor/Interprete
 	oBrowse:SetAlias("SX5")
 
-	//Setando a descriÃ§Ã£o da rotina
+	//Setando a descrição da rotina
 	oBrowse:SetDescription(cTitulo)
 	
 	//Filtrando
@@ -73,13 +79,13 @@ Return
  | Func:  MenuDef                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  05/08/2016                                                   |
- | Desc:  CriaÃ§Ã£o do menu MVC                                          |
+ | Desc:  Criação do menu MVC                                          |
  *---------------------------------------------------------------------*/
 
 Static Function MenuDef()
 	Local aRot := {}
 	
-	//Adicionando opÃ§Ãµes
+	//Adicionando opçÃµes
 	ADD OPTION aRot TITLE 'Visualizar' ACTION 'VIEWDEF.zCadSX5' OPERATION MODEL_OPERATION_VIEW   ACCESS 0 //OPERATION 1
 	ADD OPTION aRot TITLE 'Incluir'    ACTION 'VIEWDEF.zCadSX5' OPERATION MODEL_OPERATION_INSERT ACCESS 0 //OPERATION 3
 	ADD OPTION aRot TITLE 'Alterar'    ACTION 'VIEWDEF.zCadSX5' OPERATION MODEL_OPERATION_UPDATE ACCESS 0 //OPERATION 4
@@ -91,82 +97,82 @@ Return aRot
  | Func:  ModelDef                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  05/08/2016                                                   |
- | Desc:  CriaÃ§Ã£o do modelo de dados MVC                               |
+ | Desc:  Criação do modelo de dados MVC                               |
  *---------------------------------------------------------------------*/
 
 Static Function ModelDef()
-	//CriaÃ§Ã£o do objeto do modelo de dados
+	//Criação do objeto do modelo de dados
 	Local oModel := Nil
 	
-	//CriaÃ§Ã£o da estrutura de dados utilizada na interface
+	//Criação da estrutura de dados utilizada na interface
 	Local oStSX5 := FWFormStruct(1, "SX5")
 	
-	//Editando caracterÃ­sticas do dicionÃ¡rio
-	oStSX5:SetProperty('X5_TABELA',   MODEL_FIELD_WHEN,    FwBuildFeature(STRUCT_FEATURE_WHEN,    '.F.'))                       //Modo de EdiÃ§Ã£o
-	oStSX5:SetProperty('X5_TABELA',   MODEL_FIELD_INIT,    FwBuildFeature(STRUCT_FEATURE_INIPAD,  'cTabX'))                     //Ini PadrÃ£o
-	oStSX5:SetProperty('X5_CHAVE',    MODEL_FIELD_WHEN,    FwBuildFeature(STRUCT_FEATURE_WHEN,    'Iif(INCLUI, .T., .F.)'))     //Modo de EdiÃ§Ã£o
-	oStSX5:SetProperty('X5_CHAVE',    MODEL_FIELD_VALID,   FwBuildFeature(STRUCT_FEATURE_VALID,   'u_zSX5Chv()'))               //ValidaÃ§Ã£o de Campo
-	oStSX5:SetProperty('X5_CHAVE',    MODEL_FIELD_OBRIGAT, .T. )                                                                //Campo ObrigatÃ³rio
-	oStSX5:SetProperty('X5_DESCRI',   MODEL_FIELD_OBRIGAT, .T. )                                                                //Campo ObrigatÃ³rio
+	//Editando caracterÃ­sticas do dicionário
+	oStSX5:SetProperty('X5_TABELA',   MODEL_FIELD_WHEN,    FwBuildFeature(STRUCT_FEATURE_WHEN,    '.F.'))                       //Modo de Edição
+	oStSX5:SetProperty('X5_TABELA',   MODEL_FIELD_INIT,    FwBuildFeature(STRUCT_FEATURE_INIPAD,  'cTabX'))                     //Ini Padrão
+	oStSX5:SetProperty('X5_CHAVE',    MODEL_FIELD_WHEN,    FwBuildFeature(STRUCT_FEATURE_WHEN,    'Iif(INCLUI, .T., .F.)'))     //Modo de Edição
+	oStSX5:SetProperty('X5_CHAVE',    MODEL_FIELD_VALID,   FwBuildFeature(STRUCT_FEATURE_VALID,   'u_zSX5Chv()'))               //Validação de Campo
+	oStSX5:SetProperty('X5_CHAVE',    MODEL_FIELD_OBRIGAT, .T. )                                                                //Campo Obrigatório
+	oStSX5:SetProperty('X5_DESCRI',   MODEL_FIELD_OBRIGAT, .T. )                                                                //Campo Obrigatório
 		
-	//Instanciando o modelo, nÃ£o Ã© recomendado colocar nome da user function (por causa do u_), respeitando 10 caracteres
+	//Instanciando o modelo, não é recomendado colocar nome da user function (por causa do u_), respeitando 10 caracteres
 	oModel := MPFormModel():New("zCadSX5M",/*bPre*/,/*bPos*/,/*bCommit*/,/*bCancel*/) 
 	
-	//Atribuindo formulÃ¡rios para o modelo
+	//Atribuindo formulários para o modelo
 	oModel:AddFields("FORMSX5",/*cOwner*/,oStSX5)
 	
-	//Setando a chave primÃ¡ria da rotina
+	//Setando a chave primária da rotina
 	oModel:SetPrimaryKey({'X5_FILIAL', 'X5_TABELA', 'X5_CHAVE'})
 	
-	//Adicionando descriÃ§Ã£o ao modelo
+	//Adicionando descrição ao modelo
 	oModel:SetDescription("Modelo de Dados do Cadastro "+cTitulo)
 	
-	//Setando a descriÃ§Ã£o do formulÃ¡rio
-	oModel:GetModel("FORMSX5"):SetDescription("FormulÃ¡rio do Cadastro "+cTitulo)
+	//Setando a descrição do formulário
+	oModel:GetModel("FORMSX5"):SetDescription("Formulário do Cadastro "+cTitulo)
 Return oModel
 
 /*---------------------------------------------------------------------*
  | Func:  ViewDef                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  05/08/2016                                                   |
- | Desc:  CriaÃ§Ã£o da visÃ£o MVC                                         |
+ | Desc:  Criação da visão MVC                                         |
  *---------------------------------------------------------------------*/
 
 Static Function ViewDef()
-	//CriaÃ§Ã£o do objeto do modelo de dados da Interface do Cadastro de Autor/Interprete
+	//Criação do objeto do modelo de dados da Interface do Cadastro de Autor/Interprete
 	Local oModel := FWLoadModel("zCadSX5")
 	
-	//CriaÃ§Ã£o da estrutura de dados utilizada na interface do cadastro de Autor
+	//Criação da estrutura de dados utilizada na interface do cadastro de Autor
 	Local oStSX5 := FWFormStruct(2, "SX5")  //pode se usar um terceiro parÃ¢metro para filtrar os campos exibidos { |cCampo| cCampo $ 'SX5_NOME|SX5_DTAFAL|'}
 	
 	//Criando oView como nulo
 	Local oView := Nil
 
-	//Criando a view que serÃ¡ o retorno da funÃ§Ã£o e setando o modelo da rotina
+	//Criando a view que será o retorno da função e setando o modelo da rotina
 	oView := FWFormView():New()
 	oView:SetModel(oModel)
 	
-	//Atribuindo formulÃ¡rios para interface
+	//Atribuindo formulários para interface
 	oView:AddField("VIEW_SX5", oStSX5, "FORMSX5")
 	
 	//Criando um container com nome tela com 100%
 	oView:CreateHorizontalBox("TELA",100)
 	
-	//Colocando tÃ­tulo do formulÃ¡rio
+	//Colocando tÃ­tulo do formulário
 	oView:EnableTitleView('VIEW_SX5', 'Dados - '+cTitulo )  
 	
-	//ForÃ§a o fechamento da janela na confirmaÃ§Ã£o
+	//Força o fechamento da janela na confirmação
 	oView:SetCloseOnOk({||.T.})
 	
-	//O formulÃ¡rio da interface serÃ¡ colocado dentro do container
+	//O formulário da interface será colocado dentro do container
 	oView:SetOwnerView("VIEW_SX5","TELA")
 	
-	//Retira o campo de tabela da visualizaÃ§Ã£o
+	//Retira o campo de tabela da visualização
 	oStSX5:RemoveField("X5_TABELA")
 Return oView
 
 /*/{Protheus.doc} zSX5Chv
-FunÃ§Ã£o que valida a digitaÃ§Ã£o do campo Chave, para verificar se jÃ¡ existe
+Função que valida a digitação do campo Chave, para verificar se já existe
 @type function
 @author Atilio
 @since 05/08/2016
@@ -182,9 +188,9 @@ User Function zSX5Chv()
 	SX5->(DbSetOrder(1)) // X5_FILIAL+X5_TABELA+X5_CHAVE
 	SX5->(DbGoTop())
 	
-	//Se conseguir posicionar, jÃ¡ existe
+	//Se conseguir posicionar, já existe
 	If SX5->(DbSeek(FWxFilial('SX5') + cTabX + cX5Chave))
-		MsgAlert("JÃ¡ existe chave com esse cÃ³digo (<b>"+cX5Chave+"</b>)!", "AtenÃ§Ã£o")
+		MsgAlert("Já existe chave com esse código (<b>"+cX5Chave+"</b>)!", "Atenção")
 		lRet := .F.
 	EndIf
 	

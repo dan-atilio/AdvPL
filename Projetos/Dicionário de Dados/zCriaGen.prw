@@ -1,8 +1,14 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/07/11/funcao-cria-tabela-generica-sx5-advpl/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zCriaGen
-Fun√ß√£o que cria tabela gen√©rica
+FunÁ„o que cria tabela genÈrica
 @type function
 @author Atilio
 @since 03/02/2017
@@ -15,9 +21,9 @@ Fun√ß√£o que cria tabela gen√©rica
 	@obs Abaixo a estrutura do array:
 	SX5:
 		[nLinha][01] - Chave
-		[nLinha][02] - Descri√ß√£o
-		[nLinha][03] - Descri√ß√£o Espanhol
-		[nLinha][04] - Descri√ß√£o Ingl√™s
+		[nLinha][02] - DescriÁ„o
+		[nLinha][03] - DescriÁ„o Espanhol
+		[nLinha][04] - DescriÁ„o Ingl√™s
 /*/
 
 User Function zCriaGen(cTab, cDesc, aSX5)
@@ -30,9 +36,9 @@ User Function zCriaGen(cTab, cDesc, aSX5)
 	DbSelectArea("SX5")
 	SX5->(DbSetOrder(1))
 	
-	//Se tiver tabela e descri√ß√£o
+	//Se tiver tabela e descriÁ„o
 	If !Empty(cTab) .And. !Empty(cDesc)
-		//Se n√£o conseguir posicionar, cria a tabela
+		//Se n„o conseguir posicionar, cria a tabela
 		If ! SX5->(DbSeek(cFilSX5 + '00' + cTab))
 			RecLock('SX5', .T.)
 				X5_FILIAL   := FWxFilial('SX5')
@@ -48,7 +54,7 @@ User Function zCriaGen(cTab, cDesc, aSX5)
 		If Len(aSX5) > 0
 			//Percorrendo os registros
 			For nAtual := 1 To Len(aSX5)
-				//Se conseguir posicionar no registro, ser√° altera√ß√£o
+				//Se conseguir posicionar no registro, ser· alteraÁ„o
 				If SX5->(DbSeek(cFilSX5 + cTab + aSX5[nAtual][01]))
 					RecLock('SX5', .F.)
 						X5_DESCRI   := aSX5[nAtual][02]
@@ -56,7 +62,7 @@ User Function zCriaGen(cTab, cDesc, aSX5)
 						X5_DESCENG  := aSX5[nAtual][04]
 					SX5->(MsUnlock())
 				
-				//Sen√£o, ser√° inclus√£o
+				//Sen„o, ser· inclus„o
 				Else
 					RecLock('SX5', .T.)
 						X5_FILIAL   := FWxFilial('SX5')
@@ -71,7 +77,7 @@ User Function zCriaGen(cTab, cDesc, aSX5)
 		EndIf
 	EndIf
 	
-	MsgInfo("Processamento finalizado!", "Aten√ß√£o")
+	MsgInfo("Processamento finalizado!", "AtenÁ„o")
 	
 	RestArea(aAreaX5)
 Return

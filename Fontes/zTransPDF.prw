@@ -1,24 +1,30 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/01/31/funcao-para-converter-imagens-em-pdf-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zTransPDF
-FunÃ§Ã£o que converte imagens para pdf (como as geradas pelo TMSPrinter)
+Função que converte imagens para pdf (como as geradas pelo TMSPrinter)
 @type function
 @author Atilio
 @since 11/09/2016
 @version 1.0
-@param cDirect, character, DiretÃ³rio das imagens (dentro da Protheus_Data)
-@param cArqs, character, Arquivos com a extensÃ£o desejada (por exemplo, jpg)
-@param lExcImg, lÃ³gico, Define se irÃ¡ excluir as imagens apÃ³s transformar em pdf
+@param cDirect, character, Diretório das imagens (dentro da Protheus_Data)
+@param cArqs, character, Arquivos com a extensão desejada (por exemplo, jpg)
+@param lExcImg, lógico, Define se irá excluir as imagens após transformar em pdf
 @example
 	u_zTransPDF("\_diretorio\", "arquivos*.jpg")
 	
 	//ou
 	
-	//Salvando todas as pÃ¡ginas em JPEG
+	//Salvando todas as páginas em JPEG
 	oPrintPvt:SaveAllAsJpeg("\x_tst\relatorio_tst", 1250, 2000, 200)
 	
-	//Agora chama a funÃ§Ã£o de transformaÃ§Ã£o de JPEG em PDF
+	//Agora chama a função de transformação de JPEG em PDF
 	u_zTransPDF("\x_tst\", "relatorio_tst*.jpg")
 /*/
 
@@ -33,7 +39,7 @@ User Function zTransPDF(cDirect, cArqs, lExcImg)
 	Default cArqs   := ""
 	Default lExcImg := .T.
 	
-	//Se tiver diretÃ³rio e arquivos
+	//Se tiver diretório e arquivos
 	If !Empty(cDirect) .And. !Empty(cArqs)
 		cDirect := Lower(cDirect)
 		cArqs   := Lower(cArqs)

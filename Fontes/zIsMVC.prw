@@ -1,13 +1,19 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2018/04/24/saiba-como-identificar-se-uma-funcao-e-em-mvc-como-fazer-seu-ponto-de-entrada/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zIsMVC
-Fun√ß√£o que verifica se a fun√ß√£o executada atualmente √© em MVC
+FunÁ„o que verifica se a funÁ„o executada atualmente È em MVC
 @author Atilio
 @since 14/04/2018
 @version 1.0
 @type function
-@obs Essa fun√ß√£o, apenas pega e verifica se existe um modelo de dados ativo aberto, caso exista, ela mostra uma tela com observa√ß√µes
+@obs Essa funÁ„o, apenas pega e verifica se existe um modelo de dados ativo aberto, caso exista, ela mostra uma tela com observaÁ√µes
 	Inicializar ele em um ponto de entrada, por exemplo, no ChkExec ou AfterLogin:
 
 	...
@@ -42,24 +48,24 @@ User Function zIsMVC()
 	Private	oFontSub  := TFont():New(cFontUti,,-20)
 	Private	oFontSubN := TFont():New(cFontUti,,-20,,.T.)
 	
-	//Se for diferente de nulo, realmente a tela √© em MVC
+	//Se for diferente de nulo, realmente a tela È em MVC
 	If oModelPad != Nil
 		lMVC := .T.
 		
-		//Definindo a opera√ß√£o
+		//Definindo a operaÁ„o
 		cOperacao := cValToChar(oModelPad:nOperation)
 		If oModelPad:nOperation == 3
-			cOperacao += " - Inclus√£o"
+			cOperacao += " - Inclus„o"
 		ElseIf oModelPad:nOperation == 4
-			cOperacao += " - Altera√ß√£o"
+			cOperacao += " - AlteraÁ„o"
 		ElseIf oModelPad:nOperation == 5
-			cOperacao += " - Exclus√£o"
+			cOperacao += " - Exclus„o"
 		EndIf
 		
 		//Pegando o texto do ponto de entrada
 		cPontoEnt := fPontoEnt(Alltrim(oModelPad:cID))
 		
-		//Inicio a utiliza√ß√£o da tentativa
+		//Inicio a utilizaÁ„o da tentativa
 		Begin Sequence
 			cVarInfo  := VarInfo("Modelo", ClassDataArr(oModelPad, .T.), , .T., )
 		End Sequence
@@ -67,10 +73,10 @@ User Function zIsMVC()
 		//Restaurando bloco de erro do sistema
 		ErrorBlock(bError)
 		
-		//Se houve erro, ser√° mostrado ao usu√°rio
+		//Se houve erro, ser· mostrado ao usu·rio
 		If Empty(cVarInfo)
-			cVarInfo  := "Houve um erro ao gerar o VarInfo!<br>Verifique o tamanho da String, se necess√°rio, aumente o tamanho na MaxStringSize - <b>http://tdn.totvs.com/pages/viewpage.action?pageId=161349793</b><br>"
-			cVarInfo  += "Pode ser ainda, que existam muitos componentes recursivos na tela, e a fun√ß√£o VarInfo n√£o conseguiu interpretar."
+			cVarInfo  := "Houve um erro ao gerar o VarInfo!<br>Verifique o tamanho da String, se necess·rio, aumente o tamanho na MaxStringSize - <b>http://tdn.totvs.com/pages/viewpage.action?pageId=161349793</b><br>"
+			cVarInfo  += "Pode ser ainda, que existam muitos componentes recursivos na tela, e a funÁ„o VarInfo n„o conseguiu interpretar."
 		EndIf
 		
 		//Criando a janela
@@ -87,13 +93,13 @@ User Function zIsMVC()
 			
 			//Aba Geral
 			@ 003, 006 SAY "ID: " + oModelPad:cID                                                     SIZE 200, 030 FONT oFontSub   OF oFolderPvt:aDialogs[1] COLORS RGB(031,073,125) PIXEL
-			@ 013, 006 SAY "Descri√ß√£o: " + oModelPad:cDescription                                     SIZE 200, 030 FONT oFontSub   OF oFolderPvt:aDialogs[1]                         PIXEL
-			@ 023, 006 SAY "Opera√ß√£o: " + cOperacao                                                   SIZE 200, 030 FONT oFontSub   OF oFolderPvt:aDialogs[1]                         PIXEL
+			@ 013, 006 SAY "DescriÁ„o: " + oModelPad:cDescription                                     SIZE 200, 030 FONT oFontSub   OF oFolderPvt:aDialogs[1]                         PIXEL
+			@ 023, 006 SAY "OperaÁ„o: " + cOperacao                                                   SIZE 200, 030 FONT oFontSub   OF oFolderPvt:aDialogs[1]                         PIXEL
 			
 			@ 043, 006 SAY "Links Interessantes: "                                                    SIZE 200, 030 FONT oFontSub   OF oFolderPvt:aDialogs[1] COLORS RGB(031,073,125) PIXEL
 			@ 056, 006 BUTTON oBtnL001  PROMPT "V√≠deo Aula - Conceitos de MVC em AdvPL"               SIZE 285, 016 FONT oFontSub   OF oFolderPvt:aDialogs[1] ACTION (fLink(1))       PIXEL
 			@ 076, 006 BUTTON oBtnL002  PROMPT "TDN - Lista de Fontes em MVC"                         SIZE 285, 016 FONT oFontSub   OF oFolderPvt:aDialogs[1] ACTION (fLink(2))       PIXEL
-			@ 096, 006 BUTTON oBtnL003  PROMPT "TDN - Ponto de Entrada no Padr√£o MVC"                 SIZE 285, 016 FONT oFontSub   OF oFolderPvt:aDialogs[1] ACTION (fLink(3))       PIXEL
+			@ 096, 006 BUTTON oBtnL003  PROMPT "TDN - Ponto de Entrada no Padr„o MVC"                 SIZE 285, 016 FONT oFontSub   OF oFolderPvt:aDialogs[1] ACTION (fLink(3))       PIXEL
 			@ 116, 006 BUTTON oBtnL004  PROMPT "V√≠deo Aula - Como criar um ponto de entrada em MVC"   SIZE 285, 016 FONT oFontSub   OF oFolderPvt:aDialogs[1] ACTION (fLink(4))       PIXEL
 			@ 136, 006 BUTTON oBtnL005  PROMPT "V√≠deo Aula - Como criar ExecAuto em MVC"              SIZE 285, 016 FONT oFontSub   OF oFolderPvt:aDialogs[1] ACTION (fLink(5))       PIXEL
 			
@@ -109,7 +115,7 @@ User Function zIsMVC()
 		ACTIVATE MSDIALOG oDlgPvt CENTERED
 		
 	Else
-		MsgAlert("N√£o h√° ind√≠cios dessa tela ser em MVC (utilize dentro de uma tela de Inclus√£o/Altera√ß√£o/Exclus√£o)!", "Aten√ß√£o")
+		MsgAlert("N„o h· ind√≠cios dessa tela ser em MVC (utilize dentro de uma tela de Inclus„o/AlteraÁ„o/Exclus„o)!", "AtenÁ„o")
 	EndIf
 	
 Return lMVC
@@ -125,7 +131,7 @@ Static Function fLink(nBotao)
 	ElseIf nBotao == 2
 		cLink := "http://tdn.totvs.com/display/public/PROT/Fontes+em+MVC"
 	
-	//Ponto de Entrada no Padr√£o MVC
+	//Ponto de Entrada no Padr„o MVC
 	ElseIf nBotao == 3
 		cLink := "http://tdn.totvs.com/pages/releaseview.action?pageId=208345968"
 	
@@ -181,7 +187,7 @@ Static Function fPontoEnt(cID)
 	cPonto += cTab + 'If aParam != Nil ' + cQuebra
 	cPonto += cTab + cTab + 'ConOut("> "+aParam[2]) ' + cQuebra
 	cPonto += cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cAbreComent + '//Pega informa√ß√µes dos par√¢metros' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cAbreComent + '//Pega informaÁ√µes dos par√¢metros' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'oObj := aParam[1] ' + cQuebra
 	cPonto += cTab + cTab + 'cIdPonto := aParam[2] ' + cQuebra
 	cPonto += cTab + cTab + 'cIdModel := aParam[3] ' + cQuebra
@@ -191,16 +197,16 @@ Static Function fPontoEnt(cID)
 	cPonto += cTab + cTab + cTab + 'xRet := .T. ' + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//nOper := oObj:nOperation' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cTab + cAbreComent + '//Se for Exclus√£o, n√£o permite abrir a tela' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cTab + cAbreComent + '//Se for Exclus„o, n„o permite abrir a tela' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//If nOper == 5' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//' + cTab + 'xRet := .F.' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//EndIf' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cAbreComent + '//Pr√© configura√ß√µes do Modelo de Dados' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cAbreComent + '//PrÈ configuraÁ√µes do Modelo de Dados' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'ElseIf cIdPonto == ' + cAbreString + '"MODELPRE"' + cFechString + ' ' + cQuebra
 	cPonto += cTab + cTab + cTab + 'xRet := .T. ' + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cAbreComent + '//Pr√© configura√ß√µes do Formul√°rio de Dados' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cAbreComent + '//PrÈ configuraÁ√µes do Formul·rio de Dados' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'ElseIf cIdPonto == ' + cAbreString + '"FORMPRE"' + cFechString + ' ' + cQuebra
 	cPonto += cTab + cTab + cTab + 'xRet := .T. ' + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
@@ -208,51 +214,51 @@ Static Function fPontoEnt(cID)
 	cPonto += cTab + cTab + cTab + cAbreComent + '//cTipo  := aParam[4]' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//cCampo := aParam[5]' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cTab + cAbreComent + '//Se for Altera√ß√£o' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cTab + cAbreComent + '//Se for AlteraÁ„o' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//If nOper == 4' + cFechComent + cQuebra
-	cPonto += cTab + cTab + cTab + cAbreComent + '//N√£o permite altera√ß√£o dos campos' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cTab + cAbreComent + '//N„o permite alteraÁ„o dos campos' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//' + cTab + 'If cTipo == "CANSETVALUE" .And. Alltrim(cCampo) $ ("CAMPO1;CAMPO2;CAMPO3")' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//' + cTab + cTab + 'xRet := .F.' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//' + cTab + 'EndIf' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//EndIf' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + '' + cQuebra
-	cPonto += cTab + cTab + cAbreComent + '//Adi√ß√£o de op√ß√µes no A√ß√µes Relacionadas dentro da tela' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cAbreComent + '//AdiÁ„o de opÁ√µes no AÁ√µes Relacionadas dentro da tela' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'ElseIf cIdPonto == ' + cAbreString + '"BUTTONBAR"' + cFechString + ' ' + cQuebra
 	cPonto += cTab + cTab + cTab + 'xRet := {}' + cQuebra
-	cPonto += cTab + cTab + cTab + cAbreComent + '//aAdd(xRet, {"* Titulo 1", "", {|| Alert("Bot√£o 1")}, "Tooltip 1"})' + cFechComent + cQuebra
-	cPonto += cTab + cTab + cTab + cAbreComent + '//aAdd(xRet, {"* Titulo 2", "", {|| Alert("Bot√£o 2")}, "Tooltip 2"})' + cFechComent + cQuebra
-	cPonto += cTab + cTab + cTab + cAbreComent + '//aAdd(xRet, {"* Titulo 3", "", {|| Alert("Bot√£o 3")}, "Tooltip 3"})' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cTab + cAbreComent + '//aAdd(xRet, {"* Titulo 1", "", {|| Alert("Bot„o 1")}, "Tooltip 1"})' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cTab + cAbreComent + '//aAdd(xRet, {"* Titulo 2", "", {|| Alert("Bot„o 2")}, "Tooltip 2"})' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cTab + cAbreComent + '//aAdd(xRet, {"* Titulo 3", "", {|| Alert("Bot„o 3")}, "Tooltip 3"})' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cQuebra
-	cPonto += cTab + cTab + cAbreComent + '//P√≥s configura√ß√µes do Formul√°rio' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cAbreComent + '//PÛs configuraÁ√µes do Formul·rio' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'ElseIf cIdPonto == ' + cAbreString + '"FORMPOS"' + cFechString + ' ' + cQuebra
 	cPonto += cTab + cTab + cTab + 'xRet := .T. ' + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cAbreComent + '//Valida√ß√£o ao clicar no Bot√£o Confirmar' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cAbreComent + '//ValidaÁ„o ao clicar no Bot„o Confirmar' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'ElseIf cIdPonto == ' + cAbreString + '"MODELPOS"' + cFechString + ' ' + cQuebra
 	cPonto += cTab + cTab + cTab + 'xRet := .T. ' + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cTab + cAbreComent + '//Se o campo de contato estiver em branco, n√£o permite prosseguir' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cTab + cAbreComent + '//Se o campo de contato estiver em branco, n„o permite prosseguir' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//If Empty(M->CAMPO1)' + cFechComent + cQuebra
-	cPonto += cTab + cTab + cTab + cAbreComent + '//' + cTab + 'Aviso("Aten√ß√£o", "Por favor, informe o Campo!", {"OK"}, 03)' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cTab + cAbreComent + '//' + cTab + 'Aviso("AtenÁ„o", "Por favor, informe o Campo!", {"OK"}, 03)' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//' + cTab + 'xRet := .F.' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//EndIf' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cAbreComent + '//Pr√© valida√ß√µes do Commit' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cAbreComent + '//PrÈ validaÁ√µes do Commit' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'ElseIf cIdPonto == ' + cAbreString + '"FORMCOMMITTTSPRE"' + cFechString + ' ' + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cAbreComent + '//P√≥s valida√ß√µes do Commit' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cAbreComent + '//PÛs validaÁ√µes do Commit' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'ElseIf cIdPonto == ' + cAbreString + '"FORMCOMMITTTSPOS"' + cFechString + ' ' + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cAbreComent + '//Commit das opera√ß√µes (antes da grava√ß√£o)' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cAbreComent + '//Commit das operaÁ√µes (antes da gravaÁ„o)' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'ElseIf cIdPonto == ' + cAbreString + '"MODELCOMMITTTS"' + cFechString + ' ' + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cAbreComent + '//Commit das opera√ß√µes (ap√≥s a grava√ß√£o)' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cAbreComent + '//Commit das operaÁ√µes (apÛs a gravaÁ„o)' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'ElseIf cIdPonto == ' + cAbreString + '"MODELCOMMITNTTS"' + cFechString + ' ' + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//nOper := oObj:nOperation' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + ' ' + cQuebra
-	cPonto += cTab + cTab + cTab + cAbreComent + '//Se for inclus√£o, mostra mensagem de sucesso' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cTab + cAbreComent + '//Se for inclus„o, mostra mensagem de sucesso' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//If nOper == 3' + cFechComent + cQuebra
-	cPonto += cTab + cTab + cTab + cAbreComent + '//' + cTab + 'Aviso("Aten√ß√£o", "Registro incluido com sucesso!", {"OK"}, 03)' + cFechComent + cQuebra
+	cPonto += cTab + cTab + cTab + cAbreComent + '//' + cTab + 'Aviso("AtenÁ„o", "Registro incluido com sucesso!", {"OK"}, 03)' + cFechComent + cQuebra
 	cPonto += cTab + cTab + cTab + cAbreComent + '//EndIf' + cFechComent + cQuebra
 	cPonto += cTab + cTab + 'EndIf ' + cQuebra
 	cPonto += cTab + 'EndIf ' + cQuebra

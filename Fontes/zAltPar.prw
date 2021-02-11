@@ -1,13 +1,19 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/09/12/funcao-para-alterar-um-parametro-logico-sx6/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zAltPar
-Fun√ß√£o que altera par√¢metros do tipo L√≥gico (deve ser um par√¢metro com conte√∫do l√≥gico na SX6, por exemplo, "MV_CHVNFE")
+FunÁ„o que altera par√¢metros do tipo LÛgico (deve ser um par√¢metro com conte˙do lÛgico na SX6, por exemplo, "MV_CHVNFE")
 @author Atilio
 @since 25/04/2017
 @version 1.0
 @type function
-	@param cParametro, Character, C√≥digo do par√¢metro que ser√° atualizado
+	@param cParametro, Character, CÛdigo do par√¢metro que ser· atualizado
 /*/
 
 User Function zAltPar(cParametro)
@@ -24,29 +30,29 @@ User Function zAltPar(cParametro)
 		lConsAtu := GetNewPar(cParametro, .F.)
 		
 		//Adiciona os bot√µes
-		aAdd(aBotoes, Iif(lConsAtu,  "Manter Habilitado",   "Habilitar"))   //Op√ß√£o 1
-		aAdd(aBotoes, Iif(!lConsAtu, "Manter Desabilitado", "Desabilitar")) //Op√ß√£o 2
-		aAdd(aBotoes, "Cancelar")                                           //Op√ß√£o 3
+		aAdd(aBotoes, Iif(lConsAtu,  "Manter Habilitado",   "Habilitar"))   //OpÁ„o 1
+		aAdd(aBotoes, Iif(!lConsAtu, "Manter Desabilitado", "Desabilitar")) //OpÁ„o 2
+		aAdd(aBotoes, "Cancelar")                                           //OpÁ„o 3
 		
-		//Mostra o aviso e pega o bot√£o
+		//Mostra o aviso e pega o bot„o
 		cMensag := "Atualmente o par√¢metro esta " + Iif(lConsAtu, "HABILITADO", "DESABILITADO") + "." + CRLF
 		cMensag += "Deseja alterar?"
-		nOpcao := Aviso("Aten√ß√£o", cMensag, aBotoes, 2)
+		nOpcao := Aviso("AtenÁ„o", cMensag, aBotoes, 2)
 		
-		//Definindo a op√ß√£o nova
+		//Definindo a opÁ„o nova
 		If nOpcao == 1
 			lConsNov := .T.
 		ElseIf nOpcao == 2
 			lConsNov := .F.
 		EndIf
 		
-		//Se n√£o for nulo
+		//Se n„o for nulo
 		If lConsNov != Nil
-			//Se o conte√∫do novo for diferente do atual
+			//Se o conte˙do novo for diferente do atual
 			If lConsNov != lConsAtu
 				PutMV(cParametro, lConsNov)
 				
-				Final("Aten√ß√£o", "A tela ser√° fechada e deve ser aberta novamente!")
+				Final("AtenÁ„o", "A tela ser· fechada e deve ser aberta novamente!")
 			EndIf
 		EndIf
 	EndIf

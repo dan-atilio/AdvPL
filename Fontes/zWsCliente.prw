@@ -1,3 +1,9 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2019/02/05/como-configurar-um-webservice-em-advpl-utilizando-soap/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "APWebSrv.ch"
@@ -24,13 +30,13 @@ WsService zWsCliente Description "WebService com funcoes de teste"
 	WsData   cFiltRece as String
 	WsData   cFiltSend as String
 
-	//M√©todos
+	//MÈtodos
 	WsMethod TstServ       Description "Metodo para testar se servico esta em funcionamento"
 	WsMethod RetListCli    Description "Metodo para retornar uma lista de clientes filtrando informacoes"
 EndWsService
 
 /*
-	M√©todo TstServ
+	MÈtodo TstServ
 	Metodo para testar se servico esta em funcionamento
 */
 
@@ -40,10 +46,10 @@ Return .T.
 
 
 /*
-	M√©todo RetListCli
+	MÈtodo RetListCli
 	Metodo para retornar uma lista de clientes filtrando informacoes
 	
-	Exemplo do JSON que ser√° recebido
+	Exemplo do JSON que ser· recebido
 	{
 		"Dados": {
 			"Vendedor": "000000",
@@ -53,7 +59,7 @@ Return .T.
     	"Token" : "aaaa"
 	}
 	
-	Exemplo de JSON que ser√° enviado de volta (se tudo estiver certo)
+	Exemplo de JSON que ser· enviado de volta (se tudo estiver certo)
 	{
 		"Clientes": {
 			"000001" : {
@@ -74,24 +80,24 @@ Return .T.
 */
 
 WsMethod RetListCli WsReceive cFiltRece WsSend cFiltSend WsService zWsCliente
-	//Retorno do M√©todo RetListCli (.T. se est√° tudo certo ou .F. se houve falha)
+	//Retorno do MÈtodo RetListCli (.T. se est· tudo certo ou .F. se houve falha)
 	Local lRet       := .T.
 	
-	//Vari√°vel de Token pegando da tabela SX6
+	//Vari·vel de Token pegando da tabela SX6
 	Local cTokWs     := Alltrim(GetMV('MV_X_TOKEN'))
 	
-	//Par√¢metros recebidos pelo JSON (vari√°vel cFiltRece)
+	//Par√¢metros recebidos pelo JSON (vari·vel cFiltRece)
 	Local cParVend   := ""
 	Local cParEst    := ""
 	Local cParMun    := ""
 	Local cParToken  := ""
 	
-	//Consulta SQL para filtragem dos dados e vari√°veis usadas
+	//Consulta SQL para filtragem dos dados e vari·veis usadas
 	Local cQryCli    := ""
 	Local nAtual     := 0
 	Local cCGC       := ""
 	
-	//Vari√°veis usadas para transformar o JSON em Objeto
+	//Vari·veis usadas para transformar o JSON em Objeto
 	Private oJSON    := Nil
 	Private oDados   := Nil
 	
@@ -111,7 +117,7 @@ WsMethod RetListCli WsReceive cFiltRece WsSend cFiltSend WsService zWsCliente
 			cParEst    := Upper(Alltrim(Iif(Type("oDados:Estado")   != "U", oDados:Estado,   "")))
 			cParMun    := Upper(Alltrim(Iif(Type("oDados:Cidade")   != "U", oDados:Cidade,   "")))
 			
-			//Se os 3 par√¢metros estiverem em branco, retorna erro, s√≥ pode prosseguir se pelo menos 1 estiver preenchido
+			//Se os 3 par√¢metros estiverem em branco, retorna erro, sÛ pode prosseguir se pelo menos 1 estiver preenchido
 			If Empty(cParVend) .And. Empty(cParEst) .And. Empty(cParMun)
 				SetSoapFault('Erro', 'Os 3 parametros estao em branco, preencha pelo menos 1!')
 				lRet := .F.
@@ -143,7 +149,7 @@ WsMethod RetListCli WsReceive cFiltRece WsSend cFiltSend WsService zWsCliente
 				//Se existirem dados da consulta
 				If ! QRY_CLI->(EoF())	
 				
-					//Come√ßa a montar o JSON de retorno
+					//ComeÁa a montar o JSON de retorno
 					::cFiltSend += ' { '                  + CRLF
 					::cFiltSend += '  "Clientes" : { '    + CRLF
 					
@@ -152,7 +158,7 @@ WsMethod RetListCli WsReceive cFiltRece WsSend cFiltSend WsService zWsCliente
 						//Incrementa o contador
 						nAtual++
 						
-						//Transformando o CNPJ ou CPF para visualiza√ß√£o
+						//Transformando o CNPJ ou CPF para visualizaÁ„o
 						cCGC := Alltrim(QRY_CLI->A1_CGC)
 						If Len(Alltrim(SA2->A2_CGC)) > 11
 							cCGC := Alltrim(Transform(cCGC, "@R 99.999.999/9999-99"))
@@ -168,10 +174,10 @@ WsMethod RetListCli WsReceive cFiltRece WsSend cFiltSend WsService zWsCliente
 						::cFiltSend +=           '     "CGC":"'          + cCGC                        + '"'     + CRLF
 						::cFiltSend +=           '   }'
 						
-						//Pula para o pr√≥ximo cliente
+						//Pula para o prÛximo cliente
 						QRY_CLI->(DbSkip())
 						
-						//Se n√£o for o √∫ltimo cliente, acrescenta a v√≠rgula
+						//Se n„o for o ˙ltimo cliente, acrescenta a v√≠rgula
 						If ! QRY_CLI->(EoF())
 							::cFiltSend += ','
 						EndIf
@@ -180,7 +186,7 @@ WsMethod RetListCli WsReceive cFiltRece WsSend cFiltSend WsService zWsCliente
 					::cFiltSend += '  } '     + CRLF
 					::cFiltSend += ' }'       + CRLF
 					
-				//Se n√£o existirem clientes, retorna mensagem de falha
+				//Se n„o existirem clientes, retorna mensagem de falha
 				Else
 					SetSoapFault('Erro', 'Nao existem clientes nesse filtro usado!')
 					lRet := .F.
@@ -188,7 +194,7 @@ WsMethod RetListCli WsReceive cFiltRece WsSend cFiltSend WsService zWsCliente
 				QRY_CLI->(DbCloseArea())
 			EndIf
 			
-		//Caso seja um token inv√°lido
+		//Caso seja um token inv·lido
 		Else
 			SetSoapFault('Erro', 'Token invalido!')
 			lRet := .F.

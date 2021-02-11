@@ -1,23 +1,29 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2018/06/19/funcao-para-deixar-codigo-produto-sequencial-conforme-grupo/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
 
 /*/{Protheus.doc} zGrupCod
-Fun√ß√£o que preenche o c√≥digo do produto conforme o grupo
+FunÁ„o que preenche o cÛdigo do produto conforme o grupo
 @author Atilio
 @since 04/04/2018
 @version 1.0
 @type function
 @obs Passo a Passo de como fazer para funcionar:
-	1. Acesse o Configurador (SIGACFG), v√° na tabela SB1 e clique em Editar
-	2. V√° no campo Grupo (B1_GRUPO), verifique se ele est√° como obrigat√≥rio, caso n√£o esteja, deixe ele como obrigat√≥rio (est√° na aba Uso)
-	3. No modo de edi√ß√£o do campo, deixe a express√£o INCLUI para ele ficar habilitado apenas na inclus√£o (est√° na aba Op√ß√µes)
-	4. Altere a sequ√™ncia do campo, para ele vir antes do campo C√≥digo (B1_COD)
-	5. V√° no campo C√≥digo (B1_COD), no modo de edi√ß√£o deixe a express√£o .F. para n√£o deixar alterar o campo
-	6. Confirme as altera√ß√µes da tabela
-	7. V√° na se√ß√£o de Gatilhos, e clique para incluir um novo Gatilho. Nesse Gatilho, coloque a origem sendo o B1_GRUPO, e o destino o B1_COD, e a Regra sendo <b>u_zGrupCod()</b>
-	8. Salve as altera√ß√µes do Configurador
-	9. Compile a fun√ß√£o abaixo
+	1. Acesse o Configurador (SIGACFG), v· na tabela SB1 e clique em Editar
+	2. V· no campo Grupo (B1_GRUPO), verifique se ele est· como obrigatÛrio, caso n„o esteja, deixe ele como obrigatÛrio (est· na aba Uso)
+	3. No modo de ediÁ„o do campo, deixe a express„o INCLUI para ele ficar habilitado apenas na inclus„o (est· na aba OpÁ√µes)
+	4. Altere a sequ√™ncia do campo, para ele vir antes do campo CÛdigo (B1_COD)
+	5. V· no campo CÛdigo (B1_COD), no modo de ediÁ„o deixe a express„o .F. para n„o deixar alterar o campo
+	6. Confirme as alteraÁ√µes da tabela
+	7. V· na seÁ„o de Gatilhos, e clique para incluir um novo Gatilho. Nesse Gatilho, coloque a origem sendo o B1_GRUPO, e o destino o B1_COD, e a Regra sendo <b>u_zGrupCod()</b>
+	8. Salve as alteraÁ√µes do Configurador
+	9. Compile a funÁ„o abaixo
 /*/
 
 User Function zGrupCod()
@@ -32,7 +38,7 @@ User Function zGrupCod()
 	If ! Empty(cGrupo)
 		cCodigo := cGrupo + Replicate('0', nTamCod-nTamGrp)
 		
-		//Pegando o √∫ltimo c√≥digo (n√£o foi fitraldo o DELET para manter a sequencia unica)
+		//Pegando o ˙ltimo cÛdigo (n„o foi fitraldo o DELET para manter a sequencia unica)
 		cQryAux := " SELECT "                                                                        + CRLF
 		cQryAux += " 	ISNULL(MAX(B1_COD), '" + cCodigo + "') AS ULTIMO "                           + CRLF
 		cQryAux += " FROM "                                                                          + CRLF
@@ -43,7 +49,7 @@ User Function zGrupCod()
 		cQryAux += " 	AND SUBSTRING(B1_COD, 1, " + cValToChar(nTamGrp) + ") = '" + cGrupo + "' "   + CRLF
 		TCQuery cQryAux New Alias "QRY_AUX"
 		
-		//Define o novo c√≥digo, incrementando 1 no final
+		//Define o novo cÛdigo, incrementando 1 no final
 		cCodigo := Soma1(cCodigo)
 		
 		QRY_AUX->(DbCloseArea())

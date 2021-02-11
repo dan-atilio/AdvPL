@@ -1,14 +1,20 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/03/14/funcao-cria-cliente-partir-de-fornecedor-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zCliFor
-FunÃ§Ã£o que cadastra cliente a partir dos dados do fornecedor
+Função que cadastra cliente a partir dos dados do fornecedor
 @type function
 @author Atilio
 @since 12/10/2016
 @version 1.0
-	@param nRecSA2, numÃ©rico, RecNO do Fornecedor
-	@return lRet, Retorna se deu certo ou nÃ£o a inclusÃ£o do cliente
+	@param nRecSA2, numérico, RecNO do Fornecedor
+	@return lRet, Retorna se deu certo ou não a inclusão do cliente
 	@example
 	u_zCliFor(888)
 	@obs Os campos A2_X_CLCOD e A2_X_CLLOJ devem estar criados na base
@@ -28,19 +34,19 @@ User Function zCliFor(nRecSA2)
 	
 	//Se tiver recno
 	If nRecSA2 != 0
-		//Se nÃ£o for o mesmo recno, posiciona no fornecedor
+		//Se não for o mesmo recno, posiciona no fornecedor
 		DbSelectArea('SA2')
 		If SA2->(RecNo()) != nRecSA2
 			SA2->(DbGoTo(nRecSA2))
 		EndIf
 		
-		//Somente se nÃ£o tiver cliente e loja
+		//Somente se não tiver cliente e loja
 		If Empty(SA2->A2_X_CLCOD) .And. Empty(SA2->A2_X_CLLOJ)
 			DbSelectArea('SA1')
 			SA1->(DbSetOrder(3)) //A1_FILIAL + A1_CGC
 			SA1->(DbGoTop())
 		
-			//Se o CNPJ jÃ¡ existir, usa o cliente como referÃªncia
+			//Se o CNPJ já existir, usa o cliente como referÃªncia
 			If SA1->(DbSeek(FWxFilial('SA1') + SA2->A2_CGC))
 				//Grava o cliente no fornecedor
 				RecLock('SA2', .F.)
@@ -79,7 +85,7 @@ User Function zCliFor(nRecSA2)
 					lMsErroAuto := .F.
 					MSExecAuto({|x, y| Mata030(x, y)}, aSA1, 3)
 					
-					//Se houve erro, disarma a transaÃ§Ã£o
+					//Se houve erro, disarma a transação
 					If lMsErroAuto
 						lRet := .F.
 						MostraErro()

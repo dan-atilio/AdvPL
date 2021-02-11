@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2019/09/26/funcao-que-converte-um-arquivo-do-ixblog-transformando-em-um-excel-para-analise-dos-dados/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zLog2Excel
-FunÃ§Ã£o que converte um arquivo gerado com IXBLOG em uma planilha para anÃ¡lise
+Função que converte um arquivo gerado com IXBLOG em uma planilha para análise
 @author Atilio
 @since 29/08/2018
 @version 1.0
@@ -15,7 +21,7 @@ User Function zLog2Excel(cArquivo)
 	Local aArea      := GetArea()
 	Default cArquivo := ""
 
-	//Se tiver conteÃºdo e o arquivo existir, chama o processamento
+	//Se tiver conteúdo e o arquivo existir, chama o processamento
 	If ! Empty(cArquivo) .And. File(cArquivo)
 		Processa({|| fProcessa(cArquivo)}, "Processando")
 	EndIf
@@ -25,7 +31,7 @@ Return
 
 /*---------------------------------------------------------------------*
  | Func:  fProcessa                                                    |
- | Desc:  FunÃ§Ã£o que processa o arquivo e gera um arquivo do Excel     |
+ | Desc:  Função que processa o arquivo e gera um arquivo do Excel     |
  *---------------------------------------------------------------------*/
 
 Static Function fProcessa(cArquivo)
@@ -40,7 +46,7 @@ Static Function fProcessa(cArquivo)
 	Local nPosExe     := 3 //ExecBlock
 	Local nPosIn      := 4 //Time In
 	Local nPosOut     := 5 //Time Out
-	Local nPosDif     := 6 //DiferenÃ§a de Tempo
+	Local nPosDif     := 6 //Diferença de Tempo
 	Local oFWMsExcel
 	Local oExcel
 	Local cArqExport  := GetTempPath()+'zLog2Excel_'+dToS(Date())+'_'+StrTran(Time(), ':', '-')+'.xml'
@@ -53,13 +59,13 @@ Static Function fProcessa(cArquivo)
 	//Se o arquivo pode ser aberto
 	If (oFile:Open())
 
-		//Se nÃ£o for fim do arquivo
+		//Se não for fim do arquivo
 		If ! (oFile:EoF())
-			//Definindo o tamanho da rÃ©gua
+			//Definindo o tamanho da régua
 			aLinhas := oFile:GetAllLines()
 			ProcRegua(Len(aLinhas))
 			
-			//MÃ©todo GoTop nÃ£o funciona, deve fechar e abrir novamente o arquivo
+			//Método GoTop não funciona, deve fechar e abrir novamente o arquivo
 			oFile:Close()
 			oFile := FWFileReader():New(cArquivo)
 			oFile:Open()
@@ -67,14 +73,14 @@ Static Function fProcessa(cArquivo)
 			//Enquanto houver linhas a serem lidas
 			While (oFile:HasLine())
 			
-				//Incrementando a rÃ©gua
+				//Incrementando a régua
 				nAtual++
 				IncProc("Analisando linha " + cValToChar(nAtual) + " de " + cValToChar(Len(aLinhas)) + "...")
 				
 				//Buscando o texto da linha atual
 				cLinAtu := oFile:GetLine()
 
-				//Se o trecho contÃ©m IXBLOG TYPE, Ã© uma nova linha
+				//Se o trecho contém IXBLOG TYPE, é uma nova linha
 				If Upper("IXBLOG Type") $ Upper(cLinAtu)
 					aAdd(aExport, {;
 						0,;  //Sequencia
@@ -82,7 +88,7 @@ Static Function fProcessa(cArquivo)
 						"",; //ExecBlock
 						"",; //Time In
 						"",; //Time Out
-						"";  //DiferenÃ§a de Tempo
+						"";  //Diferença de Tempo
 					})
 					
 					//Define o tamanho da linha
@@ -96,7 +102,7 @@ Static Function fProcessa(cArquivo)
 				ElseIf Upper("Time Out") $ Upper(cLinAtu)
 					aExport[Len(aExport)][nPosOut] := Alltrim(SubStr(cLinAtu, At(':', cLinAtu) + 1, Len(cLinAtu)))
 				
-				//Atualiza a funÃ§Ã£o chamadora
+				//Atualiza a função chamadora
 				ElseIf Upper("ExecBlock") $ Upper(cLinAtu)
 					aExport[Len(aExport)][nPosExe] := Alltrim(SubStr(cLinAtu, At(':', cLinAtu) + 1, Len(cLinAtu)))
 				
@@ -109,7 +115,7 @@ Static Function fProcessa(cArquivo)
 			
 			//Se tiver dados a serem gerados
 			If Len(aExport) > 0
-				//Agora percorre os dados, e atualiza a diferenÃ§a de tempo
+				//Agora percorre os dados, e atualiza a diferença de tempo
 				ProcRegua(Len(aExport))
 				For nAtual := 1 To Len(aExport)
 					IncProc("Atualizando totais - " + cValToChar(nAtual) + " de " + cValToChar(Len(aLinhas)) + "...")
@@ -128,10 +134,10 @@ Static Function fProcessa(cArquivo)
 				//Adiciona as colunas
 				oFWMsExcel:AddColumn(cWorkSheet, cTable, "SequÃªncia",           1, 1)
 				oFWMsExcel:AddColumn(cWorkSheet, cTable, "Origem (From)",       1, 1)
-				oFWMsExcel:AddColumn(cWorkSheet, cTable, "FunÃ§Ã£o (ExecBlock)",  1, 1)
+				oFWMsExcel:AddColumn(cWorkSheet, cTable, "Função (ExecBlock)",  1, 1)
 				oFWMsExcel:AddColumn(cWorkSheet, cTable, "Tempo Inicial",       1, 1)
 				oFWMsExcel:AddColumn(cWorkSheet, cTable, "Tempo Final",         1, 1)
-				oFWMsExcel:AddColumn(cWorkSheet, cTable, "DiferenÃ§a de Tempo",  1, 1)
+				oFWMsExcel:AddColumn(cWorkSheet, cTable, "Diferença de Tempo",  1, 1)
 				
 				//Adiciona todas as linhas no arquivo
 				For nAtual := 1 To Len(aExport)

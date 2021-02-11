@@ -1,9 +1,15 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/10/18/funcao-para-cadastro-de-dados-em-um-arquivo-dbf/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
 
 /*/{Protheus.doc} zEditTmp
-Fun√ß√£o para manipula√ß√£o de registros .dbf
+FunÁ„o para manipulaÁ„o de registros .dbf
 @author Atilio
 @since 06/08/2016
 @version 1.0
@@ -13,21 +19,21 @@ Fun√ß√£o para manipula√ß√£o de registros .dbf
 
 User Function zEditTmp()
 	Local aArea    := GetArea()
-	Local cArqDBF  := cGetFile(	"Arquivo DBF .dbf | *.dbf ",;                      //M√°scara
+	Local cArqDBF  := cGetFile(	"Arquivo DBF .dbf | *.dbf ",;                      //M·scara
 									"Arquivo...",;                                     //T√≠tulo
-									,;                                                 //N√∫mero da m√°scara
-									,;                                                 //Diret√≥rio Inicial
+									,;                                                 //N˙mero da m·scara
+									,;                                                 //DiretÛrio Inicial
 									.F.,;                                              //.F. == Abrir; .T. == Salvar
 									,;                                                 //Tipo
-									.T.)                                               //Exibe diret√≥rio do servidor
+									.T.)                                               //Exibe diretÛrio do servidor
 	
-	//Se o arquivo n√£o existir
+	//Se o arquivo n„o existir
 	If ! File(cArqDBF)
-		MsgStop("Arquivo <b>'"+cArqDBF+"'</b> n√£o existe!", "Aten√ß√£o")
+		MsgStop("Arquivo <b>'"+cArqDBF+"'</b> n„o existe!", "AtenÁ„o")
 		Return
 	EndIf
 	
-	//Processando as informa√ß√µes e montando a Dialog
+	//Processando as informaÁ√µes e montando a Dialog
 	Processa({|| u_zEditDBF(cArqDBF) }, "Aguarde...")
 	
 	RestArea(aArea)
@@ -35,7 +41,7 @@ Return
 
 
 /*/{Protheus.doc} zEditDBF
-Fun√ß√£o para manipular o arquivo .dbf
+FunÁ„o para manipular o arquivo .dbf
 @type function
 @author Atilio
 @since 06/08/2016
@@ -66,7 +72,7 @@ User Function zEditDBF(cArqDBF)
 	Private nJanAltu := aTamanho[6]
 	Private nColMeio := (nJanLarg)/4
 
-	//Usando o dbf como tabela tempor√°ria
+	//Usando o dbf como tabela tempor·ria
 	dbUseArea(.T., "DBFCDXADS", cArqDBF, cTabTmp, .T., .F.)
 	Count To nLinhas
 	nColunas := fCount()
@@ -75,7 +81,7 @@ User Function zEditDBF(cArqDBF)
 	
 	//Percorrendo a estrutura, para adicionar as colunas
 	For nAtual := 1 To Len(aStrut)
-		//Cabe√ßalho ...	Titulo							Campo					Mask		Tamanho				Dec							Valid	Usado	Tip						F3	CBOX
+		//CabeÁalho ...	Titulo							Campo					Mask		Tamanho				Dec							Valid	Usado	Tip						F3	CBOX
 		aAdd(aHeader,{	Capital(aStrut[nAtual][1]),	aStrut[nAtual][1],	"",			aStrut[nAtual][3],	aStrut[nAtual][4],		".T.",	".T.",	aStrut[nAtual][2],	"",	""})
 		aAdd(aEdit, aStrut[nAtual][1])
 	Next
@@ -117,8 +123,8 @@ User Function zEditDBF(cArqDBF)
 												aHeader,;        					//aHeader
 												aCols)         					//aCols
 			
-		//A√ß√µes
-		@ (nJanAltu/2)-025, 003  GROUP oGrpAco TO (nJanAltu/2)-003, (nJanLarg/2)-003  PROMPT "A√ß√µes: "  OF oDlgPvt PIXEL
+		//AÁ√µes
+		@ (nJanAltu/2)-025, 003  GROUP oGrpAco TO (nJanAltu/2)-003, (nJanLarg/2)-003  PROMPT "AÁ√µes: "  OF oDlgPvt PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*1)+06) BUTTON oBtnConf PROMPT "Cancelar"   SIZE nTamBtn, 013 OF oDlgPvt ACTION(oDlgPvt:End())     PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*2)+09) BUTTON oBtnLimp PROMPT "Salvar"     SIZE nTamBtn, 013 OF oDlgPvt ACTION(fSalvar())         PIXEL
 	ACTIVATE MSDIALOG oDlgPvt CENTERED
@@ -131,7 +137,7 @@ Return
  | Func:  fSalvar                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  06/08/2016                                                   |
- | Desc:  Fun√ß√£o para salvar os dados do dbf                           |
+ | Desc:  FunÁ„o para salvar os dados do dbf                           |
  *---------------------------------------------------------------------*/
 
 Static Function fSalvar()
@@ -151,7 +157,7 @@ Static Function fSalvar()
 	
 	//Agora percorre o aCols
 	For nAtual := 1 To Len(aColsAux)
-		//Se n√£o tiver exclu√≠do, inclui o registro
+		//Se n„o tiver exclu√≠do, inclui o registro
 		If !(aColsAux[nAtual][Len(aHeader)+1])
 			RecLock(cTabTmp, .T.)
 				For nAux := 1 To Len(aStrut)
@@ -162,5 +168,5 @@ Static Function fSalvar()
 	Next
 	
 	oDlgPvt:End()
-	MsgInfo("Grava√ß√£o completa!", "Aten√ß√£o")
+	MsgInfo("GravaÁ„o completa!", "AtenÁ„o")
 Return

@@ -1,3 +1,9 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/09/20/funcao-para-editar-usuarios-contidos-em-um-parametro-advpl/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
@@ -8,7 +14,7 @@
 #Define POS_FILIAL  006 //Linha 2
 
 /*/{Protheus.doc} zMVUsers
-Fun√ß√£o para editar o MV_USERS
+FunÁ„o para editar o MV_USERS
 @author Atilio
 @since 16/05/2016
 @version 1.0
@@ -21,13 +27,13 @@ User Function zMVUsers()
 Return
 
 /*/{Protheus.doc} zParUsr
-Usu√°rios contidos em um par√¢metro
+Usu·rios contidos em um par√¢metro
 @author Atilio
 @since 16/05/2016
 @version 1.0
-	@param cParam, Caracter, C√≥digos dos usu√°rios contidos no par√¢metro
-	@param cCarSep, Caracter, Caracter de separa√ß√£o
-	@param lUsrFil, L√≥gico, Define se trar√° apenas os usu√°rios que tem acesso a filial logada
+	@param cParam, Caracter, CÛdigos dos usu·rios contidos no par√¢metro
+	@param cCarSep, Caracter, Caracter de separaÁ„o
+	@param lUsrFil, LÛgico, Define se trar· apenas os usu·rios que tem acesso a filial logada
 	@example
 	u_zParUsr("MV_X_USERS", ";", .T.)
 /*/
@@ -59,7 +65,7 @@ User Function zParUsr(cParam, cCarSep, lUsrFil)
 	
 	//Se o par√¢metro estiver em branco, finaliza a rotina
 	If Empty(cParam)
-		MsgStop("Par√¢metro em branco!", "Aten√ß√£o")
+		MsgStop("Par√¢metro em branco!", "AtenÁ„o")
 		Return
 	EndIf
 	
@@ -67,18 +73,18 @@ User Function zParUsr(cParam, cCarSep, lUsrFil)
 	DbSelectArea("SX6")
 	nTamFim := Len(SX6->X6_CONTEUD)
 	
-	//Pegando o conte√∫do
+	//Pegando o conte˙do
 	cGetReto  := GetMV(cParam)
 	cParamPvt := cParam
 	
-	//Pegando os usu√°rios
+	//Pegando os usu·rios
 	aUsers    := AllUsers()
 	
 	//Criando a estrutura para a MsSelect
 	fCriaMsSel()
 	
 	//Criando a janela
-	DEFINE MSDIALOG oDlgMark TITLE "Consulta de Usu√°rios ("+cParam+")" FROM 000, 000  TO nJanAltu, nJanLarg COLORS 0, 16777215 PIXEL
+	DEFINE MSDIALOG oDlgMark TITLE "Consulta de Usu·rios ("+cParam+")" FROM 000, 000  TO nJanAltu, nJanLarg COLORS 0, 16777215 PIXEL
 		//Pesquisar
 		@ 003, 003 GROUP oGrpPesqui TO 025, (nJanLarg/2)-3 PROMPT "Pesquisar: "	OF oDlgMark COLOR 0, 16777215 PIXEL
 			@ 010, 006 MSGET oGetPesq VAR cGetPesq SIZE (nJanLarg/2)-12, 010 OF oDlgMark COLORS 0, 16777215  VALID (fVldPesq())      PIXEL
@@ -89,19 +95,19 @@ User Function zParUsr(cParam, cCarSep, lUsrFil)
 			oMAux:bAval := { || ( fGetMkA( cMarca ), oMAux:oBrowse:Refresh() ) }
 			oMAux:oBrowse:lHasMark := .T.
 			oMAux:oBrowse:lCanAllMark := .F.
-			@ (nJanAltu/2)-28-025, 006 SAY oSayReto PROMPT "Usu√°rios:"     SIZE 040, 007 OF oDlgMark COLORS RGB(0,0,0) PIXEL
+			@ (nJanAltu/2)-28-025, 006 SAY oSayReto PROMPT "Usu·rios:"     SIZE 040, 007 OF oDlgMark COLORS RGB(0,0,0) PIXEL
 			@ (nJanAltu/2)-28-015, 006 MSGET oGetReto VAR cGetReto SIZE (nJanLarg/2)-12, 010 OF oDlgMark COLORS 0, 16777215      PIXEL
 		
 			//Populando os dados da MsSelect
 			fPopula()
 		
-		//A√ß√µes
-		@ (nJanAltu/2)-25, 003 GROUP oGrpAcoes TO (nJanAltu/2)-3, (nJanLarg/2)-3 PROMPT "A√ß√µes: "	OF oDlgMark COLOR 0, 16777215 PIXEL
+		//AÁ√µes
+		@ (nJanAltu/2)-25, 003 GROUP oGrpAcoes TO (nJanAltu/2)-3, (nJanLarg/2)-3 PROMPT "AÁ√µes: "	OF oDlgMark COLOR 0, 16777215 PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*1)+06) BUTTON oBtnConf PROMPT "Confirmar" SIZE nTamBtn, 013 OF oDlgMark ACTION(fConfirm())     PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*2)+09) BUTTON oBtnLimp PROMPT "Limpar" SIZE nTamBtn, 013 OF oDlgMark ACTION(fLimpar())     PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*3)+12) BUTTON oBtnCanc PROMPT "Cancelar" SIZE nTamBtn, 013 OF oDlgMark ACTION(fCancela())     PIXEL
 			
-		//Se n√£o for edit√°vel, desabilita o get de retorno
+		//Se n„o for edit·vel, desabilita o get de retorno
 		If ! lEditM
 			oGetReto:lReadOnly := .T.
 		EndIf
@@ -117,20 +123,20 @@ Return
  | Func:  fCriaMsSel                                                   |
  | Autor: Daniel Atilio                                                |
  | Data:  16/05/2016                                                   |
- | Desc:  Fun√ß√£o para criar a estrutura da MsSelect                    |
+ | Desc:  FunÁ„o para criar a estrutura da MsSelect                    |
  *---------------------------------------------------------------------*/
 
 Static Function fCriaMsSel()
 	Local aAreaX3 := SX3->(GetArea())
 
-	//Zerando o cabe√ßalho e a estrutura
+	//Zerando o cabeÁalho e a estrutura
 	aHeadRegs := {}
 	aStrut := {}
 	
 	//Adicionando coluna de OK
 	//					Campo				Titulo				Mascara
 	aAdd( aHeadRegs, {	"XX_OK",		,	" ",				"" } )
-	aAdd( aHeadRegs, {	"XX_CODIGO", 	,	"C√≥digo",			"@!" } )
+	aAdd( aHeadRegs, {	"XX_CODIGO", 	,	"CÛdigo",			"@!" } )
 	aAdd( aHeadRegs, {	"XX_NOME", 		,	"Nome",				"@!" } )
 	aAdd( aHeadRegs, {	"XX_NOMCOM", 	,	"Nome Completo",	"@!" } )
 	
@@ -140,13 +146,13 @@ Static Function fCriaMsSel()
 	aAdd( aStrut, {	"XX_NOME",		"C",	Len(aUsers[1][1][POS_NOME]),		0} )
 	aAdd( aStrut, {	"XX_NOMCOM",	"C",	Len(aUsers[1][1][POS_NOMCOM]),		0} )
 
-	//Excluindo dados da tabela tempor√°ria, se tiver aberta, fecha a tabela
+	//Excluindo dados da tabela tempor·ria, se tiver aberta, fecha a tabela
 	If Select(cAliasTmp)>0
 		(cAliasTmp)->(DbCloseArea())
 	EndIf
 	fErase(cAliasTmp+".DBF")
 	
-	//Criando tabela tempor√°ria
+	//Criando tabela tempor·ria
 	cArqs:= CriaTrab( aStrut, .T. )             
 	dbUseArea( .T.,"DBFCDX", cArqs, cAliasTmp, .T., .F. )
 	
@@ -157,7 +163,7 @@ Return
  | Func:  fPopula                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  16/05/2016                                                   |
- | Desc:  Fun√ß√£o que popula a tabela auxiliar da MsSelect              |
+ | Desc:  FunÁ„o que popula a tabela auxiliar da MsSelect              |
  *---------------------------------------------------------------------*/
 
 Static Function fPopula()
@@ -166,19 +172,19 @@ Static Function fPopula()
 	Local aFilAux
 	Local lContinua
 	
-	//Excluindo dados da tabela tempor√°ria, se tiver aberta, fecha a tabela
+	//Excluindo dados da tabela tempor·ria, se tiver aberta, fecha a tabela
 	If Select(cAliasTmp)>0
 		(cAliasTmp)->(DbCloseArea())
 	EndIf
 	fErase(cAliasTmp+".DBF")
 	
-	//Criando tabela tempor√°ria
+	//Criando tabela tempor·ria
 	cArqs:= CriaTrab( aStrut, .T. )             
 	dbUseArea( .T.,"DBFCDX", cArqs, cAliasTmp, .T., .F. )
 	
 	//Percorrendo as filiais listadas
 	For nAtu := 1 To Len(aUsers)
-		//Se filtrar filial e o usu√°rio n√£o for o Administrador
+		//Se filtrar filial e o usu·rio n„o for o Administrador
 		If lUsrFilM .And. aUsers[nAtu][1][POS_CODIGO] != "000000"
 			aFilAux   := aUsers[nAtu][2][POS_FILIAL]
 			lContinua := .F.
@@ -191,7 +197,7 @@ Static Function fPopula()
 				EndIf
 			Next
 			
-			//Caso n√£o tenha acesso a filial
+			//Caso n„o tenha acesso a filial
 			If !lContinua
 				Loop
 			EndIf
@@ -199,7 +205,7 @@ Static Function fPopula()
 	
 		//Se tiver pesquisa
 		If !Empty(cGetPesq)
-			//Se n√£o bater a pesquisa, pula o registro
+			//Se n„o bater a pesquisa, pula o registro
 			If !( 	Alltrim(Upper(cGetPesq)) $ Upper(aUsers[nAtu][1][POS_CODIGO]) .Or.;
 					Alltrim(Upper(cGetPesq)) $ Upper(aUsers[nAtu][1][POS_NOME]) .Or.;
 					Alltrim(Upper(cGetPesq)) $ Upper(aUsers[nAtu][1][POS_NOMCOM]))
@@ -208,7 +214,7 @@ Static Function fPopula()
 		EndIf
 		
 		cOk := Space(Len(cMarca))
-		//Se j√° existir no retorno, ser√° Ok
+		//Se j· existir no retorno, ser· Ok
 		If Alltrim(aUsers[nAtu][1][POS_CODIGO]) $ cGetReto
 			cOk := cMarca
 		EndIf
@@ -231,7 +237,7 @@ Return
  | Func:  fConfirm                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  16/05/2016                                                   |
- | Desc:  Fun√ß√£o de confirma√ß√£o da rotina                              |
+ | Desc:  FunÁ„o de confirmaÁ„o da rotina                              |
  *---------------------------------------------------------------------*/
 
 Static Function fConfirm()
@@ -243,7 +249,7 @@ Return
  | Func:  fLimpar                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  16/05/2016                                                   |
- | Desc:  Fun√ß√£o que limpa os dados da rotina                          |
+ | Desc:  FunÁ„o que limpa os dados da rotina                          |
  *---------------------------------------------------------------------*/
 
 Static Function fLimpar()
@@ -264,7 +270,7 @@ Return
  | Func:  fCancela                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  16/05/2016                                                   |
- | Desc:  Fun√ß√£o de cancelamento da rotina                             |
+ | Desc:  FunÁ„o de cancelamento da rotina                             |
  *---------------------------------------------------------------------*/
 
 Static Function fCancela()
@@ -275,16 +281,16 @@ Return
  | Func:  fVldPesq                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  16/05/2016                                                   |
- | Desc:  Fun√ß√£o que valida o campo digitado                           |
+ | Desc:  FunÁ„o que valida o campo digitado                           |
  *---------------------------------------------------------------------*/
 
 Static Function fVldPesq()
 	Local lRet := .T.
 	
-	//Se tiver ap√≥strofo ou porcentagem, a pesquisa n√£o pode prosseguir
+	//Se tiver apÛstrofo ou porcentagem, a pesquisa n„o pode prosseguir
 	If "'" $ cGetPesq .Or. "%" $ cGetPesq
 		lRet := .F.
-		MsgAlert("<b>Pesquisa inv√°lida!</b><br>A pesquisa n√£o pode ter <b>'</b> ou <b>%</b>.", "Aten√ß√£o")
+		MsgAlert("<b>Pesquisa inv·lida!</b><br>A pesquisa n„o pode ter <b>'</b> ou <b>%</b>.", "AtenÁ„o")
 	EndIf
 	
 	//Se houver retorno, atualiza grid
@@ -297,7 +303,7 @@ Return lRet
  | Func:  fGetMkA                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  16/05/2016                                                   |
- | Desc:  Fun√ß√£o que marca o registro                                  |
+ | Desc:  FunÁ„o que marca o registro                                  |
  *---------------------------------------------------------------------*/
 
 Static Function fGetMkA(cMarca)
@@ -313,7 +319,7 @@ Static Function fGetMkA(cMarca)
 	If lChecado
 		//Se o tamanho do retorno +chave for maior que o retorno
 		If Len(Alltrim(cGetReto) + cChave) > nTamFim
-			MsgAlert("Tamanho do Par√¢metro Excedido!", "Aten√ß√£o")
+			MsgAlert("Tamanho do Par√¢metro Excedido!", "AtenÁ„o")
 			lFalhou := .T.
 		
 		//Atualiza chave
@@ -321,13 +327,13 @@ Static Function fGetMkA(cMarca)
 			cGetReto := Alltrim(cGetReto)+cChave
 		EndIf
 	
-	//Sen√£o retira do retorno
+	//Sen„o retira do retorno
 	Else
 		cGetReto := StrTran(cGetReto, cChave, '')
 	EndIf
 	cGetReto := cGetReto + Space(nTamFim - Len(cGetReto))
 	
-	//Se n√£o houve falhas
+	//Se n„o houve falhas
 	If !lFalhou
 		//Gravando a marca
 		RecLock( cAliasTmp, .F. )

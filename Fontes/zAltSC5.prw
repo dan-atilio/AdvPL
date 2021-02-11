@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/08/02/funcao-para-alterar-dados-de-pedido-de-venda-ja-liberado-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
@@ -5,21 +11,21 @@
  | P.E.:  MA410MNU                                                                                      |
  | Autor: Daniel Atilio                                                                                 |
  | Data:  31/07/2016                                                                                    |
- | Desc:  AdiÃ§Ã£o de opÃ§Ã£o no menu de aÃ§Ãµes relacionadas do Pedido de Vendas                             |
+ | Desc:  Adição de opção no menu de açÃµes relacionadas do Pedido de Vendas                             |
  | Links: http://tdn.totvs.com/display/public/mp/MA410MNU                                               |
  *------------------------------------------------------------------------------------------------------*/
  
 User Function MA410MNU()
 	Local aArea := GetArea()
 	
-	//Adicionando funÃ§Ã£o de vincular
+	//Adicionando função de vincular
 	aAdd(aRotina,{"* Alterar Pedido",	"U_zSC5AltPed()",	0 , 4, 0 , Nil})	
 	
 	RestArea(aArea)
 Return
 
 /*/{Protheus.doc} zSC5AltPed
-FunÃ§Ã£o teste criada para ser chamada no AÃ§Ãµes Relacionadas do Pedido de Venda, atravÃ©s do P.E. MA410MNU
+Função teste criada para ser chamada no AçÃµes Relacionadas do Pedido de Venda, através do P.E. MA410MNU
 @type function
 @author Atilio
 @since 30/07/2016
@@ -35,10 +41,10 @@ User Function zSC5AltPed()
 	Local aCampos		:= {}
 	Local aCampAlt	:= {}
 	
-	//Preenchendo os campos de alteraÃ§Ã£o
+	//Preenchendo os campos de alteração
 	aAdd(aCampAlt, 'C5_MENNOTA')
 	
-	//Definindo todos os campos que serÃ£o mostrados
+	//Definindo todos os campos que serão mostrados
 	aCampos := aClone(aCampAlt)
 	aAdd(aCampos, 'C5_NUM')
 	aAdd(aCampos, 'C5_TIPO')
@@ -47,7 +53,7 @@ User Function zSC5AltPed()
 	aAdd(aCampos, 'C5_CONDPAG')
 	aAdd(aCampos, 'C5_EMISSAO')
 	
-	//Tela para alteraÃ§Ã£o de pedido de venda jÃ¡ liberado
+	//Tela para alteração de pedido de venda já liberado
 	u_zAltSC5(aCampos, aCampAlt)
 	
 	RestArea(aAreaC6)
@@ -56,23 +62,23 @@ User Function zSC5AltPed()
 Return
 
 /*/{Protheus.doc} zAltSC5
-FunÃ§Ã£o para alterar dados de Pedidos de Venda Liberados / Faturados
+Função para alterar dados de Pedidos de Venda Liberados / Faturados
 @type function
 @author Atilio
 @since 09/12/2015
 @version 1.0
-	@param aCampos, Array, Array com todos os campos que serÃ£o visualizados na SC5
-	@param aCampAlt, Array, (DescriÃ§Ã£o do parÃ¢metro)
+	@param aCampos, Array, Array com todos os campos que serão visualizados na SC5
+	@param aCampAlt, Array, (Descrição do parÃ¢metro)
 	@example
 	u_zAltSC5({"C5_NUM", "C5_MENNOTA"}, {"C5_MENNOTA"})
-	@obs Como Ã© utilizada a funÃ§Ã£o Enchoice para montar a tela, os campos criados por usuÃ¡rios serÃ£o mostrados
+	@obs Como é utilizada a função Enchoice para montar a tela, os campos criados por usuários serão mostrados
 	@see http://terminaldeinformacao.com
 /*/
 
 User Function zAltSC5(aCampos, aCampAlt)
 	Local aArea		:= GetArea()
 	Local aAreaC5		:= SC5->(GetArea())
-	//VariÃ¡veis da Janela
+	//Variáveis da Janela
 	Local oDlgPed
 	Local oGrpAco
 	Local oBtnConf
@@ -83,7 +89,7 @@ User Function zAltSC5(aCampos, aCampAlt)
 	Local aTamanho	:= MsAdvSize()
 	Local nJanLarg	:= aTamanho[5]
 	Local nJanAltu	:= aTamanho[6]
-	//VariÃ¡veis da Enchoice
+	//Variáveis da Enchoice
 	Local cAliasE		:= "SC5"
 	Local nReg			:= SC5->(RecNo())
 	Local aPos			:= {001, 001, (nJanAltu/2)-30, (nJanLarg/2)}
@@ -97,11 +103,11 @@ User Function zAltSC5(aCampos, aCampAlt)
 	Local nCampAtu	:= 0
 	Local bCampo		:= {|nField| Field(nField)}
 	
-	//Iniciando o controle de transaÃ§Ã£o
+	//Iniciando o controle de transação
 	Begin Transaction
 		//Cria a janela
-		DEFINE MsDialog oDlgPed TITLE "AlteraÃ§Ã£o de Pedido de Venda" FROM 000,000 TO nJanAltu,nJanLarg PIXEL
-			//Insere os dados na memÃ³ria
+		DEFINE MsDialog oDlgPed TITLE "Alteração de Pedido de Venda" FROM 000,000 TO nJanAltu,nJanLarg PIXEL
+			//Insere os dados na memória
 			RegToMemory(cAliasE, .F.)
 			
 			//Chama a enchoice
@@ -126,14 +132,14 @@ User Function zAltSC5(aCampos, aCampAlt)
 						lNoFolder,;
 						lProperty)
 			
-			//Grupo de AÃ§Ãµes
-			@ (nJanAltu/2)-27, 001 GROUP oGrpAco TO (nJanAltu/2)-3, (nJanLarg/2) PROMPT "AlteraÃ§Ã£o de Pedido de Venda Liberado / Faturado: "	OF oDlgPed COLOR 0, 16777215 PIXEL
+			//Grupo de AçÃµes
+			@ (nJanAltu/2)-27, 001 GROUP oGrpAco TO (nJanAltu/2)-3, (nJanLarg/2) PROMPT "Alteração de Pedido de Venda Liberado / Faturado: "	OF oDlgPed COLOR 0, 16777215 PIXEL
 				@ (nJanAltu/2)-20, (nJanLarg/2)-((nTamBtn*1)+03) BUTTON oBtnConf PROMPT "Confirmar" SIZE nTamBtn, 013 OF oDlgPed PIXEL ACTION (lConfirm := .T., oDlgPed:End())
 				@ (nJanAltu/2)-20, (nJanLarg/2)-((nTamBtn*2)+06) BUTTON oBtnCanc PROMPT "Cancelar"  SIZE nTamBtn, 013 OF oDlgPed PIXEL ACTION (lConfirm := .F., oDlgPed:End())
 			
 		ACTIVATE MsDialog oDlgPed CENTERED
 		
-		//Se a rotina for confirmada, commita a transaÃ§Ã£o
+		//Se a rotina for confirmada, commita a transação
 		If lConfirm
 			DbSelectArea(cAliasE)
 			RecLock(cAliasE, .F.)
@@ -144,7 +150,7 @@ User Function zAltSC5(aCampos, aCampAlt)
 				If "FILIAL" $ FieldName(nCampAtu)
 				 	FieldPut(nCampAtu, FWxFilial(cAliasE))
 				 
-				//SenÃ£o, inputa o campo
+				//Senão, inputa o campo
 				Else
 				 	FieldPut(nCampAtu, M->&(eVal(bCampo, nCampAtu)))
 				EndIf
@@ -153,7 +159,7 @@ User Function zAltSC5(aCampos, aCampAlt)
 			(cAliasE)->(DbCommit())
 			(cAliasE)->(MsUnlock())
 		
-		//SenÃ£o, disarma a transaÃ§Ã£o
+		//Senão, disarma a transação
 		Else
 			DisarmTransaction()
 		EndIf

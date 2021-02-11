@@ -1,14 +1,20 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/07/18/funcao-verifica-se-um-array-esta-vazio/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zVazio
-Fun√ß√£o que verifica se o array est√° vazio (ou somente com linhas exclu√≠das)
+FunÁ„o que verifica se o array est· vazio (ou somente com linhas exclu√≠das)
 @type function
 @author Atilio
 @since 05/03/2016
 @version 1.0
-	@param aArray, Array, Array que cont√©m as informa√ß√µes (como um aCols)
-	@return lRet, Se o Array est√° vazio (n√£o tem nenhuma posi√ß√£o v√°lida)
+	@param aArray, Array, Array que contÈm as informaÁ√µes (como um aCols)
+	@return lRet, Se o Array est· vazio (n„o tem nenhuma posiÁ„o v·lida)
 /*/
 
 User Function zVazio(aArray)
@@ -17,18 +23,18 @@ User Function zVazio(aArray)
 	Local nUltPos := 0
 	Local nExcluidos := 0
 	
-	//Se o tamanho for 0, Array √© vazio
+	//Se o tamanho for 0, Array È vazio
 	If Len(aArray) == 0
 		lRet := .T.
 	
-	//Se tiver em branco, Array √© vazio
+	//Se tiver em branco, Array È vazio
 	ElseIf Empty(aArray)
 		lRet := .T.
 		
 	Else
 		//Percorro o Array
 		For nAtual := 1 To Len(aArray)
-			//Pega a √∫ltima posi√ß√£o do aCols (a que cont√©m se a linha est√° exclu√≠da - .T. -, ou n√£o - .F. -)
+			//Pega a ˙ltima posiÁ„o do aCols (a que contÈm se a linha est· exclu√≠da - .T. -, ou n„o - .F. -)
 			nUltPos := Len(aArray[nAtual])
 			
 			//Se tiver exclu√≠do
@@ -37,7 +43,7 @@ User Function zVazio(aArray)
 			EndIf
 		Next
 		
-		//Se a quantidade de exclu√≠dos for igual ao tamanho do array, array est√° vazio
+		//Se a quantidade de exclu√≠dos for igual ao tamanho do array, array est· vazio
 		If nExcluidos == Len(aArray)
 			lRet := .T.
 		EndIf

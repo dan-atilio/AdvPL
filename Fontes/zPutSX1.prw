@@ -1,31 +1,37 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/10/10/funcao-para-criar-grupo-de-perguntas-sx1-protheus-12/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zPutSX1
-Fun√ß√£o para criar Grupo de Perguntas
+FunÁ„o para criar Grupo de Perguntas
 @author Atilio
 @since 09/06/2017
 @version 1.0
 @type function
 	@param cGrupo,    characters, Grupo de Perguntas       (ex.: X_TESTE)
 	@param cOrdem,    characters, Ordem da Pergunta        (ex.: 01, 02, 03, ...)
-	@param cTexto,    characters, Texto da Pergunta        (ex.: Produto De, Produto At√©, Data De, ...)
+	@param cTexto,    characters, Texto da Pergunta        (ex.: Produto De, Produto AtÈ, Data De, ...)
 	@param cMVPar,    characters, MV_PAR?? da Pergunta     (ex.: MV_PAR01, MV_PAR02, MV_PAR03, ...)
-	@param cVariavel, characters, Vari√°vel da Pergunta     (ex.: MV_CH0, MV_CH1, MV_CH2, ...)
-	@param cTipoCamp, characters, Tipo do Campo            (C = Caracter, N = Num√©rico, D = Data)
-	@param nTamanho,  numeric,    Tamanho da Pergunta      (M√°ximo de 60)
-	@param nDecimal,  numeric,    Tamanho de Decimais      (M√°ximo de 9)
+	@param cVariavel, characters, Vari·vel da Pergunta     (ex.: MV_CH0, MV_CH1, MV_CH2, ...)
+	@param cTipoCamp, characters, Tipo do Campo            (C = Caracter, N = NumÈrico, D = Data)
+	@param nTamanho,  numeric,    Tamanho da Pergunta      (M·ximo de 60)
+	@param nDecimal,  numeric,    Tamanho de Decimais      (M·ximo de 9)
 	@param cTipoPar,  characters, Tipo do Par√¢metro        (G = Get, C = Combo, F = Escolha de Arquivos, K = Check Box)
-	@param cValid,    characters, Valida√ß√£o da Pergunta    (ex.: Positivo(), u_SuaFuncao(), ...)
+	@param cValid,    characters, ValidaÁ„o da Pergunta    (ex.: Positivo(), u_SuaFuncao(), ...)
 	@param cF3,       characters, Consulta F3 da Pergunta  (ex.: SB1, SA1, ...)
-	@param cPicture,  characters, M√°scara do Par√¢metro     (ex.: @!, @E 999.99, ...)
-	@param cDef01,    characters, Primeira op√ß√£o do combo
-	@param cDef02,    characters, Segunda op√ß√£o do combo
-	@param cDef03,    characters, Terceira op√ß√£o do combo
-	@param cDef04,    characters, Quarta op√ß√£o do combo
-	@param cDef05,    characters, Quinta op√ß√£o do combo
+	@param cPicture,  characters, M·scara do Par√¢metro     (ex.: @!, @E 999.99, ...)
+	@param cDef01,    characters, Primeira opÁ„o do combo
+	@param cDef02,    characters, Segunda opÁ„o do combo
+	@param cDef03,    characters, Terceira opÁ„o do combo
+	@param cDef04,    characters, Quarta opÁ„o do combo
+	@param cDef05,    characters, Quinta opÁ„o do combo
 	@param cHelp,     characters, Texto de Help do par√¢metro
-	@obs Fun√ß√£o foi criada, pois a partir de algumas vers√µes do Protheus 12, a fun√ß√£o padr√£o PutSX1 n√£o funciona (por medidas de seguran√ßa)
+	@obs FunÁ„o foi criada, pois a partir de algumas vers√µes do Protheus 12, a funÁ„o padr„o PutSX1 n„o funciona (por medidas de seguranÁa)
 	@example Abaixo um exemplo de como criar um grupo de perguntas
 	
 	cPerg    := "X_TST"
@@ -40,12 +46,12 @@ Fun√ß√£o para criar Grupo de Perguntas
 	cDef05   := ""
 	
 	u_zPutSX1(cPerg, "01", "Produto De?",       "MV_PAR01", "MV_CH0", "C", TamSX3('B1_COD')[01], 0, "G", cValid,       "SB1", cPicture,        cDef01,  cDef02,        cDef03,        cDef04,    cDef05, "Informe o produto inicial")
-	u_zPutSX1(cPerg, "02", "Produto At√©?",      "MV_PAR02", "MV_CH1", "C", TamSX3('B1_COD')[01], 0, "G", cValid,       "SB1", cPicture,        cDef01,  cDef02,        cDef03,        cDef04,    cDef05, "Informe o produto final")
+	u_zPutSX1(cPerg, "02", "Produto AtÈ?",      "MV_PAR02", "MV_CH1", "C", TamSX3('B1_COD')[01], 0, "G", cValid,       "SB1", cPicture,        cDef01,  cDef02,        cDef03,        cDef04,    cDef05, "Informe o produto final")
 	u_zPutSX1(cPerg, "03", "A partir da Data?", "MV_PAR03", "MV_CH2", "D", 08,                   0, "G", cValid,       cF3,   cPicture,        cDef01,  cDef02,        cDef03,        cDef04,    cDef05, "Informe a data inicial a ser considerada")
-	u_zPutSX1(cPerg, "04", "M√©dia maior que?",  "MV_PAR04", "MV_CH3", "N", 09,                   2, "G", "Positivo()", cF3,   "@E 999,999.99", cDef01,  cDef02,        cDef03,        cDef04,    cDef05, "Informe a m√©dia de atraso que ser√° considerada")
+	u_zPutSX1(cPerg, "04", "MÈdia maior que?",  "MV_PAR04", "MV_CH3", "N", 09,                   2, "G", "Positivo()", cF3,   "@E 999,999.99", cDef01,  cDef02,        cDef03,        cDef04,    cDef05, "Informe a mÈdia de atraso que ser· considerada")
 	u_zPutSX1(cPerg, "05", "Tipo de Saldos?",   "MV_PAR05", "MV_CH4", "N", 01,                   0, "C", cValid,       cF3,   cPicture,        "Todos", "Maior que 0", "Menor que 0", "Zerados", cDef05, "Informe o tipo de saldo a ser considerado")
-	u_zPutSX1(cPerg, "06", "Tipos de Produto?", "MV_PAR06", "MV_CH5", "C", 60,                   0, "K", cValid,       cF3,   cPicture,        "PA",    "PI",          "MP",          cDef04,    cDef05, "Informe os tipos de produto que ser√£o considerados")
-	u_zPutSX1(cPerg, "07", "Caminho de Log?",   "MV_PAR07", "MV_CH6", "C", 60,                   0, "F", cValid,       cF3,   cPicture,        cDef01,  cDef02,        cDef03,        cDef04,    cDef05, "Informe o caminho para gera√ß√£o do log")
+	u_zPutSX1(cPerg, "06", "Tipos de Produto?", "MV_PAR06", "MV_CH5", "C", 60,                   0, "K", cValid,       cF3,   cPicture,        "PA",    "PI",          "MP",          cDef04,    cDef05, "Informe os tipos de produto que ser„o considerados")
+	u_zPutSX1(cPerg, "07", "Caminho de Log?",   "MV_PAR07", "MV_CH6", "C", 60,                   0, "F", cValid,       cF3,   cPicture,        cDef01,  cDef02,        cDef03,        cDef04,    cDef05, "Informe o caminho para geraÁ„o do log")
 /*/
 
 User Function zPutSX1(cGrupo, cOrdem, cTexto, cMVPar, cVariavel, cTipoCamp, nTamanho, nDecimal, cTipoPar, cValid, cF3, cPicture, cDef01, cDef02, cDef03, cDef04, cDef05, cHelp)
@@ -71,28 +77,28 @@ User Function zPutSX1(cGrupo, cOrdem, cTexto, cMVPar, cVariavel, cTipoCamp, nTam
 	Default cDef05    := Space(15)
 	Default cHelp     := ""
 	
-	//Se tiver Grupo, Ordem, Texto, Par√¢metro, Vari√°vel, Tipo e Tamanho, continua para a cria√ß√£o do par√¢metro
+	//Se tiver Grupo, Ordem, Texto, Par√¢metro, Vari·vel, Tipo e Tamanho, continua para a criaÁ„o do par√¢metro
 	If !Empty(cGrupo) .And. !Empty(cOrdem) .And. !Empty(cTexto) .And. !Empty(cMVPar) .And. !Empty(cVariavel) .And. !Empty(cTipoCamp) .And. nTamanho != 0
 		
-		//Defini√ß√£o de vari√°veis
-		cGrupo     := PadR(cGrupo, Len(SX1->X1_GRUPO), " ")           //Adiciona espa√ßos a direita para utiliza√ß√£o no DbSeek
+		//DefiniÁ„o de vari·veis
+		cGrupo     := PadR(cGrupo, Len(SX1->X1_GRUPO), " ")           //Adiciona espaÁos a direita para utilizaÁ„o no DbSeek
 		cChaveHelp := "P." + AllTrim(cGrupo) + AllTrim(cOrdem) + "."  //Define o nome da pergunta
-		cMVPar     := Upper(cMVPar)                                   //Deixa o MV_PAR tudo em mai√∫sculo
-		nPreSel    := Iif(cTipoPar == "C", 1, 0)                      //Se for Combo, o pr√©-selecionado ser√° o Primeiro
-		cDef01     := Iif(cTipoPar == "F", "56", cDef01)              //Se for File, muda a defini√ß√£o para ser tanto Servidor quanto Local
-		nTamanho   := Iif(nTamanho > 60, 60, nTamanho)                //Se o tamanho for maior que 60, volta para 60 - Limita√ß√£o do Protheus
+		cMVPar     := Upper(cMVPar)                                   //Deixa o MV_PAR tudo em mai˙sculo
+		nPreSel    := Iif(cTipoPar == "C", 1, 0)                      //Se for Combo, o prÈ-selecionado ser· o Primeiro
+		cDef01     := Iif(cTipoPar == "F", "56", cDef01)              //Se for File, muda a definiÁ„o para ser tanto Servidor quanto Local
+		nTamanho   := Iif(nTamanho > 60, 60, nTamanho)                //Se o tamanho for maior que 60, volta para 60 - LimitaÁ„o do Protheus
 		nDecimal   := Iif(nDecimal > 9,  9,  nDecimal)                //Se o decimal for maior que 9, volta para 9
-		nDecimal   := Iif(cTipoPar == "N", nDecimal, 0)               //Se n√£o for par√¢metro do tipo num√©rico, ser√° 0 o Decimal
-		cTipoCamp  := Upper(cTipoCamp)                                //Deixa o tipo do Campo em mai√∫sculo
-		cTipoCamp  := Iif(! cTipoCamp $ 'C;D;N;', 'C', cTipoCamp)     //Se o tipo do Campo n√£o estiver entre Caracter / Data / Num√©rico, ser√° Caracter
-		cTipoPar   := Upper(cTipoPar)                                 //Deixa o tipo do Par√¢metro em mai√∫sculo
-		cTipoPar   := Iif(Empty(cTipoPar), 'G', cTipoPar)             //Se o tipo do Par√¢metro estiver em branco, ser√° um Get
-		nTamanho   := Iif(cTipoPar == "C", 1, nTamanho)               //Se for Combo, o tamanho ser√° 1
+		nDecimal   := Iif(cTipoPar == "N", nDecimal, 0)               //Se n„o for par√¢metro do tipo numÈrico, ser· 0 o Decimal
+		cTipoCamp  := Upper(cTipoCamp)                                //Deixa o tipo do Campo em mai˙sculo
+		cTipoCamp  := Iif(! cTipoCamp $ 'C;D;N;', 'C', cTipoCamp)     //Se o tipo do Campo n„o estiver entre Caracter / Data / NumÈrico, ser· Caracter
+		cTipoPar   := Upper(cTipoPar)                                 //Deixa o tipo do Par√¢metro em mai˙sculo
+		cTipoPar   := Iif(Empty(cTipoPar), 'G', cTipoPar)             //Se o tipo do Par√¢metro estiver em branco, ser· um Get
+		nTamanho   := Iif(cTipoPar == "C", 1, nTamanho)               //Se for Combo, o tamanho ser· 1
 	
 		DbSelectArea('SX1')
 		SX1->(DbSetOrder(1)) // Grupo + Ordem
 	
-		//Se n√£o conseguir posicionar, a pergunta ser√° criada
+		//Se n„o conseguir posicionar, a pergunta ser· criada
 		If ! SX1->(DbSeek(cGrupo + cOrdem))
 			RecLock('SX1', .T.)
 				X1_GRUPO   := cGrupo
@@ -140,8 +146,8 @@ User Function zPutSX1(cGrupo, cOrdem, cTexto, cMVPar, cVariavel, cTipoCamp, nTam
 Return
 
 /*---------------------------------------------------*
- | Fun√ß√£o: fPutHelp                                  |
- | Desc:   Fun√ß√£o que insere o Help do Parametro     |
+ | FunÁ„o: fPutHelp                                  |
+ | Desc:   FunÁ„o que insere o Help do Parametro     |
  *---------------------------------------------------*/
 
 Static Function fPutHelp(cKey, cHelp, lUpdate)
@@ -161,11 +167,11 @@ Static Function fPutHelp(cKey, cHelp, lUpdate)
 	//**************************** Portugu√™s
 	nRet := SPF_SEEK(cFilePor, cKey, 1)
 	
-	//Se n√£o encontrar, ser√° inclus√£o
+	//Se n„o encontrar, ser· inclus„o
 	If nRet < 0
 		SPF_INSERT(cFilePor, cKey, , , cHelp)
 	
-	//Sen√£o, ser√° atualiza√ß√£o
+	//Sen„o, ser· atualizaÁ„o
 	Else
 		If lUpdate
 			SPF_UPDATE(cFilePor, nRet, cKey, , , cHelp)
@@ -177,11 +183,11 @@ Static Function fPutHelp(cKey, cHelp, lUpdate)
 	//**************************** Ingl√™s
 	nRet := SPF_SEEK(cFileEng, cKey, 1)
 	
-	//Se n√£o encontrar, ser√° inclus√£o
+	//Se n„o encontrar, ser· inclus„o
 	If nRet < 0
 		SPF_INSERT(cFileEng, cKey, , , cHelp)
 	
-	//Sen√£o, ser√° atualiza√ß√£o
+	//Sen„o, ser· atualizaÁ„o
 	Else
 		If lUpdate
 			SPF_UPDATE(cFileEng, nRet, cKey, , , cHelp)
@@ -193,11 +199,11 @@ Static Function fPutHelp(cKey, cHelp, lUpdate)
 	//**************************** Espanhol
 	nRet := SPF_SEEK(cFileSpa, cKey, 1)
 	
-	//Se n√£o encontrar, ser√° inclus√£o
+	//Se n„o encontrar, ser· inclus„o
 	If nRet < 0
 		SPF_INSERT(cFileSpa, cKey, , , cHelp)
 	
-	//Sen√£o, ser√° atualiza√ß√£o
+	//Sen„o, ser· atualizaÁ„o
 	Else
 		If lUpdate
 			SPF_UPDATE(cFileSpa, nRet, cKey, , , cHelp)

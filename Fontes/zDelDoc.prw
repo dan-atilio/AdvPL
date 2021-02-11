@@ -1,9 +1,15 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2018/07/03/funcao-para-excluir-varios-documentos-de-entrada-de-uma-unica-vez/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
 
 /*/{Protheus.doc} zDelDoc
-FunÃ§Ã£o para excluir vÃ¡rios documentos de entrada ao mesmo tempo
+Função para excluir vários documentos de entrada ao mesmo tempo
 @author Atilio
 @since 23/02/2018
 @version 1.0
@@ -30,9 +36,9 @@ User Function zDelDoc()
 		//Somente se os parÃ¢metros estiverem preenchidos
 		If ! Empty(cFornec) .And. ! Empty(cLoja) .And. ! Empty(dDataAux)
 		
-			//Se a data do parÃ¢metro for menor que o Ãºltimo fechamento, nÃ£o permite excluir
+			//Se a data do parÃ¢metro for menor que o último fechamento, não permite excluir
 			If dDataAux < dUltFec
-				MsgStop("Data invÃ¡lida, fechamento do estoque em "+dToC(dUltFec), "AtenÃ§Ã£o")
+				MsgStop("Data inválida, fechamento do estoque em "+dToC(dUltFec), "Atenção")
 			Else
 				Processa({|| fProcDel()}, "Excluindo Docs de Entrada...")
 			EndIf
@@ -43,9 +49,9 @@ User Function zDelDoc()
 Return
 
 Static Function fValidPerg(cPerg)
-	u_zPutSX1(cPerg, "01", "Fornecedor?",        "MV_PAR01", "MV_CH0", "C", TamSX3('A2_COD')[01],     0, "G", /*cValid*/,   "SA2",    /*cPicture*/,    /*cDef01*/,  /*cDef02*/,    /*cDef03*/,    /*cDef04*/, /*cDef05*/, "Informe o cÃ³digo do fornecedor")
+	u_zPutSX1(cPerg, "01", "Fornecedor?",        "MV_PAR01", "MV_CH0", "C", TamSX3('A2_COD')[01],     0, "G", /*cValid*/,   "SA2",    /*cPicture*/,    /*cDef01*/,  /*cDef02*/,    /*cDef03*/,    /*cDef04*/, /*cDef05*/, "Informe o código do fornecedor")
 	u_zPutSX1(cPerg, "02", "Loja?",              "MV_PAR02", "MV_CH1", "C", TamSX3('A2_LOJA')[01],    0, "G", /*cValid*/,   /*cF3*/,  /*cPicture*/,    /*cDef01*/,  /*cDef02*/,    /*cDef03*/,    /*cDef04*/, /*cDef05*/, "Informe a loja do fornecedor")
-	u_zPutSX1(cPerg, "03", "Data de DigitaÃ§Ã£o?", "MV_PAR03", "MV_CH2", "D", TamSX3('F1_DTDIGIT')[01], 0, "G", /*cValid*/,   /*cF3*/,  /*cPicture*/,    /*cDef01*/,  /*cDef02*/,    /*cDef03*/,    /*cDef04*/, /*cDef05*/, "Informe a data de digitaÃ§Ã£o a ser processada")
+	u_zPutSX1(cPerg, "03", "Data de Digitação?", "MV_PAR03", "MV_CH2", "D", TamSX3('F1_DTDIGIT')[01], 0, "G", /*cValid*/,   /*cF3*/,  /*cPicture*/,    /*cDef01*/,  /*cDef02*/,    /*cDef03*/,    /*cDef04*/, /*cDef05*/, "Informe a data de digitação a ser processada")
 Return
 
 Static Function fProcDel()
@@ -90,7 +96,7 @@ Static Function fProcDel()
 		cQrySF1 += " 	AND SF1.D_E_L_E_T_ = ' ' "                                          + CRLF
 		TCQuery cQrySF1 New Alias "QRY_SF1"
 		
-		//Pega o tamanho total de registros e seta na rÃ©gua
+		//Pega o tamanho total de registros e seta na régua
 		Count To nTotal
 		ProcRegua(nTotal)
 		QRY_SF1->(DbGoTop())
@@ -103,17 +109,17 @@ Static Function fProcDel()
 				nAtual++
 				IncProc("Analisando documento " + cValToChar(nAtual) + " de " + cValToChar(nTotal) + "...")
 				
-				//Atualiza a variÃ¡vel
+				//Atualiza a variável
 				cDocs += '- ' + Alltrim(QRY_SF1->DOCUMENTO) + ';' + CRLF
 				
 				QRY_SF1->(DbSkip())
 			EndDo
 			
 			cDocs := "Fornecedor: " + SA2->A2_COD + ' / ' + SA2->A2_LOJA + ' (' + Alltrim(SA2->A2_NOME) + ')' + CRLF +;
-				'TerÃ¡ o(s) seguinte(s) documento(s) excluÃ­do(s) - Tanto o Documento de Entrada como a PrÃ© Nota: ' + CRLF + cDocs + CRLF + CRLF + 'Confirma?'
+				'Terá o(s) seguinte(s) documento(s) excluÃ­do(s) - Tanto o Documento de Entrada como a Pré Nota: ' + CRLF + cDocs + CRLF + CRLF + 'Confirma?'
 			
 			//Mostra a pergunta se realmente quer continuar
-			If Aviso("AtenÃ§Ã£o", cDocs, {"Sim","Nao"}, 3) == 1
+			If Aviso("Atenção", cDocs, {"Sim","Nao"}, 3) == 1
 				ProcRegua(nTotal)
 				nAtual := 0
 				
@@ -131,7 +137,7 @@ Static Function fProcDel()
 					cDocBkp := QRY_SF1->DOCUMENTO
 					cKeyBkp := QRY_SF1->CHAVE
 					
-					//Posiciona na SF1, monta o cabeÃ§alho do array
+					//Posiciona na SF1, monta o cabeçalho do array
 					SF1->(DbGoTop())
 					If SF1->(DbSeek(cKeyBkp))
 						aAdd(aCabSF1, {"F1_DOC",     SF1->F1_DOC,     Nil})
@@ -165,49 +171,49 @@ Static Function fProcDel()
 								SD1->(DbSkip())
 							EndDo
 							
-							//Ordena pelo nÃºmero do item
+							//Ordena pelo número do item
 							aSort(aDadSD1, , , { |x, y| x[6] < y[6] })
 						EndIf
 						
-						//ComeÃ§a o controle de transaÃ§Ã£o
+						//Começa o controle de transação
 						Begin Transaction
 						
-							//Caso haja Status, Ã© Documento de Entrada
+							//Caso haja Status, é Documento de Entrada
 							If ! Empty(SF1->F1_STATUS)
 							
-								//Chama o Execauto de exclusÃ£o de documento de entrada
+								//Chama o Execauto de exclusão de documento de entrada
 								lMsErroAuto := .F.
 								MSExecAuto({|x, y, z| MATA103(x, y, z)}, aCabSF1, aDadSD1, 5)
 								
-								//Se houve erro, mostra o erro, disarma a transaÃ§Ã£o e atualiza a variÃ¡vel
+								//Se houve erro, mostra o erro, disarma a transação e atualiza a variável
 								If lMsErroAuto
 									MostraErro()
 									DisarmTransaction()
 									lErro := .T.
-									cError += "- Documento '" + cDocBkp + "', nÃ£o foi possÃ­vel excluir Documento de Entrada!" + CRLF
+									cError += "- Documento '" + cDocBkp + "', não foi possÃ­vel excluir Documento de Entrada!" + CRLF
 								EndIf
 							EndIf
 							
-							//Caso nÃ£o haja erro
+							//Caso não haja erro
 							If ! lErro
 							
 								//Posiciona novamente no documento
 								SF1->(DbGoTop())
 								If SF1->(DbSeek(cKeyBkp))
 								
-									//Se for o mesmo, verifica se o status estÃ¡ em branco (Ã© uma prÃ© nota)
+									//Se for o mesmo, verifica se o status está em branco (é uma pré nota)
 									If Empty(SF1->F1_STATUS)
 									
-										//Chama o Execauto de exclusÃ£o da prÃ© nota
+										//Chama o Execauto de exclusão da pré nota
 										lMsErroAuto := .F.
 										MSExecAuto({|x, y, z| MATA140(x, y, z)}, aCabSF1, aDadSD1, 5)
 										
-										//Se houve erro, mostra o erro, disarma a transaÃ§Ã£o e atualiza a variÃ¡vel
+										//Se houve erro, mostra o erro, disarma a transação e atualiza a variável
 										If lMsErroAuto
 											MostraErro()
 											DisarmTransaction()
 											lErro := .T.
-											cError += "- Documento '" + cDocBkp + "', nÃ£o foi possÃ­vel excluir a PrÃ© Nota de Entrada!" + CRLF
+											cError += "- Documento '" + cDocBkp + "', não foi possÃ­vel excluir a Pré Nota de Entrada!" + CRLF
 										EndIf
 									EndIf
 								EndIf
@@ -216,28 +222,28 @@ Static Function fProcDel()
 						End Transaction
 						
 					Else
-						cError += "- Documento '" + cDocBkp + "' nÃ£o encontrado!" + CRLF
+						cError += "- Documento '" + cDocBkp + "' não encontrado!" + CRLF
 					EndIf
 					
 					QRY_SF1->(DbSkip())
 				EndDo
 					
-				//Caso tenha algum log de erro, mostra ao usuÃ¡rio com todos os docs listados
+				//Caso tenha algum log de erro, mostra ao usuário com todos os docs listados
 				If ! Empty(cError)
-					Aviso("AtenÃ§Ã£o", "Houveram os seguintes erros na atualizaÃ§Ã£o: " + CRLF + cError, {"Ok"}, 3)
+					Aviso("Atenção", "Houveram os seguintes erros na atualização: " + CRLF + cError, {"Ok"}, 3)
 					
 				Else
-					MsgInfo("Processo finalizado!", "AtenÃ§Ã£o")
+					MsgInfo("Processo finalizado!", "Atenção")
 				EndIf
 			EndIf
 			
 		Else
-			MsgStop("NÃ£o hÃ¡ dados para esse fornecedor, nessa data de digitaÃ§Ã£o!", "AtenÃ§Ã£o")
+			MsgStop("Não há dados para esse fornecedor, nessa data de digitação!", "Atenção")
 		EndIf
 		
 		QRY_SF1->(DbCloseArea())
 		
 	Else
-		MsgStop("Fornecedor nÃ£o encontrado!", "AtenÃ§Ã£o")
+		MsgStop("Fornecedor não encontrado!", "Atenção")
 	EndIf
 Return

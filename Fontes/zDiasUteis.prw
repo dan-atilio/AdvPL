@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/03/21/funcao-retorna-numero-de-dias-uteis-entre-duas-datas-utilizando-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zDiasUteis
-FunÃ§Ã£o que retorna a quantidade de dias Ãºteis entre duas datas
+Função que retorna a quantidade de dias úteis entre duas datas
 @author Atilio
 @since 25/10/2016
 @version 1.0
@@ -24,7 +30,7 @@ User Function zDiasUteis(dDtIni, dDtFin)
 	//Enquanto a data atual for menor ou igual a data final
 	dDtAtu := dDtIni
 	While dDtAtu <= dDtFin
-		//Se a data atual for uma data VÃ¡lida
+		//Se a data atual for uma data Válida
 		If dDtAtu == DataValida(dDtAtu) 
 			nDias++
 		EndIf

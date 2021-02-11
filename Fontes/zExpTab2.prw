@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/12/23/listagem-tabelas-campos-indices-relacionamentos-protheus/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zExpTab2
-FunÃ§Ã£o que gera lista das tabelas do Protheus
+Função que gera lista das tabelas do Protheus
 @type function
 @author Atilio
 @since 18/12/2016
@@ -19,7 +25,7 @@ User Function zExpTab2()
 	Local cArquivo := "tabelas.html"
 	Local nHdl
 	
-	//Monta cabeÃ§alho do html
+	//Monta cabeçalho do html
 	fErase("C:\Users\Atilio\Desktop\tab2\referencias.html")
 	nHdl := fCreate("C:\Users\Atilio\Desktop\tab2\referencias.html")
 	fWrite(nHdl, FwNoAccent('<html>') + CRLF)
@@ -35,7 +41,7 @@ User Function zExpTab2()
 	DbSelectArea('SX2')
 	SX2->(DbGoTop())
 	While !SX2->(EoF())
-		//Se nÃ£o for tabela especÃ­fica
+		//Se não for tabela especÃ­fica
 		If SubStr(SX2->X2_CHAVE, 1, 2) != 'SZ' .And. SubStr(SX2->X2_CHAVE, 1, 2) != 'Z'
 			fWrite(nHdl, FwNoAccent('		<li><a href="./tabelas/'+Lower(SX2->X2_CHAVE)+'.html" target="main">'+SX2->X2_CHAVE+' - '+Alltrim(SX2->X2_NOME)+'</a></li>') + CRLF)
 		EndIf
@@ -49,11 +55,11 @@ User Function zExpTab2()
 	fClose(nHdl)
 	Return
 	
-	//Agora Ã© montado as tabelas
+	//Agora é montado as tabelas
 	DbSelectArea('SX2')
 	SX2->(DbGoTop())
 	While !SX2->(EoF())
-		//Se nÃ£o for tabela especÃ­fica
+		//Se não for tabela especÃ­fica
 		If SubStr(SX2->X2_CHAVE, 1, 2) != 'SZ' .And. SubStr(SX2->X2_CHAVE, 1, 2) != 'Z'
 			fErase("C:\Users\Atilio\Desktop\tab2\tabelas\"+SX2->X2_CHAVE+".html")
 			nHdl := fCreate("C:\Users\Atilio\Desktop\tab2\tabelas\"+SX2->X2_CHAVE+".html")
@@ -84,7 +90,7 @@ User Function zExpTab2()
 			
 				//Percorre os campos
 				While ! SX3->(Eof()) .And. SX3->X3_ARQUIVO == SX2->X2_CHAVE
-					//Se nÃ£o for campo customizado
+					//Se não for campo customizado
 					If ! ('_X_' $ SX3->X3_CAMPO .Or. '__' $ SX3->X3_CAMPO)
 						fWrite(nHdl, FwNoAccent('<tr>') + CRLF)
 						fWrite(nHdl, FwNoAccent('	<td>'+SX3->X3_CAMPO+'</td>') + CRLF)

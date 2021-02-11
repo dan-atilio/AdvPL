@@ -1,16 +1,22 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/11/22/funcao-migra-varias-tabelas-de-uma-base-para-outra-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
 
 /*/{Protheus.doc} zAppend
-FunÃ§Ã£o de Append em bloco de uma base para outra
+Função de Append em bloco de uma base para outra
 @type function
 @author Atilio
 @since 16/08/2016
 @version 1.0
 	@example
 	u_zAppend()
-	@obs Feito conforme lÃ³gica e ajuda de Marcos GuaranÃ¡
+	@obs Feito conforme lógica e ajuda de Marcos Guaraná
 /*/
 
 User Function zAppend()
@@ -29,7 +35,7 @@ User Function zAppend()
 		cTabDe    := MV_PAR02
 		cTabAt    := MV_PAR03
 		
-		//Chama a rotina de cÃ³pia
+		//Chama a rotina de cópia
 		If !Empty(cDbOrigem)
 			Processa({|| fAtualiza()}, "Processando...")
 		EndIf
@@ -42,7 +48,7 @@ Return
  | Func:  fAtualiza                                                    |
  | Autor: Daniel Atilio                                                |
  | Data:  16/08/2016                                                   |
- | Desc:  FunÃ§Ã£o que atualiza os dados do Destino conforme a Origem    |
+ | Desc:  Função que atualiza os dados do Destino conforme a Origem    |
  *---------------------------------------------------------------------*/
 		
 Static Function fAtualiza()
@@ -82,7 +88,7 @@ Static Function fAtualiza()
 	cQry += "         particoes.partition_id = alocacao.container_id "
 	cQry += "     ) "
  
-	//Filtra somentes tabelas, filtra somente as criadas por usuÃ¡rio
+	//Filtra somentes tabelas, filtra somente as criadas por usuário
 	cQry += " WHERE "
 	cQry += "     tabelas.NAME NOT LIKE 'dt%' "
 	cQry += "     AND tabelas.is_ms_shipped = 0 "
@@ -91,7 +97,7 @@ Static Function fAtualiza()
 	cQry += "     AND tabelas.NAME >= '"+cTabDe+cEmpAnt+"0' "
 	cQry += "     AND tabelas.NAME <= '"+cTabAt+cEmpAnt+"0' "
  
-	//Agrupando pela Tabela, Esquema e NÃºmero de linhas
+	//Agrupando pela Tabela, Esquema e Número de linhas
 	cQry += " GROUP BY "
 	cQry += "     tabelas.Name, esquemas.Name, particoes.Rows "
  
@@ -161,10 +167,10 @@ Static Function fAtualiza()
 	
 	//Se houve erro
 	If !Empty(cLogErr)
-		Aviso('AtenÃ§Ã£o', "Houveram erros nas tabelas: "+Chr(13)+Chr(10)+cLogErr, {'Ok'}, 03)
+		Aviso('Atenção', "Houveram erros nas tabelas: "+Chr(13)+Chr(10)+cLogErr, {'Ok'}, 03)
 		
 	Else
-		MsgInfo("Processo terminado!", "AtenÃ§Ã£o")
+		MsgInfo("Processo terminado!", "Atenção")
 	EndIf
 Return
 
@@ -172,12 +178,12 @@ Return
  | Func:  fValidPerg                                                   |
  | Autor: Daniel Atilio                                                |
  | Data:  16/08/2016                                                   |
- | Desc:  FunÃ§Ã£o para criaÃ§Ã£o do grupo de perguntas                    |
+ | Desc:  Função para criação do grupo de perguntas                    |
  *---------------------------------------------------------------------*/
 
 Static Function fValidPerg(cPerg)
 	//(		cGrupo,	cOrdem,	cPergunt,						cPergSpa,		cPergEng,	cVar,		cTipo,	nTamanho,		nDecimal,	nPreSel,	cGSC,	cValid,	cF3,	cGrpSXG,	cPyme,	cVar01,		cDef01,	cDefSpa1,	cDefEng1,	cCnt01,	cDef02,					cDefSpa2,	cDefEng2,	cDef03,						cDefSpa3,		cDefEng3,	cDef04,	cDefSpa4,	cDefEng4,	cDef05,	cDefSpa5,	cDefEng5,	aHelpPor,	aHelpEng,	aHelpSpa,	cHelp)
 	PutSx1(cPerg,		"01",		"Base de Dados Origem?",		"",				"",			"mv_ch0",	"C",	060,			0,			0,			"G",	"", 		"",		"",			"",		"mv_par01",	"",			"",			"",			"",			"",							"",			"",			"",								"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
 	PutSx1(cPerg,		"02",		"Alias De?",					"",				"",			"mv_ch1",	"C",	003,			0,			0,			"G",	"", 		"",		"",			"",		"mv_par02",	"",			"",			"",			"",			"",							"",			"",			"",								"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
-	PutSx1(cPerg,		"03",		"Alias AtÃ©?",					"",				"",			"mv_ch2",	"C",	003,			0,			0,			"G",	"", 		"",		"",			"",		"mv_par03",	"",			"",			"",			"",			"",							"",			"",			"",								"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
+	PutSx1(cPerg,		"03",		"Alias Até?",					"",				"",			"mv_ch2",	"C",	003,			0,			0,			"G",	"", 		"",		"",			"",		"mv_par03",	"",			"",			"",			"",			"",							"",			"",			"",								"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
 Return

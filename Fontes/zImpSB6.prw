@@ -1,3 +1,9 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/11/08/rotina-de-importacao-da-sb6-em-advpl/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
@@ -5,11 +11,11 @@
 //Constantes
 #Define STR_PULA		Chr(13)+Chr(10)
 
-//Vari√°veis est√°ticas
+//Vari·veis est·ticas
 Static cDirLog := "\x_logsb6\"
 
 /*/{Protheus.doc} zImpSB6
-Fun√ß√£o para importar saldos de poder de/em terceiros
+FunÁ„o para importar saldos de poder de/em terceiros
 @author Atilio
 @since 28/08/2015
 @version 1.0
@@ -36,55 +42,55 @@ User Function zImpSB6()
 	Private oSaySer, oGetSer, cGetSer := Space(TamSX3('F2_SERIE')[01])
 	Private oDlgPvt
 	
-	//Mostrando mensagem de aten√ß√£o ao usar a rotina
+	//Mostrando mensagem de atenÁ„o ao usar a rotina
 	cMsgAux := "<h1>Cuidado!</h1><br>"
-	cMsgAux += "Rotina para importa√ß√£o de Poder de/em Terceiros, ser√°<br>"
-	cMsgAux += "executado apenas a importa√ß√£o das NFs.<br>"
-	cMsgAux += "Ap√≥s a importa√ß√£o, rode o refaz saldos Poder Terceiro!<br>"
-	MsgAlert(cMsgAux, "Aten√ß√£o")
+	cMsgAux += "Rotina para importaÁ„o de Poder de/em Terceiros, ser·<br>"
+	cMsgAux += "executado apenas a importaÁ„o das NFs.<br>"
+	cMsgAux += "ApÛs a importaÁ„o, rode o refaz saldos Poder Terceiro!<br>"
+	MsgAlert(cMsgAux, "AtenÁ„o")
 	
-	//Se n√£o existir o diret√≥rio de logs, gera
+	//Se n„o existir o diretÛrio de logs, gera
 	If !ExistDir(cDirLog)
 		MakeDir(cDirLog)
 	EndIf
 	
 	//Criando a janela
-	DEFINE MSDIALOG oDlgPvt TITLE "zImpSB6 - Importa√ß√£o Poder de/em Terceiros" FROM 000, 000  TO nJanAltu, nJanLarg COLORS 0, 16777215 PIXEL
+	DEFINE MSDIALOG oDlgPvt TITLE "zImpSB6 - ImportaÁ„o Poder de/em Terceiros" FROM 000, 000  TO nJanAltu, nJanLarg COLORS 0, 16777215 PIXEL
 		//Grupo Par√¢metros
 		@ 003, 003 	GROUP oGrpPar TO 060, (nJanLarg/2) 	PROMPT "Par√¢metros: " 		OF oDlgPvt COLOR 0, 16777215 PIXEL
 			//Caminho do arquivo
 			@ 013, 006 SAY        oSayArq PROMPT "Arquivo:"                  SIZE 060, 007 OF oDlgPvt PIXEL
 			@ 010, 070 MSGET      oGetArq VAR    cGetArq                     SIZE 240, 010 OF oDlgPvt PIXEL
 			oGetArq:bHelp := {||	ShowHelpCpo(	"cGetArq",;
-									{"Arquivo CSV que ser√° importado."+STR_PULA+"Exemplo: C:\teste.csv"},2,;
+									{"Arquivo CSV que ser· importado."+STR_PULA+"Exemplo: C:\teste.csv"},2,;
 									{},2)}
 			@ 010, 311 BUTTON oBtnArq PROMPT "..."      SIZE 008, 011 OF oDlgPvt ACTION (fPegaArq()) PIXEL
 			
-			//Tipo de Importa√ß√£o
+			//Tipo de ImportaÁ„o
 			@ 028, 006 SAY        oSayTes PROMPT "TES:"                      SIZE 060, 007 OF oDlgPvt PIXEL
 			@ 025, 070 MSGET      oGetTes VAR    cGetTes                     SIZE 100, 010 OF oDlgPvt PIXEL F3 'SF4'
 			oGetTes:bHelp := {||	ShowHelpCpo(	"cGetTes",;
-									{"Tipo de TES que ser√° processada para importa√ß√£o dos saldos."},2,;
+									{"Tipo de TES que ser· processada para importaÁ„o dos saldos."},2,;
 									{},2)}
 			
 			//Simula antes de importar
-			@ 043, 006 SAY        oSaySer PROMPT "S√©rie:"                    SIZE 070, 007 OF oDlgPvt PIXEL
+			@ 043, 006 SAY        oSaySer PROMPT "SÈrie:"                    SIZE 070, 007 OF oDlgPvt PIXEL
 			@ 040, 070 MSGET      oGetSer VAR    cGetSer                     SIZE 100, 010 OF oDlgPvt PIXEL F3 '01'
 			oGetSer:bHelp := {||	ShowHelpCpo(	"cGetSer",;
-									{"S√©rie que ser√° utilizada para importa√ß√£o."},2,;
+									{"SÈrie que ser· utilizada para importaÁ„o."},2,;
 									{},2)}
 		
-		//Grupo A√ß√µes
-		@ 063, 003 	GROUP oGrpAco TO (nJanAltu/2)-3, (nJanLarg/2) 	PROMPT "A√ß√µes: " 		OF oDlgPvt COLOR 0, 16777215 PIXEL
+		//Grupo AÁ√µes
+		@ 063, 003 	GROUP oGrpAco TO (nJanAltu/2)-3, (nJanLarg/2) 	PROMPT "AÁ√µes: " 		OF oDlgPvt COLOR 0, 16777215 PIXEL
 		
 			//Bot√µes
 			@ 070, (nJanLarg/2)-(63*1)  BUTTON oBtnSair PROMPT "Sair"      SIZE 60, 014 OF oDlgPvt ACTION (oDlgPvt:End()) PIXEL
 			@ 070, (nJanLarg/2)-(63*2)  BUTTON oBtnImp  PROMPT "Importar"  SIZE 60, 014 OF oDlgPvt ACTION (Processa({|| fImport() }, "Aguarde...")) PIXEL
-			@ 070, (nJanLarg/2)-(63*3)  BUTTON oBtnRela PROMPT "Rela√ß√£o"   SIZE 60, 014 OF oDlgPvt ACTION (fRelacao()) PIXEL
+			@ 070, (nJanLarg/2)-(63*3)  BUTTON oBtnRela PROMPT "RelaÁ„o"   SIZE 60, 014 OF oDlgPvt ACTION (fRelacao()) PIXEL
 	ACTIVATE MSDIALOG oDlgPvt CENTERED
 	
 	//Se confirmar a pergunta, chama a rotina de refaz poder de terceiros
-	If MsgYesNo("Deseja executar a rotina de Refaz Poder de Terceiros?", "Aten√ß√£o")
+	If MsgYesNo("Deseja executar a rotina de Refaz Poder de Terceiros?", "AtenÁ„o")
 		Mata216()
 	EndIf
 	
@@ -96,25 +102,25 @@ Return
  | Func:  fPegaArq                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  28/08/2015                                                   |
- | Desc:  Fun√ß√£o para pegar o arquivo txt a ser importado              |
+ | Desc:  FunÁ„o para pegar o arquivo txt a ser importado              |
  *---------------------------------------------------------------------*/
 
 Static Function fPegaArq()
 	Local cArqAux := ""
 
-	cArqAux := cGetFile( "Arquivo Texto *.csv* | *.csv*",;	//M√°scara
+	cArqAux := cGetFile( "Arquivo Texto *.csv* | *.csv*",;	//M·scara
 							"Arquivo...",;						//T√≠tulo
-							,;										//N√∫mero da m√°scara
-							,;										//Diret√≥rio Inicial
+							,;										//N˙mero da m·scara
+							,;										//DiretÛrio Inicial
 							.F.,;									//.F. == Abrir; .T. == Salvar
-							GETF_LOCALHARD,;						//Diret√≥rio full. Ex.: 'C:\TOTVS\arquivo.xlsx'
-							.F.)									//N√£o exibe diret√≥rio do servidor
+							GETF_LOCALHARD,;						//DiretÛrio full. Ex.: 'C:\TOTVS\arquivo.xlsx'
+							.F.)									//N„o exibe diretÛrio do servidor
 								
-	//Caso o arquivo n√£o exista ou estiver em branco ou n√£o for a extens√£o txt
+	//Caso o arquivo n„o exista ou estiver em branco ou n„o for a extens„o txt
 	If Empty(cArqAux) .Or. !File(cArqAux) .Or. SubStr(cArqAux, RAt('.', cArqAux)+1, 3) != "csv"
-		MsgStop("Arquivo <b>inv√°lido</b>!", "Aten√ß√£o")
+		MsgStop("Arquivo <b>inv·lido</b>!", "AtenÁ„o")
 		
-	//Sen√£o, define o get
+	//Sen„o, define o get
 	Else
 		cGetArq := PadR(cArqAux,99)
 		oGetArq:Refresh()
@@ -125,7 +131,7 @@ Return
  | Func:  fImport                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  28/08/2015                                                   |
- | Desc:  Fun√ß√£o que realiza a importa√ß√£o dos dados                    |
+ | Desc:  FunÁ„o que realiza a importaÁ„o dos dados                    |
  *---------------------------------------------------------------------*/
 
 Static Function fImport()
@@ -140,41 +146,41 @@ Static Function fImport()
 	SX5->(DbSetOrder(1)) //X5_FILIAL+X5_TABELA+X5_CHAVE
 	SX5->(DbGoTop())
 
-	//Caso o arquivo n√£o exista ou estiver em branco ou n√£o for a extens√£o txt
+	//Caso o arquivo n„o exista ou estiver em branco ou n„o for a extens„o txt
 	If Empty(cGetArq) .Or. !File(cGetArq) .Or. SubStr(cGetArq, RAt('.', cGetArq)+1, 3) != "csv"
-		MsgStop("Arquivo <b>inv√°lido</b>!", "Aten√ß√£o")
+		MsgStop("Arquivo <b>inv·lido</b>!", "AtenÁ„o")
 		Return
 	EndIf
 	
 	//Valida se TES existe
 	If SF4->(DbSeek(FWxFilial('SF4') + cGetTes))
-		//Somente ir√° prosseguir se for Remessa ou Devolu√ß√£o
+		//Somente ir· prosseguir se for Remessa ou DevoluÁ„o
 		If SF4->F4_PODER3 $ 'R;D'
 			lMovEstoq := (SF4->F4_ESTOQUE == 'S')
 		
 			//Se movimenta estoque, mostra mensagem perguntando se quer continuar
 			If lMovEstoq
 				cMsgAux := "Essa TES, <b>movimenta ESTOQUE</b>, certifique-se de ter saldo dispon√≠vel!<br>Deseja prosseguir?"
-				If !MsgYesNo(cMsgAux, "Aten√ß√£o")
+				If !MsgYesNo(cMsgAux, "AtenÁ„o")
 					Return
 				EndIf
 			EndIf
 		
-		//Sen√£o, mostra mensagem que tes n√£o movimenta poder de/em terceiros 
+		//Sen„o, mostra mensagem que tes n„o movimenta poder de/em terceiros 
 		Else
-			MsgStop("TES <b>n√£o movimenta</b> poder de/em Terceiros!", "Aten√ß√£o")
+			MsgStop("TES <b>n„o movimenta</b> poder de/em Terceiros!", "AtenÁ„o")
 			Return
 		EndIf
 	
-	//Se n√£o conseguir posicionar, retorna erro
+	//Se n„o conseguir posicionar, retorna erro
 	Else
-		MsgStop("TES <b>n√£o encontrada</b>!", "Aten√ß√£o")
+		MsgStop("TES <b>n„o encontrada</b>!", "AtenÁ„o")
 		Return
 	EndIf
 	
-	//Valida se a S√©rie existe
+	//Valida se a SÈrie existe
 	If ! SX5->(DbSeek(FWxFilial('SX5') + '01' + cGetSer))
-		MsgStop("S√©rie <b>n√£o encontrada</b>!", "Aten√ß√£o")
+		MsgStop("SÈrie <b>n„o encontrada</b>!", "AtenÁ„o")
 		Return
 	EndIf
 	
@@ -186,14 +192,14 @@ Static Function fImport()
 	ElseIf SF4->F4_TIPO == 'E'
 		fImpSB6SF1()
 	EndIf
-	MsgInfo("Importa√ß√£o conclu√≠da!", "Aten√ß√£o")
+	MsgInfo("ImportaÁ„o conclu√≠da!", "AtenÁ„o")
 Return
 
 /*---------------------------------------------------------------------*
  | Func:  fImpSB6SF2                                                   |
  | Autor: Daniel Atilio                                                |
  | Data:  28/08/2015                                                   |
- | Desc:  Fun√ß√£o que importa as NF de Sa√≠da, para gera√ß√£o da SB6       |
+ | Desc:  FunÁ„o que importa as NF de Sa√≠da, para geraÁ„o da SB6       |
  *---------------------------------------------------------------------*/
 
 Static Function fImpSB6SF2()
@@ -242,20 +248,20 @@ Static Function fImpSB6SF2()
 		//Pegando os dados, conforme caracter delimitador
 		aDadAux := StrTokArr(cBuffer, ';')
 		
-		//Se a primeira posi√ß√£o for '1' √© cabe√ßalho
+		//Se a primeira posiÁ„o for '1' È cabeÁalho
 		If aDadAux[1] == '1' .And. Len(aCabSF2) == 0
 			nLinNF := nLinAtu
 			cCliAtu := aDadAux[3]
 			cLojAtu := aDadAux[4]
 			
-			//Pegando a pr√≥xima nota dessa s√©rie
+			//Pegando a prÛxima nota dessa sÈrie
 			cNFAux := NxtSX5Nota(cSerAux)
 			
 			DbSelectArea('SA1')
 			SA1->(DbSetOrder(1)) //A1_FILIAL+A1_COD+A1_LOJA
 			SA1->(DbSeek(FWxFilial('SA1') + cCliAtu + cLojAtu)) 
 			
-			//Adicionando dados no cabe√ßalho
+			//Adicionando dados no cabeÁalho
 			aAdd(aCabSF2,{"F2_FILIAL",	FWxFilial("SF2"),	Nil})          
 			aAdd(aCabSF2,{"F2_TIPO",		cTipAux,			Nil})
 			aAdd(aCabSF2,{"F2_DOC",		cNFAux,			Nil})
@@ -268,7 +274,7 @@ Static Function fImpSB6SF2()
 			aAdd(aCabSF2,{"F2_TIPOCLI",	SA1->A1_TIPO,		Nil})	
 			aAdd(aCabSF2,{"F2_ESPECIE",	aDadAux[5],		Nil})
 			
-		//Sen√£o, se a primeira posi√ß√£o for '2' √© item
+		//Sen„o, se a primeira posiÁ„o for '2' È item
 		ElseIf aDadAux[1] == '2' .And. Len(aCabSF2) != 0
 			aLinAux := {}
 			cIteAtu := Soma1(cIteAtu)
@@ -291,21 +297,21 @@ Static Function fImpSB6SF2()
 			aAdd(aLinAux,{"D2_TES",		cGetTes,			Nil})
 			aAdd(aIteSD2, aLinAux)
 			
-		//Sen√£o, se a terceira posi√ß√£o for '3' √© o final dessa Nota, para importa√ß√£o dos dados
+		//Sen„o, se a terceira posiÁ„o for '3' È o final dessa Nota, para importaÁ„o dos dados
 		ElseIf aDadAux[1] == '3' .And. Len(aCabSF2) != 0 .And. Len(aIteSD2) != 0
-			//Iniciando transa√ß√£o
+			//Iniciando transaÁ„o
 			Begin Transaction
 				lMsErroAuto 		:= .F.
 				lAutoErrNoFile	:= .T.
 				lMsErroAuto		:= .F.
 				l920Inclui			:= .T.
 			
-				//Chamando a inclus√£o autom√°tica
+				//Chamando a inclus„o autom·tica
 				MSExecAuto({|x, y, z| Mata920(x, y, z)}, aCabSF2, aIteSD2, 3)
 			
 				//Se houve erro
 				If lMsErroAuto
-					cLogAtu := "Houveram erros na importa√ß√£o da NF, na linha "+cValToChar(nLinNF)+":" + STR_PULA
+					cLogAtu := "Houveram erros na importaÁ„o da NF, na linha "+cValToChar(nLinNF)+":" + STR_PULA
 					cNomLog := "linha_"+cValToChar(nLinNF)+"_"+StrTran(dToC(dDataBase), '/', '-')+"_"+StrTran(Time(), ':', '-')+".txt"
 					
 					//Pegando log do ExecAuto
@@ -315,12 +321,12 @@ Static Function fImpSB6SF2()
 					Next
 					MemoWrite(cDirLog+cNomLog, cLogAtu)
 					
-					cErroImp += "- Linha "+cValToChar(nLinNF)+" - log est√° em '"+cDirLog+cNomLog+"';"+STR_PULA
+					cErroImp += "- Linha "+cValToChar(nLinNF)+" - log est· em '"+cDirLog+cNomLog+"';"+STR_PULA
 					DisarmTransaction()
 				EndIf
 			End Transaction
 			
-			//Voltando as vari√°veis
+			//Voltando as vari·veis
 			nLinNF		:= 0
 			cNFAux		:= ''
 			cCliAtu	:= ''
@@ -333,10 +339,10 @@ Static Function fImpSB6SF2()
 		Ft_FSkip()
 	EndDo
 		
-	//Se houve erros, mostra mensagem ao usu√°rio
+	//Se houve erros, mostra mensagem ao usu·rio
 	If !Empty(cErroImp)
-		cErroImp := "Houve erro(s) na importa√ß√£o."+STR_PULA+STR_PULA+"---"+STR_PULA+"Log: "+STR_PULA+cErroImp
-		Aviso('Aten√ß√£o', cErroImp, {'Ok'}, 03)
+		cErroImp := "Houve erro(s) na importaÁ„o."+STR_PULA+STR_PULA+"---"+STR_PULA+"Log: "+STR_PULA+cErroImp
+		Aviso('AtenÁ„o', cErroImp, {'Ok'}, 03)
 	EndIf
 		
 	//Fechando o arquivo
@@ -352,7 +358,7 @@ Return
  | Func:  fImpSB6SF1                                                   |
  | Autor: Daniel Atilio                                                |
  | Data:  28/08/2015                                                   |
- | Desc:  Fun√ß√£o que importa as NF de Entrada, para gera√ß√£o da SB6     |
+ | Desc:  FunÁ„o que importa as NF de Entrada, para geraÁ„o da SB6     |
  *---------------------------------------------------------------------*/
 
 Static Function fImpSB6SF1()
@@ -402,20 +408,20 @@ Static Function fImpSB6SF1()
 		//Pegando os dados, conforme caracter delimitador
 		aDadAux := StrTokArr(cBuffer, ';')
 		
-		//Se a primeira posi√ß√£o for '1' √© cabe√ßalho
+		//Se a primeira posiÁ„o for '1' È cabeÁalho
 		If aDadAux[1] == '1' .And. Len(aCabSF1) == 0
 			nLinNF := nLinAtu
 			cForAtu := aDadAux[3]
 			cLojAtu := aDadAux[4]
 			
-			//Pegando a pr√≥xima nota dessa s√©rie
+			//Pegando a prÛxima nota dessa sÈrie
 			cNFAux := NxtSX5Nota(cSerAux)
 			
 			DbSelectArea('SA2')
 			SA2->(DbSetOrder(1)) //A2_FILIAL+A2_COD+A2_LOJA
 			SA2->(DbSeek(FWxFilial('SA2') + cForAtu + cLojAtu)) 
 			
-			//Adicionando dados no cabe√ßalho
+			//Adicionando dados no cabeÁalho
 			aAdd(aCabSF1,{"F1_FILIAL",	FWxFilial("SF1"),	Nil})          
 			aAdd(aCabSF1,{"F1_TIPO",		cTipAux,			Nil})
 			aAdd(aCabSF1,{"F1_DOC",		cNFAux,			Nil})
@@ -428,7 +434,7 @@ Static Function fImpSB6SF1()
 			aAdd(aCabSF1,{"F1_FORMUL",	'N',				Nil})
 			aAdd(aCabSF1,{"F1_COND",		aDadAux[6],		Nil})
 			
-		//Sen√£o, se a primeira posi√ß√£o for '2' √© item
+		//Sen„o, se a primeira posiÁ„o for '2' È item
 		ElseIf aDadAux[1] == '2' .And. Len(aCabSF1) != 0
 			aLinAux := {}
 			cIteAtu := Soma1(cIteAtu)
@@ -450,9 +456,9 @@ Static Function fImpSB6SF1()
 			aAdd(aLinAux,{"D1_TES",		cGetTes,			Nil})
 			aAdd(aIteSD1, aLinAux)
 			
-		//Sen√£o, se a terceira posi√ß√£o for '3' √© o final dessa Nota, para importa√ß√£o dos dados
+		//Sen„o, se a terceira posiÁ„o for '3' È o final dessa Nota, para importaÁ„o dos dados
 		ElseIf aDadAux[1] == '3' .And. Len(aCabSF1) != 0 .And. Len(aIteSD1) != 0
-			//Iniciando transa√ß√£o
+			//Iniciando transaÁ„o
 			Begin Transaction
 				lMsErroAuto 		:= .F.
 				lAutoErrNoFile	:= .T.
@@ -460,12 +466,12 @@ Static Function fImpSB6SF1()
 				nModBkp			:= nModulo
 				nModulo			:= 2
 			
-				//Chamando a inclus√£o autom√°tica
+				//Chamando a inclus„o autom·tica
 				MSExecAuto({|x, y, z| Mata103(x, y, z)}, aCabSF1, aIteSD1, 3)
 			
 				//Se houve erro
 				If lMsErroAuto
-					cLogAtu := "Houveram erros na importa√ß√£o da NF, na linha "+cValToChar(nLinNF)+":" + STR_PULA
+					cLogAtu := "Houveram erros na importaÁ„o da NF, na linha "+cValToChar(nLinNF)+":" + STR_PULA
 					cNomLog := "linha_"+cValToChar(nLinNF)+"_"+StrTran(dToC(dDataBase), '/', '-')+"_"+StrTran(Time(), ':', '-')+".txt"
 					
 					//Pegando log do ExecAuto
@@ -475,14 +481,14 @@ Static Function fImpSB6SF1()
 					Next
 					MemoWrite(cDirLog+cNomLog, cLogAtu)
 					
-					cErroImp += "- Linha "+cValToChar(nLinNF)+" - log est√° em '"+cDirLog+cNomLog+"';"+STR_PULA
+					cErroImp += "- Linha "+cValToChar(nLinNF)+" - log est· em '"+cDirLog+cNomLog+"';"+STR_PULA
 					DisarmTransaction()
 				EndIf
 				
 				nModulo := nModBkp
 			End Transaction
 			
-			//Voltando as vari√°veis
+			//Voltando as vari·veis
 			nLinNF		:= 0
 			cNFAux		:= ''
 			cForAtu	:= ''
@@ -495,10 +501,10 @@ Static Function fImpSB6SF1()
 		Ft_FSkip()
 	EndDo
 		
-	//Se houve erros, mostra mensagem ao usu√°rio
+	//Se houve erros, mostra mensagem ao usu·rio
 	If !Empty(cErroImp)
-		cErroImp := "Houve erro(s) na importa√ß√£o."+STR_PULA+STR_PULA+"---"+STR_PULA+"Log: "+STR_PULA+cErroImp
-		Aviso('Aten√ß√£o', cErroImp, {'Ok'}, 03)
+		cErroImp := "Houve erro(s) na importaÁ„o."+STR_PULA+STR_PULA+"---"+STR_PULA+"Log: "+STR_PULA+cErroImp
+		Aviso('AtenÁ„o', cErroImp, {'Ok'}, 03)
 	EndIf
 		
 	//Fechando o arquivo
@@ -514,17 +520,17 @@ Return
  | Func:  fRelacao                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  28/08/2015                                                   |
- | Desc:  Fun√ß√£o que exporta a rela√ß√£o dos campos para TReport         |
+ | Desc:  FunÁ„o que exporta a relaÁ„o dos campos para TReport         |
  *---------------------------------------------------------------------*/
 
 Static Function fRelacao()
 	Local cMsgAux := ""
 	
-	//Mensagem que ser√° impressa no TReport
-	cMsgAux := 'Leiaute de importa√ß√£o de Saldos de/em Poder de Terceiros<br>'
+	//Mensagem que ser· impressa no TReport
+	cMsgAux := 'Leiaute de importaÁ„o de Saldos de/em Poder de Terceiros<br>'
 	cMsgAux += ' <br>'
-	cMsgAux += '   Os campos dever√£o ser separados com ponto e v√≠rgula (";"), e gerados na extens√£o .csv.<br>'
-	cMsgAux += '   Abaixo a explica√ß√£o dos Saldos de/em Poder de Terceiros:<br>'
+	cMsgAux += '   Os campos dever„o ser separados com ponto e v√≠rgula (";"), e gerados na extens„o .csv.<br>'
+	cMsgAux += '   Abaixo a explicaÁ„o dos Saldos de/em Poder de Terceiros:<br>'
 	cMsgAux += '   O controle do poder de terceiros do SIGA-ADVANCED foi concebido para controlar o envio e o recebimento de materiais que recebem algum tipo de beneficiamento.<br>'
 	cMsgAux += '   Existem duas situacoes bastante claras e distintas que sao relatadas a seguir:<br>'
 	cMsgAux += ' <br>'
@@ -532,33 +538,33 @@ Static Function fRelacao()
 	cMsgAux += '     - NF de entrada com tipo "B" p/ apresentar cliente e TES com F4_PODER3 = "R" (Remessa).<br>'
 	cMsgAux += '   Apos a execucao do servico de beneficiamento, o material deve ser devolvido ao cliente:<br>'
 	cMsgAux += '     - NF de saida com tipo "N" p/ apresentar cliente e TES como F4_PODER3 = "D" (Devolucao).<br>'
-	cMsgAux += '   Note que o servico prestado tambem deve constar desta nota, porem nao tem tratamento de poder de terceiros, simplesmente √© vendido.<br>'
+	cMsgAux += '   Note que o servico prestado tambem deve constar desta nota, porem nao tem tratamento de poder de terceiros, simplesmente È vendido.<br>'
 	cMsgAux += ' <br>'
 	cMsgAux += '   Quando "EU MANDO BENEFICIAR" - O processo se inicia quando o material deve ser enviado para um fornecedor, que ira fazer o beneficiamento:<br>'
 	cMsgAux += '     - NF de saida com tipo "B" p/ apresentar fornecedor e TES com F4_PODER3 = "R" (Remessa).<br>'
-	cMsgAux += '   Apos a execucao do servico de beneficiamento, o material √© devolvido pelo fornecedor:<br>'
+	cMsgAux += '   Apos a execucao do servico de beneficiamento, o material È devolvido pelo fornecedor:<br>'
 	cMsgAux += '     - NF de entrada com tipo "N" p/ apresentar fornecedor e TES como F4_PODER3 = "D" (Devolucao).<br>'
-	cMsgAux += '   Note que o servico prestado tambem deve constar desta nota, porem nao tem tratamento de poder de terceiros, simplesmente √© comprado.<br>'
+	cMsgAux += '   Note que o servico prestado tambem deve constar desta nota, porem nao tem tratamento de poder de terceiros, simplesmente È comprado.<br>'
 	cMsgAux += ' <br>'
 	cMsgAux += '   Link: http://tdn.totvs.com/display/public/mp/Controle+de+Poder+de+Terceiros;jsessionid=8E86724A96E413F71334FBAA092EF916<br>'
 	cMsgAux += ' <br>'
 	cMsgAux += '+=========================================+<br>'
 	cMsgAux += 'Abaixo o Layout para Saldos em Terceiros:<br>'
-	cMsgAux += '   Linha de Cabe√ßalho:<br>'
-	cMsgAux += '     - Caracter "1", indicando cabe√ßalho;<br>'
-	cMsgAux += '     - F2_EMISSAO - Data de Emiss√£o da NF de Sa√≠da (padr√£o DD/MM/YYYY);<br>'
-	cMsgAux += '     - F2_CLIENTE - C√≥digo do Cliente;<br>'
+	cMsgAux += '   Linha de CabeÁalho:<br>'
+	cMsgAux += '     - Caracter "1", indicando cabeÁalho;<br>'
+	cMsgAux += '     - F2_EMISSAO - Data de Emiss„o da NF de Sa√≠da (padr„o DD/MM/YYYY);<br>'
+	cMsgAux += '     - F2_CLIENTE - CÛdigo do Cliente;<br>'
 	cMsgAux += '     - F2_LOJA - Loja do Cliente;<br>'
-	cMsgAux += '     - F2_ESPECIE - Esp√©cie da NF de Sa√≠da (ex.: "NF").<br>'
+	cMsgAux += '     - F2_ESPECIE - EspÈcie da NF de Sa√≠da (ex.: "NF").<br>'
 	cMsgAux += ' <br>'
 	cMsgAux += '   Linha de Itens:<br>'
 	cMsgAux += '     - Caracter "2", indicando item;<br>'
-	cMsgAux += '     - D2_COD - C√≥digo do Produto;<br>'
+	cMsgAux += '     - D2_COD - CÛdigo do Produto;<br>'
 	cMsgAux += '     - D2_QUANT - Quantidade do Produto;<br>'
-	cMsgAux += '     - D2_PRCVEN - Pre√ßo do Produto;<br>'
-	cMsgAux += '     - D2_X_MOTOR - N√∫mero do Motor.<br>'
+	cMsgAux += '     - D2_PRCVEN - PreÁo do Produto;<br>'
+	cMsgAux += '     - D2_X_MOTOR - N˙mero do Motor.<br>'
 	cMsgAux += ' <br>'
-	cMsgAux += '   Finaliza√ß√£o do Documento atual<br>'
+	cMsgAux += '   FinalizaÁ„o do Documento atual<br>'
 	cMsgAux += '     - Caracter "3", indicando o final da NF de Sa√≠da.<br>'
 	cMsgAux += ' <br>'
 	cMsgAux += '   Exemplo:<br>'
@@ -569,21 +575,21 @@ Static Function fRelacao()
 	cMsgAux += '     3;<br>'
 	cMsgAux += '+=========================================+<br>'
 	cMsgAux += 'Abaixo o Layout para Saldos de Terceiros:<br>'
-	cMsgAux += '   Linha de Cabe√ßalho:<br>'
-	cMsgAux += '     - Caracter "1", indicando cabe√ßalho;<br>'
-	cMsgAux += '     - F1_EMISSAO - Data de Emiss√£o da NF de Entrada (padr√£o DD/MM/YYYY);<br>'
-	cMsgAux += '     - F1_FORNECE - C√≥digo do Fornecedor;<br>'
+	cMsgAux += '   Linha de CabeÁalho:<br>'
+	cMsgAux += '     - Caracter "1", indicando cabeÁalho;<br>'
+	cMsgAux += '     - F1_EMISSAO - Data de Emiss„o da NF de Entrada (padr„o DD/MM/YYYY);<br>'
+	cMsgAux += '     - F1_FORNECE - CÛdigo do Fornecedor;<br>'
 	cMsgAux += '     - F1_LOJA - Loja do Fornecedor;<br>'
-	cMsgAux += '     - F1_ESPECIE - Esp√©cie da NF de Sa√≠da (ex.: "NF");<br>'
-	cMsgAux += '     - F1_COND - Condi√ß√£o de pagamento (ex.: "001").<br>'
+	cMsgAux += '     - F1_ESPECIE - EspÈcie da NF de Sa√≠da (ex.: "NF");<br>'
+	cMsgAux += '     - F1_COND - CondiÁ„o de pagamento (ex.: "001").<br>'
 	cMsgAux += ' <br>'
 	cMsgAux += '   Linha de Itens:<br>'
 	cMsgAux += '     - Caracter "2", indicando item;<br>'
-	cMsgAux += '     - D1_COD - C√≥digo do Produto;<br>'
+	cMsgAux += '     - D1_COD - CÛdigo do Produto;<br>'
 	cMsgAux += '     - D1_QUANT - Quantidade do Produto;<br>'
-	cMsgAux += '     - D1_VUNIT - Pre√ßo do Produto.<br>'
+	cMsgAux += '     - D1_VUNIT - PreÁo do Produto.<br>'
 	cMsgAux += ' <br>'
-	cMsgAux += '   Finaliza√ß√£o do Documento atual<br>'
+	cMsgAux += '   FinalizaÁ„o do Documento atual<br>'
 	cMsgAux += '     - Caracter "3", indicando o final da NF de Sa√≠da.<br>'
 	cMsgAux += ' <br>'
 	cMsgAux += '   Exemplo:<br>'
@@ -600,14 +606,14 @@ Return
  | Func:  fImpRel                                                                |
  | Autor: Daniel Atilio                                                          |
  | Data:  12/08/2015                                                             |
- | Desc:  Fun√ß√£o que imprime a rela√ß√£o das vari√°veis                             |
+ | Desc:  FunÁ„o que imprime a relaÁ„o das vari·veis                             |
  *-------------------------------------------------------------------------------*/
 
 Static Function fImpRel(cMsgAux, aDadAux)
 	Local oReport
 	Private cMensagem		:= cMsgAux
 	
-	//Definindo as se√ß√µes e gerando a impress√£o
+	//Definindo as seÁ√µes e gerando a impress„o
 	oReport := fReportDef()
 	oReport:PrintDialog()
 Return
@@ -616,7 +622,7 @@ Return
  | Func:  fReportDef                                                             |
  | Autor: Daniel Atilio                                                          |
  | Data:  28/08/2015                                                             |
- | Desc:  Fun√ß√£o que monta a defini√ß√£o do relat√≥rio                              |
+ | Desc:  FunÁ„o que monta a definiÁ„o do relatÛrio                              |
  *-------------------------------------------------------------------------------*/
 
 Static Function fReportDef()
@@ -625,25 +631,25 @@ Static Function fReportDef()
 	Local oSectDad
 	Local oFunTotDad
 
-	//Cria√ß√£o do componente de impress√£o
-	oReport := TReport():New(	"zImpSB6",;														//Nome do Relat√≥rio
-									"Rela√ß√£o de Dados",;												//T√≠tulo
+	//CriaÁ„o do componente de impress„o
+	oReport := TReport():New(	"zImpSB6",;														//Nome do RelatÛrio
+									"RelaÁ„o de Dados",;												//T√≠tulo
 									,;																	//Pergunte
-									{|oReport| fRepPrint(oReport)},;								//Bloco de c√≥digo que ser√° executado na confirma√ß√£o da impress√£o
-									)																	//Descri√ß√£o
-	oReport:SetLandscape(.T.)   //Define a orienta√ß√£o de p√°gina do relat√≥rio como paisagem  ou retrato. .F.=Retrato; .T.=Paisagem
-	oReport:SetTotalInLine(.F.) //Define se os totalizadores ser√£o impressos em linha ou coluna
+									{|oReport| fRepPrint(oReport)},;								//Bloco de cÛdigo que ser· executado na confirmaÁ„o da impress„o
+									)																	//DescriÁ„o
+	oReport:SetLandscape(.T.)   //Define a orientaÁ„o de p·gina do relatÛrio como paisagem  ou retrato. .F.=Retrato; .T.=Paisagem
+	oReport:SetTotalInLine(.F.) //Define se os totalizadores ser„o impressos em linha ou coluna
 	If !Empty(oReport:uParam)
 		Pergunte(oReport:uParam,.F.)
 	EndIf
 	
-	//Criando a se√ß√£o de mensagem
-	oSectMsg := TRSection():New(	oReport,;				//Objeto TReport que a se√ß√£o pertence
-										"",;					//Descri√ß√£o da se√ß√£o
-										{""})					//Tabelas utilizadas, a primeira ser√° considerada como principal da se√ß√£o
-	oSectMsg:SetTotalInLine(.F.)  //Define se os totalizadores ser√£o impressos em linha ou coluna. .F.=Coluna; .T.=Linha
+	//Criando a seÁ„o de mensagem
+	oSectMsg := TRSection():New(	oReport,;				//Objeto TReport que a seÁ„o pertence
+										"",;					//DescriÁ„o da seÁ„o
+										{""})					//Tabelas utilizadas, a primeira ser· considerada como principal da seÁ„o
+	oSectMsg:SetTotalInLine(.F.)  //Define se os totalizadores ser„o impressos em linha ou coluna. .F.=Coluna; .T.=Linha
 	
-	//C√©lulas da se√ß√£o mensagem
+	//CÈlulas da seÁ„o mensagem
 	TRCell():New(	oSectMsg,	"XX_MENS",	"",	"",	"",	200,	/*lPixel*/,	/*{|| code-block de impressao }*/)
 Return oReport
 
@@ -651,7 +657,7 @@ Return oReport
  | Func:  fRepPrint                                                              |
  | Autor: Daniel Atilio                                                          |
  | Data:  28/08/2015                                                             |
- | Desc:  Fun√ß√£o que imprime o relat√≥rio                                         |
+ | Desc:  FunÁ„o que imprime o relatÛrio                                         |
  *-------------------------------------------------------------------------------*/
 
 Static Function fRepPrint(oReport)
@@ -661,7 +667,7 @@ Static Function fRepPrint(oReport)
 	Local aAux := {}
 	Local nAux := 0
 
-	//Pegando as se√ß√µes do relat√≥rio
+	//Pegando as seÁ√µes do relatÛrio
 	oMsg	:= oReport:Section(1)
 
 	//Quebrando a mensagem
@@ -681,19 +687,19 @@ Return
  | Func:  fRepPrint                                                              |
  | Autor: Daniel Atilio                                                          |
  | Data:  28/08/2015                                                             |
- | Desc:  Fun√ß√£o para quebrar uma string em v√°rias linhas                        |
+ | Desc:  FunÁ„o para quebrar uma string em v·rias linhas                        |
  *-------------------------------------------------------------------------------*/
 
 Static Function fMemoToArr(cTexto, aTexto, nMaxCol, cCaracter)
-	Local nPosAtual := 1         //Posi√ß√£o Atual
-	Local nPosFim   := nMaxCol   //Posi√ß√£o Final
-	Local nMaxLin   := 1         //N√∫mero de Linhas
+	Local nPosAtual := 1         //PosiÁ„o Atual
+	Local nPosFim   := nMaxCol   //PosiÁ„o Final
+	Local nMaxLin   := 1         //N˙mero de Linhas
 	Local aTexto:={}
 	Local aAux:={}
 	Local nI := 0
 	Default cCaracter := Chr(13)
 
-	//Se o texto n√£o tiver em branco
+	//Se o texto n„o tiver em branco
 	If ! Empty(cTexto)
 		//Quebrando o Array, conforme -Enter-
 		aAux:= Separa(cTexto, '<br>')
@@ -705,17 +711,17 @@ Static Function fMemoToArr(cTexto, aTexto, nMaxCol, cCaracter)
 		
 		//Correndo as linhas quebradas
 		For nI:=1 To Len(aAux)
-			//Se o tamanho de Texto, for maior que o n√∫mero de colunas
+			//Se o tamanho de Texto, for maior que o n˙mero de colunas
 			If(Len(aAux[nI]) > nMaxCol)
 				//Enquanto o Tamanho for Maior
 				While (Len(aAux[nI]) > nMaxCol)
-					//A √∫ltima posi√ß√£o, ser√° o √∫ltimo espa√ßo em branco
+					//A ˙ltima posiÁ„o, ser· o ˙ltimo espaÁo em branco
 					nUltPos:=Rat(' ',SubStr(aAux[nI],1,nMaxCol))
-					//Se n√£o encontrar espa√ßo em branco, a √∫ltima posi√ß√£o ser√° a coluna m√°xima
+					//Se n„o encontrar espaÁo em branco, a ˙ltima posiÁ„o ser· a coluna m·xima
 					If(nUltPos==0)
 						nUltPos:=nMaxCol
 					EndIf
-					//Adicionando Parte da Sring (de 1 at√© a √ölima posi√ß√£o v√°lida)
+					//Adicionando Parte da Sring (de 1 atÈ a √ölima posiÁ„o v·lida)
 					aAdd(aTexto,SubStr(aAux[nI],1,nUltPos))
 					//Quebrando o resto da String
 					aAux[nI]:=SubStr(aAux[nI],nUltPos+1,Len(aAux[nI])-nUltPos)
@@ -723,17 +729,17 @@ Static Function fMemoToArr(cTexto, aTexto, nMaxCol, cCaracter)
 				//Adicionando o que sobrou
 				aAdd(aTexto,aAux[nI])
 			Else
-				//Se for menor que o M√°ximo de colunas, adiciona o texto
+				//Se for menor que o M·ximo de colunas, adiciona o texto
 				aAdd(aTexto,aAux[nI])
 			EndIf
 		Next
 	EndIf
 	
-	//Se n√£o tiver nada para retornar, fixa como espa√ßo em branco
+	//Se n„o tiver nada para retornar, fixa como espaÁo em branco
 	If Len(aTexto) == 0
 		aTexto := {""}
 	EndIf
 	
-	//Pegando o n√∫mero m√°ximo de Linhas
+	//Pegando o n˙mero m·ximo de Linhas
 	nMaxLin:=Len(aTexto)
 Return nMaxLin

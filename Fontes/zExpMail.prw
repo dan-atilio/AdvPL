@@ -1,8 +1,14 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2020/05/29/funcao-para-exportar-contatos-para-locaweb-utilizando-advpl/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "TOTVS.ch"
 
 /*/{Protheus.doc} zExpMail
-Fun√ß√£o que gera a exporta√ß√£o csv de contatos para a Locaweb
+FunÁ„o que gera a exportaÁ„o csv de contatos para a Locaweb
 @author Atilio
 @since 16/01/2017
 @version 1.0
@@ -39,18 +45,18 @@ User Function zExpMail()
         lFornece   := (Val(cValToChar(MV_PAR04)) == 1)
 		cEstado    := Alltrim(MV_PAR05)
 
-        //Verifica se a √∫ltima posi√ß√£o √© uma \
+        //Verifica se a ˙ltima posiÁ„o È uma \
 		If SubStr(cDiretorio, Len(cDiretorio), 1) != '\'
 			cDiretorio += '\'
 		EndIf
 		
-		//Se o diret√≥rio existir, continua com o processamento
+		//Se o diretÛrio existir, continua com o processamento
 		If ExistDir(cDiretorio)
 			If lVendedor .Or. lCliente .Or. lFornece
 				//Chama o processamento para gerar os arquivos
 				Processa({|| fGeraArq()}, "Gerando arquivos...")
 				
-				//Monta e mostra a mensagem que ser√° exibida
+				//Monta e mostra a mensagem que ser· exibida
 				cMsg := "Arquivos gerados com sucesso!" + CRLF
 				If lCliente
 					cMsg += "- " + cDiretorio + cArqCli + CRLF
@@ -61,13 +67,13 @@ User Function zExpMail()
 				If lFornece
 					cMsg += "- " + cDiretorio + cArqFor + CRLF
 				EndIf
-				Aviso("Aten√ß√£o", cMsg, {"Ok"}, 2)
+				Aviso("AtenÁ„o", cMsg, {"Ok"}, 2)
 				
 			Else
-				MsgAlert("Escolha pelo menos uma op√ß√£o para gera√ß√£o dos arquivos!", "Aten√ß√£o")
+				MsgAlert("Escolha pelo menos uma opÁ„o para geraÁ„o dos arquivos!", "AtenÁ„o")
 			EndIf
 		Else
-			MsgAlert("Diret√≥rio n√£o existe!", "Aten√ß√£o")
+			MsgAlert("DiretÛrio n„o existe!", "AtenÁ„o")
 		EndIf
 	EndIf
 	
@@ -78,7 +84,7 @@ Return
  | Func:  fGeraArq                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  16/01/2017                                                   |
- | Desc:  Fun√ß√£o para gera√ß√£o dos arquivos csv                         |
+ | Desc:  FunÁ„o para geraÁ„o dos arquivos csv                         |
  *---------------------------------------------------------------------*/
 
 Static Function fGeraArq()
@@ -121,7 +127,7 @@ Static Function fGeraArq()
 		//Se houve falhas, encerra a rotina
 		If ! oFWriter:Create()
             lCliente := .F.
-			MsgAlert("O arquivo '"+cDirect+cArqCli+"' n√£o pode ser criado!", "Aten√ß√£o")
+			MsgAlert("O arquivo '"+cDirect+cArqCli+"' n„o pode ser criado!", "AtenÁ„o")
 			
 		Else
 			cLinha := "Email;Nome"
@@ -141,7 +147,7 @@ Static Function fGeraArq()
 				//Pegando o email
 				cEmailAtu := FwNoAccent(Alltrim(QRY_CLI->EMAIL))
 				
-				//Se tiver e-Mail e nome e se o email for v√°lido
+				//Se tiver e-Mail e nome e se o email for v·lido
 				If !Empty(cNomeAtu) .And. !Empty(cEmailAtu) .And. fEmailVali(cEmailAtu)
 					cLinha := ""
 					
@@ -155,7 +161,7 @@ Static Function fGeraArq()
 							oFWriter:Write(cLinha + CRLF)
 						Next
 						
-					//Sen√£o, ser√° apenas uma linha √∫nica
+					//Sen„o, ser· apenas uma linha ˙nica
 					Else
 						cLinha := cEmailAtu+";"+cNomeAtu
 						oFWriter:Write(cLinha + CRLF)
@@ -200,7 +206,7 @@ Static Function fGeraArq()
 		//Se houve falhas, encerra a rotina
 		If ! oFWriter:Create()
             lVendedor := .F.
-			MsgAlert("O arquivo '"+cDirect+cArqVen+"' n√£o pode ser criado!", "Aten√ß√£o")
+			MsgAlert("O arquivo '"+cDirect+cArqVen+"' n„o pode ser criado!", "AtenÁ„o")
 			
 		Else
 			cLinha := "Email;Nome"
@@ -220,7 +226,7 @@ Static Function fGeraArq()
 				//Pegando o email
 				cEmailAtu := FwNoAccent(Alltrim(QRY_VEN->EMAIL))
 				
-				//Se tiver e-Mail e nome e se o email for v√°lido
+				//Se tiver e-Mail e nome e se o email for v·lido
 				If !Empty(cNomeAtu) .And. !Empty(cEmailAtu) .And. fEmailVali(cEmailAtu)
 					cLinha := ""
 					
@@ -234,7 +240,7 @@ Static Function fGeraArq()
 							oFWriter:Write(cLinha + CRLF)
 						Next
 						
-					//Sen√£o, ser√° apenas uma linha √∫nica
+					//Sen„o, ser· apenas uma linha ˙nica
 					Else
 						cLinha := cEmailAtu+";"+cNomeAtu
 						oFWriter:Write(cLinha + CRLF)
@@ -278,7 +284,7 @@ Static Function fGeraArq()
 		//Se houve falhas, encerra a rotina
 		If ! oFWriter:Create()
             lFornece := .F.
-			MsgAlert("O arquivo '"+cDirect+cArqFor+"' n√£o pode ser criado!", "Aten√ß√£o")
+			MsgAlert("O arquivo '"+cDirect+cArqFor+"' n„o pode ser criado!", "AtenÁ„o")
 			
 		Else
 			cLinha := "Email;Nome"
@@ -298,7 +304,7 @@ Static Function fGeraArq()
 				//Pegando o email
 				cEmailAtu := FwNoAccent(Alltrim(QRY_FOR->EMAIL))
 				
-				//Se tiver e-Mail e nome e se o email for v√°lido
+				//Se tiver e-Mail e nome e se o email for v·lido
 				If !Empty(cNomeAtu) .And. !Empty(cEmailAtu) .And. fEmailVali(cEmailAtu)
 					cLinha := ""
 					
@@ -312,7 +318,7 @@ Static Function fGeraArq()
 							oFWriter:Write(cLinha + CRLF)
 						Next
 						
-					//Sen√£o, ser√° apenas uma linha √∫nica
+					//Sen„o, ser· apenas uma linha ˙nica
 					Else
 						cLinha := cEmailAtu+";"+cNomeAtu
 						oFWriter:Write(cLinha + CRLF)
@@ -336,7 +342,7 @@ Return
  | Func:  fRetira                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  16/01/2017                                                   |
- | Desc:  Fun√ß√£o que retira caracteres especiais de uma string         |
+ | Desc:  FunÁ„o que retira caracteres especiais de uma string         |
  *---------------------------------------------------------------------*/
 
 Static Function fRetira(cOrigem)
@@ -384,7 +390,7 @@ Return cNovo
  | Func:  fEmailVali                                                   |
  | Autor: Daniel Atilio                                                |
  | Data:  16/01/2017                                                   |
- | Desc:  Fun√ß√£o que verifica se o email √© v√°lido                      |
+ | Desc:  FunÁ„o que verifica se o email È v·lido                      |
  *---------------------------------------------------------------------*/
 
 Static Function fEmailVali(cEmailVld)

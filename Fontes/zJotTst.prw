@@ -1,13 +1,19 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2020/12/22/como-integrar-protheus-com-jotforms/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Totvs.ch"
  
 /*/{Protheus.doc} zJotTst
-Exemplo de GET em uma integra√ß√£o com JotForms
+Exemplo de GET em uma integraÁ„o com JotForms
 @author Atilio
 @since 01/11/2020
 @version 1.0
 @type function
-@obs No exemplo abaixo √© usado o /user/forms com Get, mas √© poss√≠vel usar Set e outros m√©todos conforme documenta√ß√£o dispon√≠vel - https://api.jotform.com/docs/#user-forms
+@obs No exemplo abaixo È usado o /user/forms com Get, mas È poss√≠vel usar Set e outros mÈtodos conforme documentaÁ„o dispon√≠vel - https://api.jotform.com/docs/#user-forms
 /*/
  
 User Function zJotTst()
@@ -22,13 +28,13 @@ User Function zJotTst()
  
     //Se o token tiver preenchido
     If !Empty(cAPIKey)
-        //No cabe√ßalho define o Token usado
+        //No cabeÁalho define o Token usado
         aAdd(aHeaderStr, 'APIKEY: ' + cAPIKey)
  
-        //Iremos definir a integra√ß√£o como /user/forms e iremos filtrar cria√ß√µes a partir da data 01/11/2020
+        //Iremos definir a integraÁ„o como /user/forms e iremos filtrar criaÁ√µes a partir da data 01/11/2020
         oRestClient:SetPath('/user/forms?filter={%22created_at:gt%22:%22' + cDtIni + '%2000:00:00%22}%20')
          
-        //Chama o m√©todo Get do FWRest, armazena o resultado em uma vari√°vel
+        //Chama o mÈtodo Get do FWRest, armazena o resultado em uma vari·vel
         If oRestClient:Get( aHeaderStr )
             cResult := oRestClient:GetResult()
  
@@ -37,7 +43,7 @@ User Function zJotTst()
                 Alert('Json foi deserializado')
             EndIf
              
-        //Sen√£o, pega os erros, e se quiser exibir, basta adicionar um Alert
+        //Sen„o, pega os erros, e se quiser exibir, basta adicionar um Alert
         Else
             cLastError := oRestClient:GetLastError()
             cErrorDetail := oRestClient:GetResult()

@@ -1,18 +1,24 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/06/13/funcao-retorna-se-usuario-tem-acesso-filial-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zUsrFil
-FunÃ§Ã£o que valida se o usuÃ¡rio tem acesso a filial
+Função que valida se o usuário tem acesso a filial
 @author Atilio
 @since 20/01/2017
 @version undefined
 @type function
-	@param cCodUsr, characters, CÃ³digo do usuÃ¡rio pesquisado (por default, vem o cÃ³digo do usuÃ¡rio logado)
-	@param cCodEmp, characters, CÃ³digo da empresa / grupo de empresas (por default, vem o cÃ³digo da empresa / grupo atual)
-	@param cCodFil, characters, CÃ³digo da filial (por default, vem o cÃ³digo da filial atual)
+	@param cCodUsr, characters, Código do usuário pesquisado (por default, vem o código do usuário logado)
+	@param cCodEmp, characters, Código da empresa / grupo de empresas (por default, vem o código da empresa / grupo atual)
+	@param cCodFil, characters, Código da filial (por default, vem o código da filial atual)
 	@example u_zUsrFil("000001", "01", "02")
 	u_zUsrFil("000001", "01", "0201")
-	@obs FunÃ§Ã£o desenvolvida com ajuda de Gabriel Cisneiro
+	@obs Função desenvolvida com ajuda de Gabriel Cisneiro
 /*/
 
 User Function zUsrFil(cCodUsr, cCodEmp, cCodFil)
@@ -25,17 +31,17 @@ User Function zUsrFil(cCodUsr, cCodEmp, cCodFil)
 	Default cCodEmp := cEmpAnt
 	Default cCodFil := cFilAnt
 	
-	//Encontra o usuÃ¡rio
+	//Encontra o usuário
 	nLinEnc:= aScan(aUsuarios, {|x| x[1][1] == cCodUsr })
 	
-	//Caso encontre o usuÃ¡rio
+	//Caso encontre o usuário
 	If nLinEnc > 0
 		aUsrAux := aClone(aUsuarios[nLinEnc][2][6])
 		
 		//Agora procura pela empresa + filial nos acessos 
 		nPosFil := aScan(aUsrAux, {|x| x == cCodEmp + cCodFil })
 		
-		//Se encontrou a filial ou tem acesso a todas, o retorno serÃ¡ verdadeiro
+		//Se encontrou a filial ou tem acesso a todas, o retorno será verdadeiro
 		If nPosFil > 0 .Or. "@" $ aUsrAux[1]
 			lRet := .T.
 		EndIf

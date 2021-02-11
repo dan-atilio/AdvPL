@@ -1,8 +1,14 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/04/11/funcao-sobrepoe-conteudo-da-sx3-atraves-de-um-dbf-dtc/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zRepSX3
-Fun√ß√£o que d√° replace em campos da SX3, conforme arquivo de origem
+FunÁ„o que d· replace em campos da SX3, conforme arquivo de origem
 @author Atilio
 @since 11/11/2016
 @version 1.0
@@ -24,7 +30,7 @@ User Function zRepSX3(cArquiPar, cAliasPar, cCamposPar)
 	//Cria / Atualiza o Grupo de Perguntas
 	fValidPerg()
 	
-	//Se veio dados do par√¢metro, ser√° de forma autom√°tica
+	//Se veio dados do par√¢metro, ser· de forma autom·tica
 	If !Empty(cArquiPar) .And. !Empty(cAliasPar) .And. !Empty(cCamposPar)
 		cArquiAux  := cArquiPar
 		cAliasAux  := cAliasPar
@@ -34,7 +40,7 @@ User Function zRepSX3(cArquiPar, cAliasPar, cCamposPar)
 		Processa({|| fAtualiza()}, 'Atualizando')
 		
 	Else
-		//Se a Pergunta for Confirmada, chama a atualiza√ß√£o
+		//Se a Pergunta for Confirmada, chama a atualizaÁ„o
 		If Pergunte(cPerg, .T.)
 			cArquiAux  := MV_PAR01
 			cAliasAux  := MV_PAR02
@@ -42,7 +48,7 @@ User Function zRepSX3(cArquiPar, cAliasPar, cCamposPar)
 			
 			//Se estiver algum campo em branco, aborta
 			If Empty(cArquiAux) .Or. Empty(cAliasAux) .Or. Empty(cCamposAux)
-				MsgAlert("Existe(m) par√¢metro(s) em branco.", "Aten√ß√£o")
+				MsgAlert("Existe(m) par√¢metro(s) em branco.", "AtenÁ„o")
 			Else
 				Processa({|| fAtualiza()}, 'Atualizando')
 			EndIf
@@ -56,7 +62,7 @@ Return
  | Func:  fValidPerg                                                   |
  | Autor: Daniel Atilio                                                |
  | Data:  11/11/2016                                                   |
- | Desc:  Fun√ß√£o para criar o grupo de perguntas                       |
+ | Desc:  FunÁ„o para criar o grupo de perguntas                       |
  *---------------------------------------------------------------------*/
 
 Static Function fAtualiza()
@@ -77,25 +83,25 @@ Static Function fAtualiza()
 	
 	//Verifica na DbStruct, se esses campos realmente existem
 	For nAtual := 1 To Len(aCampVer)
-		//Se encontrou o campo no Dicion√°rio
+		//Se encontrou o campo no Dicion·rio
 		If aScan(aStruX3, {|x| Alltrim(x[1]) == Alltrim(aCampVer[nAtual])}) > 0
 			aAdd(aCampos, aCampVer[nAtual])
 		EndIf
 	Next
 	
-	//Caso n√£o existam, retorna
+	//Caso n„o existam, retorna
 	If Len(aCampVer) == 0
-		MsgAlert("Campos da SX3 n√£o encontrados!", "Aten√ß√£o")
+		MsgAlert("Campos da SX3 n„o encontrados!", "AtenÁ„o")
 		Return
 	EndIf
 	
-	//Se o arquivo n√£o existir, retorna
+	//Se o arquivo n„o existir, retorna
 	If !File(cArquiAux)
-		MsgAlert("Arquivo de dados n√£o encontrado!", "Aten√ß√£o")
+		MsgAlert("Arquivo de dados n„o encontrado!", "AtenÁ„o")
 		Return
 	EndIf
 	
-	//Abre o arquivo como uma tempor√°ria, cria um √≠ndice por campo e filtra a tabela
+	//Abre o arquivo como uma tempor·ria, cria um √≠ndice por campo e filtra a tabela
 	DbUseArea(.T., "DBFCDX", cArquiAux, cAliasTmp, .T., .F.)
 	cArqTmp := CriaTrab(Nil, .F.)
 	cIndTmp := "X3_CAMPO"
@@ -104,25 +110,25 @@ Static Function fAtualiza()
 		(cAliasTmp)->(DbSetFilter({|| X3_ARQUIVO == cAliasAux }, "X3_ARQUIVO == '"+cAliasAux+"'"))
 	EndIf
 	
-	//Filtra o Dicion√°rio
+	//Filtra o Dicion·rio
 	DbSelectArea('SX3')
 	If cAliasAux != '*'
 		SX3->(DbSetFilter({|| X3_ARQUIVO == cAliasAux }, "X3_ARQUIVO == '"+cAliasAux+"'"))
 	EndIf
 	
-	//Inicia controle de transa√ß√£o
+	//Inicia controle de transaÁ„o
 	Begin Transaction
 		//Seta a Regua
 		SX3->(DbGoTop())
 		Count To nTotal
 		ProcRegua(nTotal)
 		
-		//Percorre o Dicion√°rio enquanto for essa tabela
+		//Percorre o Dicion·rio enquanto for essa tabela
 		SX3->(DbGoTop())
 		While ! SX3->(EoF())
 			IncProc("Analisando "+Alltrim(SX3->X3_CAMPO)+"...")
 			
-			//Se conseguir posicionar no campo na tempor√°ria
+			//Se conseguir posicionar no campo na tempor·ria
 			If (cAliasTmp)->(DbSeek(SX3->X3_CAMPO))
 				RecLock('SX3', .F.)
 				//Percorre os campos
@@ -130,16 +136,16 @@ Static Function fAtualiza()
 					xContOld := &("SX3->"+aCampos[nAtual])
 					xContNew := &(cAliasTmp+"->"+aCampos[nAtual])
 					
-					//Somente se o conte√∫do novo n√£o estiver em branco
+					//Somente se o conte˙do novo n„o estiver em branco
 					If !Empty(Alltrim(cValToChar(xContNew)))
-						//Somente se o conte√∫do antigo for diferente do novo
+						//Somente se o conte˙do antigo for diferente do novo
 						If xContOld != xContNew
-							//Atualiza vari√°vel de log
+							//Atualiza vari·vel de log
 							cLogAux += 	"Campo "+SX3->X3_CAMPO+" - "+aCampos[nAtual]+", '"+;
 										Alltrim(cValToChar(xContOld))+"' -> '"+Alltrim(cValToChar(xContNew))+"'; "+;
 										Chr(13)+Chr(10)
 							
-							//Se for tipo Num√©rico
+							//Se for tipo NumÈrico
 							If ValType(xContNew) == 'N'
 								xContNew := cValToChar(xContNew)
 								
@@ -147,9 +153,9 @@ Static Function fAtualiza()
 							ElseIf ValType(xContNew) == 'D'
 								xContNew := 'sToD("'+dToS(xContNew)+'")'
 							
-							//Sen√£o
+							//Sen„o
 							Else
-								//Se tiver Aspas no Conte√∫do, utilizar√° ap√≥strofo
+								//Se tiver Aspas no Conte˙do, utilizar· apÛstrofo
 								If '"' $ xContNew
 									xContNew := "'"+xContNew+"'"
 									
@@ -170,17 +176,17 @@ Static Function fAtualiza()
 			SX3->(DbSkip())
 		EndDo
 		
-		//Se tiver mensagem, teve atualiza√ß√£o
+		//Se tiver mensagem, teve atualizaÁ„o
 		If !Empty(cLogAux)
-			cLogAux := 	"A tabela '"+cAliasAux+"' teve as seguintes atualiza√ß√µes: "+Char(13)+Chr(10)+Char(13)+Chr(10)+;
+			cLogAux := 	"A tabela '"+cAliasAux+"' teve as seguintes atualizaÁ√µes: "+Char(13)+Chr(10)+Char(13)+Chr(10)+;
 						cLogAux
 			
 			//Mostra a mensagem
 			If !lAuto
-				Aviso("Aten√ß√£o", cLogAux, , 3)
+				Aviso("AtenÁ„o", cLogAux, , 3)
 			EndIf
 			
-			//Caso n√£o exista o diret√≥rio de Log, cria
+			//Caso n„o exista o diretÛrio de Log, cria
 			If !ExistDir(cDirLog)
 				MakeDir(cDirLog)
 			EndIf
@@ -193,7 +199,7 @@ Static Function fAtualiza()
 			EndIf
 			
 		Else
-			cLogAux := 	"A tabela '"+cAliasAux+"' n√£o teve atualiza√ß√µes!"
+			cLogAux := 	"A tabela '"+cAliasAux+"' n„o teve atualizaÁ√µes!"
 			If cAliasAux == '*'
 				MemoWrite(cDirLog+cAliasAux+"_nao_"+dToS(Date())+"_"+StrTran(Time(), ':', '-')+".log", cLogAux)
 			Else
@@ -201,11 +207,11 @@ Static Function fAtualiza()
 			EndIf
 		EndIf
 		
-		//Fecha a tempor√°ria e limpa o filtro do Dicion√°rio
+		//Fecha a tempor·ria e limpa o filtro do Dicion·rio
 		(cAliasTmp)->(DbCloseArea())
 		SX3->(DbClearFilter())
 		
-	//Finaliza a Transa√ß√£o
+	//Finaliza a TransaÁ„o
 	End Transaction
 	
 	RestArea(aAreaX3)
@@ -216,7 +222,7 @@ Return
  | Func:  fValidPerg                                                   |
  | Autor: Daniel Atilio                                                |
  | Data:  11/11/2016                                                   |
- | Desc:  Fun√ß√£o para criar o grupo de perguntas                       |
+ | Desc:  FunÁ„o para criar o grupo de perguntas                       |
  *---------------------------------------------------------------------*/
 
 Static Function fValidPerg()
@@ -227,7 +233,7 @@ Static Function fValidPerg()
 Return
 
 /*/{Protheus.doc} zRepAll
-Fun√ß√£o que d√° um replace de todas as tabelas
+FunÁ„o que d· um replace de todas as tabelas
 @author Atilio
 @since 11/11/2016
 @version 1.0

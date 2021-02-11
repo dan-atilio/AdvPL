@@ -1,15 +1,21 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/10/24/funcao-converte-valor-numerico-para-soma1-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zValToSoma1
-FunÃ§Ã£o criada para converter um valor numÃ©rico em valor caracter do Soma1
+Função criada para converter um valor numérico em valor caracter do Soma1
 @author Atilio
 @since 16/06/2017
 @version 1.0
 @type function
-	@param nValor, numeric, NÃºmero que deseja converter
+	@param nValor, numeric, Número que deseja converter
 	@param nQtdPos, numeric, Quantidade de casas a considerar
-	@return cValor, Valor jÃ¡ convertido
+	@return cValor, Valor já convertido
 	@example u_zValToSoma1(100, 2) --> Retorna "A0"
 	u_zValToSoma1(500, 2) --> Retorna "L4"
 	u_zValToSoma1(500, 3) --> Retorna "500"

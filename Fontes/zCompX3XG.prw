@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/08/15/relatorio-compara-grupo-de-campos-sxg-sx3/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zCompX3XG
-FunÃ§Ã£o que compara o grupo de campos (SX3 e SXG)
+Função que compara o grupo de campos (SX3 e SXG)
 @type function
 @author Atilio
 @since 02/04/2017
@@ -18,7 +24,7 @@ User Function zCompX3XG()
 
 	fValidPerg(cPerg)
 	
-	//Cria as definiÃ§Ãµes do relatÃ³rio
+	//Cria as definiçÃµes do relatório
 	If Pergunte(cPerg, .T.)
 		oReport := fReportDef()
 		oReport:PrintDialog()
@@ -29,7 +35,7 @@ Return
 	
 /*-------------------------------------------------------------------------------*
  | Func:  fReportDef                                                             |
- | Desc:  FunÃ§Ã£o que monta a definiÃ§Ã£o do relatÃ³rio                              |
+ | Desc:  Função que monta a definição do relatório                              |
  *-------------------------------------------------------------------------------*/
 	
 Static Function fReportDef()
@@ -37,12 +43,12 @@ Static Function fReportDef()
 	Local oSectPar := Nil
 	Local oSectDad := Nil
 	
-	//CriaÃ§Ã£o do componente de impressÃ£o
-	oReport := TReport():New(	"zCompX3XG",;		//Nome do RelatÃ³rio
-									"ComparaÃ§Ã£o de Grupo de Campos (SX3 x SXG)",;		//TÃ­tulo
-									cPerg,;		//Pergunte ... Se eu defino a pergunta aqui, serÃ¡ impresso uma pÃ¡gina com os parÃ¢metros, conforme privilÃ©gio 101
-									{|oReport| fRepPrint(oReport)},;		//Bloco de cÃ³digo que serÃ¡ executado na confirmaÃ§Ã£o da impressÃ£o
-									)		//DescriÃ§Ã£o
+	//Criação do componente de impressão
+	oReport := TReport():New(	"zCompX3XG",;		//Nome do Relatório
+									"Comparação de Grupo de Campos (SX3 x SXG)",;		//TÃ­tulo
+									cPerg,;		//Pergunte ... Se eu defino a pergunta aqui, será impresso uma página com os parÃ¢metros, conforme privilégio 101
+									{|oReport| fRepPrint(oReport)},;		//Bloco de código que será executado na confirmação da impressão
+									)		//Descrição
 	oReport:SetTotalInLine(.F.)
 	oReport:lParamPage := .F.
 	oReport:oPage:SetPaperSize(9) //Folha A4
@@ -50,23 +56,23 @@ Static Function fReportDef()
 	oReport:SetLineHeight(60)
 	oReport:nFontBody := -16
 	
-	//Criando a seÃ§Ã£o de dados
-	oSectPar := TRSection():New(	oReport,;		//Objeto TReport que a seÃ§Ã£o pertence
-										"ParÃ¢metros",;		//DescriÃ§Ã£o da seÃ§Ã£o
-										{})		//Tabelas utilizadas, a primeira serÃ¡ considerada como principal da seÃ§Ã£o
-	oSectPar:SetTotalInLine(.F.)  //Define se os totalizadores serÃ£o impressos em linha ou coluna. .F.=Coluna; .T.=Linha
+	//Criando a seção de dados
+	oSectPar := TRSection():New(	oReport,;		//Objeto TReport que a seção pertence
+										"ParÃ¢metros",;		//Descrição da seção
+										{})		//Tabelas utilizadas, a primeira será considerada como principal da seção
+	oSectPar:SetTotalInLine(.F.)  //Define se os totalizadores serão impressos em linha ou coluna. .F.=Coluna; .T.=Linha
 	
 	//Colunas dos ParÃ¢metros
 	TRCell():New(oSectPar, "XX_PARAM", "",        "Parametro",   /*Picture*/, 030,  /*lPixel*/,/*{|| code-block de impressao }*/,/*cAlign*/,/*lLineBreak*/,/*cHeaderAlign */,/*lCellBreak*/,/*nColSpace*/,/*lAutoSize*/,/*nClrBack*/,/*nClrFore*/,/*lBold*/)
 	TRCell():New(oSectPar, "XX_CONTE", "",        "Conteudo",    /*Picture*/, 030,  /*lPixel*/,/*{|| code-block de impressao }*/,/*cAlign*/,/*lLineBreak*/,/*cHeaderAlign */,/*lCellBreak*/,/*nColSpace*/,/*lAutoSize*/,/*nClrBack*/,/*nClrFore*/,/*lBold*/)
 	
-	//Criando a seÃ§Ã£o de dados
-	oSectDad := TRSection():New(	oReport,;		//Objeto TReport que a seÃ§Ã£o pertence
-										"Dados",;		//DescriÃ§Ã£o da seÃ§Ã£o
-										{})		//Tabelas utilizadas, a primeira serÃ¡ considerada como principal da seÃ§Ã£o
-	oSectDad:SetTotalInLine(.F.)  //Define se os totalizadores serÃ£o impressos em linha ou coluna. .F.=Coluna; .T.=Linha
+	//Criando a seção de dados
+	oSectDad := TRSection():New(	oReport,;		//Objeto TReport que a seção pertence
+										"Dados",;		//Descrição da seção
+										{})		//Tabelas utilizadas, a primeira será considerada como principal da seção
+	oSectDad:SetTotalInLine(.F.)  //Define se os totalizadores serão impressos em linha ou coluna. .F.=Coluna; .T.=Linha
 	
-	//Colunas do relatÃ³rio
+	//Colunas do relatório
 	TRCell():New(oSectDad, "XX_GRUPO", "",        "Grupo",        /*Picture*/, 003,  /*lPixel*/,/*{|| code-block de impressao }*/,/*cAlign*/,/*lLineBreak*/,/*cHeaderAlign */,/*lCellBreak*/,/*nColSpace*/,/*lAutoSize*/,/*nClrBack*/,/*nClrFore*/,/*lBold*/)
 	TRCell():New(oSectDad, "XX_GRDES", "",        "Grup. Desc.",  /*Picture*/, 015,  /*lPixel*/,/*{|| code-block de impressao }*/,/*cAlign*/,/*lLineBreak*/,/*cHeaderAlign */,/*lCellBreak*/,/*nColSpace*/,/*lAutoSize*/,/*nClrBack*/,/*nClrFore*/,/*lBold*/)
 	TRCell():New(oSectDad, "XX_CAMPO", "",        "Campo",        /*Picture*/, 010,  /*lPixel*/,/*{|| code-block de impressao }*/,/*cAlign*/,/*lLineBreak*/,/*cHeaderAlign */,/*lCellBreak*/,/*nColSpace*/,/*lAutoSize*/,/*nClrBack*/,/*nClrFore*/,/*lBold*/)
@@ -78,7 +84,7 @@ Return oReport
 	
 /*-------------------------------------------------------------------------------*
  | Func:  fRepPrint                                                              |
- | Desc:  FunÃ§Ã£o que imprime o relatÃ³rio                                         |
+ | Desc:  Função que imprime o relatório                                         |
  *-------------------------------------------------------------------------------*/
 	
 Static Function fRepPrint(oReport)
@@ -93,7 +99,7 @@ Static Function fRepPrint(oReport)
 	Local lFil     := MV_PAR02 == 1
 	Local cStatus  := ""
 	
-	//Pegando as seÃ§Ãµes do relatÃ³rio
+	//Pegando as seçÃµes do relatório
 	oSectPar := oReport:Section(1)
 	oSectDad := oReport:Section(2)
 	
@@ -114,7 +120,7 @@ Static Function fRepPrint(oReport)
 	SX3->(DbSetFilter({|| X3_GRPSXG != ' ' }, "X3_GRPSXG != ' '"))
 	SX3->(DbGoTop())
 	
-	//Setando o tamanho da rÃ©gua
+	//Setando o tamanho da régua
 	Count To nTotal
 	oReport:SetMeter(nTotal)
 	SX3->(DbGoTop())
@@ -143,7 +149,7 @@ Static Function fRepPrint(oReport)
 			oSectDad:Cell("XX_CPTAM"):SetValue(SX3->X3_TAMANHO)
 			oSectDad:Cell("XX_STATU"):SetValue("")
 			
-			//Verificando se Ã© igual ou diferente
+			//Verificando se é igual ou diferente
 			If SXG->XG_SIZE == SX3->X3_TAMANHO
 				cStatus := "IGUAIS"
 			Else
@@ -169,11 +175,11 @@ Return
 
 /*---------------------------------------------------------------------*
  | Func:  fValidPerg                                                   |
- | Desc:  FunÃ§Ã£o para criaÃ§Ã£o do grupo de perguntas                    |
+ | Desc:  Função para criação do grupo de perguntas                    |
  *---------------------------------------------------------------------*/
 
 Static Function fValidPerg(cPerg)
 	//(			cGrupo,	cOrdem,	cPergunt,			cPergSpa,		cPergEng,	cVar,		cTipo,	nTamanho,					nDecimal,	nPreSel,	cGSC,	cValid,	cF3,	cGrpSXG,	cPyme,	cVar01,		cDef01,	cDefSpa1,	cDefEng1,	cCnt01,	cDef02,						cDefSpa2,	cDefEng2,	cDef03,					cDefSpa3,		cDefEng3,	cDef04,	cDefSpa4,	cDefEng4,	cDef05,	cDefSpa5,	cDefEng5,	aHelpPor,	aHelpEng,	aHelpSpa,	cHelp)
 	PutSx1(	cPerg,		"01",		"Tipo?",			"",				"",			"mv_ch0",	"N",	1,							0,			1,			"C",	"", 		"",		"",			"",		"mv_par01",	"Todos",	"",			"",			"",			"Somente Diferentes",		"",			"",			"Somente Iguais",			"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
-	PutSx1(	cPerg,		"02",		"Campo Filial?",	"",				"",			"mv_ch1",	"N",	1,							0,			1,			"C",	"", 		"",		"",			"",		"mv_par02",	"Sim",		"",			"",			"",			"NÃ£o",							"",			"",			"",							"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
+	PutSx1(	cPerg,		"02",		"Campo Filial?",	"",				"",			"mv_ch1",	"N",	1,							0,			1,			"C",	"", 		"",		"",			"",		"mv_par02",	"Sim",		"",			"",			"",			"Não",							"",			"",			"",							"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
 Return

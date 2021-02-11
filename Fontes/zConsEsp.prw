@@ -1,3 +1,9 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/12/27/consulta-especifica-de-dados-em-advpl/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
@@ -6,17 +12,17 @@
 #Define STR_PULA		Chr(13)+ Chr(10)
 
 /*/{Protheus.doc} zConsEsp
-Fun√ß√£o para consulta gen√©rica
+FunÁ„o para consulta genÈrica
 @author Daniel Atilio
 @since 24/02/2015
 @version 1.0
 	@param cAliasM, Caracter, Alias da tabela consultada
-	@param aCamposM, Array, Campos que ser√£o montados na grid de marca√ß√£o
+	@param aCamposM, Array, Campos que ser„o montados na grid de marcaÁ„o
 	@param cFiltroM, Caracter, Filtragem da tela (SQL)
-	@param cRetorM, Caracter, Campo que ser√° checado
-	@param aColsM, Array, Conte√∫do de campos espec√≠ficos, que iniciam com XX_ no aCamposM
+	@param cRetorM, Caracter, Campo que ser· checado
+	@param aColsM, Array, Conte˙do de campos espec√≠ficos, que iniciam com XX_ no aCamposM
 	@param cOrdM, Caracter, Campos utilizados no Order By
-	@return lRetorn, retorno se a consulta foi confirmada ou n√£o
+	@return lRetorn, retorno se a consulta foi confirmada ou n„o
 	@example
 	u_zConsEsp("SED", {"ED_CODIGO","ED_DESCRIC"}, " AND ED_FILIAL = '"+xFilial("SED")+"' ", "ED_CODIGO")
 	u_zConsEsp("SB1", {"B1_COD","B1_DESC","B1_TIPO"}, " AND B1_FILIAL = '"+xFilial("SB1")+"' ", "B1_COD")
@@ -24,9 +30,9 @@ Fun√ß√£o para consulta gen√©rica
 	User Function zConsSC2()
 		lOk := u_zConsEsp("SC2", {"C2_NUM","C2_ITEM","C2_SEQUEN","C2_OBS","C2_PRODUTO","C2_CC","XX_SALDO"},, "C2_NUM+C2_ITEM+C2_SEQUEN",{"u_zRetSC2Sld(QRY_DAD->XX_RECNUM)"})
 	Return lOk
-	@obs O retorno da consulta √© p√∫blica (__cRetorn) para ser usada em consultas espec√≠ficas
-	Caso seja necess√°rio incluir campos espec√≠ficos na grid, utilize o prefixo XX_ antes do nome do campo no aCamposM,
-	   e seu conte√∫do preencha no aColsM
+	@obs O retorno da consulta È p˙blica (__cRetorn) para ser usada em consultas espec√≠ficas
+	Caso seja necess·rio incluir campos espec√≠ficos na grid, utilize o prefixo XX_ antes do nome do campo no aCamposM,
+	   e seu conte˙do preencha no aColsM
 /*/
 
 User Function zConsEsp(cAliasM, aCamposM, cFiltroM, cRetorM, aColsM, cOrdM)
@@ -61,9 +67,9 @@ User Function zConsEsp(cAliasM, aCamposM, cFiltroM, cRetorM, aColsM, cOrdM)
 	Private lRetorn := .F.
 	Public  __cRetorn := ""
 	
-	//Se tiver o alias em branco ou n√£o tiver campos
+	//Se tiver o alias em branco ou n„o tiver campos
 	If Empty(cAliasM) .Or. Len(aCamposM) <= 0 .Or. Empty(cRetorM)
-		MsgStop("Alias em branco e/ou Sem campos para marca√ß√£o!", "Aten√ß√£o")
+		MsgStop("Alias em branco e/ou Sem campos para marcaÁ„o!", "AtenÁ„o")
 		Return lRetorn
 	EndIf
 	
@@ -102,8 +108,8 @@ User Function zConsEsp(cAliasM, aCamposM, cFiltroM, cRetorM, aColsM, cOrdM)
 			//Populando os dados da MsNewGetDados
 			fPopula()
 		
-		//A√ß√µes
-		@ (nJanAltu/2)-25, 003 GROUP oGrpAcoes TO (nJanAltu/2)-3, (nJanLarg/2)-3 PROMPT "A√ß√µes: "	OF oDlgEspe COLOR 0, 16777215 PIXEL
+		//AÁ√µes
+		@ (nJanAltu/2)-25, 003 GROUP oGrpAcoes TO (nJanAltu/2)-3, (nJanLarg/2)-3 PROMPT "AÁ√µes: "	OF oDlgEspe COLOR 0, 16777215 PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*1)+06) BUTTON oBtnConf PROMPT "Confirmar" SIZE nTamBtn, 013 OF oDlgEspe ACTION(fConfirm())     PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*2)+09) BUTTON oBtnLimp PROMPT "Limpar" SIZE nTamBtn, 013 OF oDlgEspe ACTION(fLimpar())     PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*3)+12) BUTTON oBtnCanc PROMPT "Cancelar" SIZE nTamBtn, 013 OF oDlgEspe ACTION(fCancela())     PIXEL
@@ -120,14 +126,14 @@ Return lRetorn
  | Func:  fCriaMsNew                                                   |
  | Autor: Daniel Atilio                                                |
  | Data:  24/02/2015                                                   |
- | Desc:  Fun√ß√£o para criar a estrutura da MsNewGetDados               |
+ | Desc:  FunÁ„o para criar a estrutura da MsNewGetDados               |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
 Static Function fCriaMsNew()
 	Local aAreaX3 := SX3->(GetArea())
 
-	//Zerando o cabe√ßalho e a estrutura
+	//Zerando o cabeÁalho e a estrutura
 	aHeadAux := {}
 	aColsAux := {}
 	
@@ -141,17 +147,17 @@ Static Function fCriaMsNew()
 		
 		//Se iniciar com XX_
 		If SubStr(cCampoAtu, 1, 3) == "XX_"
-			//Cabe√ßalho ...	Titulo											Campo			Mask		Tamanho	Dec		Valid	Usado	Tip		F3	CBOX
+			//CabeÁalho ...	Titulo											Campo			Mask		Tamanho	Dec		Valid	Usado	Tip		F3	CBOX
 			aAdd(aHeadAux,{	Capital(StrTran(cCampoAtu, "XX_", "")),	cCampoAtu,		"",			18,			0,		".F.",	".F.",	"C",	"",	""})
 		ElseIf SubStr(cCampoAtu, 1, 3) == "YY_"
-			//Cabe√ßalho ...	Titulo											Campo			Mask		Tamanho	Dec		Valid	Usado	Tip		F3	CBOX
+			//CabeÁalho ...	Titulo											Campo			Mask		Tamanho	Dec		Valid	Usado	Tip		F3	CBOX
 			aAdd(aHeadAux,{	Capital(StrTran(cCampoAtu, "YY_", "")),	cCampoAtu,		"",			100,			0,		".F.",	".F.",	"C",	"",	""})
 		Else
 	
 			//Se coneguir posicionar no campo
 			If SX3->(DbSeek(cCampoAtu))
 			
-				//Cabe√ßalho ...	Titulo			Campo		Mask									Tamanho					Dec							Valid	Usado	Tip				F3	CBOX
+				//CabeÁalho ...	Titulo			Campo		Mask									Tamanho					Dec							Valid	Usado	Tip				F3	CBOX
 				aAdd(aHeadAux,{	X3Titulo(),	cCampoAtu,	PesqPict(cAliasPvt  , cCampoAtu),	TamSX3(cCampoAtu)[01],	TamSX3(cCampoAtu)[02],	".F.",	".F.",	SX3->X3_TIPO,	"",	""})
 				
 				//Se o campo atual for retornar, aumenta o tamanho do retorno
@@ -163,7 +169,7 @@ Static Function fCriaMsNew()
 		EndIf
 	Next
 	
-	//Cabe√ßalho ...	Titulo		Campo			Mask						Tamanho	Dec		Valid	Usado	Tip		F3	CBOX
+	//CabeÁalho ...	Titulo		Campo			Mask						Tamanho	Dec		Valid	Usado	Tip		F3	CBOX
 	aAdd(aHeadAux,{	"RecNo",	"XX_RECNUM",	"@E 999999999999999999",	18,			0,		".F.",	".F.",	"C",	"",	""})
 	
 	RestArea(aAreaX3)
@@ -173,7 +179,7 @@ Return
  | Func:  fPopula                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  24/02/2015                                                   |
- | Desc:  Fun√ß√£o que popula a tabela auxiliar da MsNewGetDados         |
+ | Desc:  FunÁ„o que popula a tabela auxiliar da MsNewGetDados         |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -236,7 +242,7 @@ Static Function fPopula()
 				aAdd(aAux, &(aColsEsp[nCampAux]))
 				nCampAux++
 				
-			//Sen√£o, adiciona conforme consulta
+			//Sen„o, adiciona conforme consulta
 			Else
 				aAdd(aAux, cValToChar( &("QRY_DAD->"+cCampoAtu) ))
 			EndIf
@@ -249,7 +255,7 @@ Static Function fPopula()
 	EndDo
 	QRY_DAD->(DbCloseArea())
 	
-	//Se n√£o tiver dados, adiciona linha em branco
+	//Se n„o tiver dados, adiciona linha em branco
 	If Len(aColsAux) == 0
 		aAux := {}
 		//Percorrendo os campos e adicionando no acols (junto com o recno e com o delet
@@ -271,7 +277,7 @@ Return
  | Func:  fConfirm                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  24/02/2015                                                   |
- | Desc:  Fun√ß√£o de confirma√ß√£o da rotina                              |
+ | Desc:  FunÁ„o de confirmaÁ„o da rotina                              |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -306,7 +312,7 @@ Static Function fConfirm()
 	If Len(__cRetorn) < nTamanRet
 		__cRetorn += Space(nTamanRet - Len(__cRetorn))
 	
-	//Sen√£o se for maior, diminui
+	//Sen„o se for maior, diminui
 	ElseIf Len(__cRetorn) > nTamanRet
 		__cRetorn := SubStr(__cRetorn, 1, nTamanRet)
 	EndIf
@@ -319,7 +325,7 @@ Return
  | Func:  fLimpar                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  24/02/2015                                                   |
- | Desc:  Fun√ß√£o que limpa os dados da rotina                          |
+ | Desc:  FunÁ„o que limpa os dados da rotina                          |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -339,7 +345,7 @@ Return
  | Func:  fCancela                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  24/02/2015                                                   |
- | Desc:  Fun√ß√£o de cancelamento da rotina                             |
+ | Desc:  FunÁ„o de cancelamento da rotina                             |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -354,17 +360,17 @@ Return
  | Func:  fVldPesq                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  24/02/2015                                                   |
- | Desc:  Fun√ß√£o que valida o campo digitado                           |
+ | Desc:  FunÁ„o que valida o campo digitado                           |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
 Static Function fVldPesq()
 	Local lRet := .T.
 	
-	//Se tiver ap√≥strofo ou porcentagem, a pesquisa n√£o pode prosseguir
+	//Se tiver apÛstrofo ou porcentagem, a pesquisa n„o pode prosseguir
 	If "'" $ cGetPesq .Or. "%" $ cGetPesq
 		lRet := .F.
-		MsgAlert("<b>Pesquisa inv√°lida!</b><br>A pesquisa n√£o pode ter <b>'</b> ou <b>%</b>.", "Aten√ß√£o")
+		MsgAlert("<b>Pesquisa inv·lida!</b><br>A pesquisa n„o pode ter <b>'</b> ou <b>%</b>.", "AtenÁ„o")
 	EndIf
 	
 	//Se houver retorno, atualiza grid
@@ -377,7 +383,7 @@ Return lRet
  | Func:  fVisual                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  24/02/2015                                                   |
- | Desc:  Fun√ß√£o de visualizar o registro                              |
+ | Desc:  FunÁ„o de visualizar o registro                              |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 

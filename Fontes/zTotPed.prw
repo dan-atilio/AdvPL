@@ -1,14 +1,20 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/01/17/funcao-retorna-total-pedido-de-vendas-com-impostos-em-advpl/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
 
 /*/{Protheus.doc} zTotPed
-Fun√ß√£o que retorna o valor total do pedido com os impostos
+FunÁ„o que retorna o valor total do pedido com os impostos
 @author Atilio
 @since 25/08/2016
 @version undefined
-@param cNumPed, characters, N√∫mero do Pedido
-@param nTipo, num√©rico, 1 == Browse da SC5, 2 == Dentro da tela do Pedido
+@param cNumPed, characters, N˙mero do Pedido
+@param nTipo, numÈrico, 1 == Browse da SC5, 2 == Dentro da tela do Pedido
 @type function
 /*/
 
@@ -24,7 +30,7 @@ User Function zTotPed(cNumPed, nTipo)
 	Default cNumPed := SC5->C5_NUM
 	Default nTipo   := 1
 	
-	//Se for no Browse, j√° traz o valor total
+	//Se for no Browse, j· traz o valor total
 	If nTipo == 1
 		//Seleciona agora os itens do pedido
 		cQryIte := " SELECT "

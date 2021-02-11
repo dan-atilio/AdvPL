@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2021/01/13/funcao-para-visualizar-a-estrutura-de-produtos-dentro-de-uma-dialog/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "TOTVS.ch"
 #Include 'FWMVCDef.ch'
@@ -39,7 +45,7 @@ User Function zTelEstr(cProduto, cDescric)
         @ 014, 050 SAY Alltrim(cDescric)                 SIZE 400, 030 FONT oFontSubN OF oDlgEstr COLORS RGB(031,073,125) PIXEL
          
         //Criando o DbTree
-        oTreePad := dbTree():New(029, 003, (nJanAltu/2)-26, (nJanLarg/2)-1, oDlgEstr, {|| /* Se quiser colocar alguma funÃ§Ã£o aqui, serÃ¡ chamada ao mudar de cargo */ }, , .T., , oFontBtn)
+        oTreePad := dbTree():New(029, 003, (nJanAltu/2)-26, (nJanLarg/2)-1, oDlgEstr, {|| /* Se quiser colocar alguma função aqui, será chamada ao mudar de cargo */ }, , .T., , oFontBtn)
          
         //Monta os dados da Tree
         Pergunte('MTA200', .F.)

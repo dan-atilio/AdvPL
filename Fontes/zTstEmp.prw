@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2018/04/17/funcao-para-criar-tabelas-em-todas-filiais-empresas/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zTstEmp
-FunÃ§Ã£o que percorre as empresas / filiais e cria as tabelas no banco
+Função que percorre as empresas / filiais e cria as tabelas no banco
 @author Daniel Atilio
 @since 16/12/2017
 @version 1.0

@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/12/23/listagem-tabelas-campos-indices-relacionamentos-protheus/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zExpTabs
-FunÃ§Ã£o que gera lista das tabelas do Protheus
+Função que gera lista das tabelas do Protheus
 @type function
 @author Atilio
 @since 18/12/2016
@@ -21,11 +27,11 @@ User Function zExpTabs()
 	
 	//Se houve falhas, encerra a rotina
 	If nHdl == -1
-		MsgAlert("O arquivo '"+cDirect+cArquivo+"' nÃ£o pode ser criado!", "AtenÃ§Ã£o")
+		MsgAlert("O arquivo '"+cDirect+cArquivo+"' não pode ser criado!", "Atenção")
 		Return
 	Endif
 	
-	//Monta cabeÃ§alho do html
+	//Monta cabeçalho do html
 	fWrite(nHdl, '<html>' + CRLF)
 	fWrite(nHdl, '<head><title>Tabelas Protheus</title></head>' + CRLF)
 	fWrite(nHdl, '<body>' + CRLF)
@@ -35,7 +41,7 @@ User Function zExpTabs()
 	DbSelectArea('SX2')
 	SX2->(DbGoTop())
 	While !SX2->(EoF())
-		//Se nÃ£o for tabela especÃ­fica
+		//Se não for tabela especÃ­fica
 		If SubStr(SX2->X2_CHAVE, 1, 2) != 'SZ' .And. SubStr(SX2->X2_CHAVE, 1, 2) != 'Z'
 			fWrite(nHdl, '- <a href="#'+SX2->X2_CHAVE+'">'+SX2->X2_CHAVE+' ('+Alltrim(SX2->X2_NOME)+')</a><br>' + CRLF)
 		EndIf
@@ -46,11 +52,11 @@ User Function zExpTabs()
 	fWrite(nHdl, '<hr>' + CRLF)
 	fWrite(nHdl, '<br>' + CRLF)
 	
-	//Agora Ã© montado as tabelas
+	//Agora é montado as tabelas
 	DbSelectArea('SX2')
 	SX2->(DbGoTop())
 	While !SX2->(EoF())
-		//Se nÃ£o for tabela especÃ­fica
+		//Se não for tabela especÃ­fica
 		If SubStr(SX2->X2_CHAVE, 1, 2) != 'SZ' .And. SubStr(SX2->X2_CHAVE, 1, 2) != 'Z'
 			fWrite(nHdl, '<center>' + CRLF)
 			fWrite(nHdl, '<font color="red"><h2 id="'+SX2->X2_CHAVE+'">'+SX2->X2_CHAVE+' - '+Alltrim(SX2->X2_NOME)+'</h2></font>' + CRLF)
@@ -72,7 +78,7 @@ User Function zExpTabs()
 			
 				//Percorre os campos
 				While ! SX3->(Eof()) .And. SX3->X3_ARQUIVO == SX2->X2_CHAVE
-					//Se nÃ£o for campo customizado
+					//Se não for campo customizado
 					If ! ('_X_' $ SX3->X3_CAMPO .Or. '__' $ SX3->X3_CAMPO)
 						fWrite(nHdl, '<tr>' + CRLF)
 						fWrite(nHdl, '<td>'+SX3->X3_CAMPO+'</td>' + CRLF)
@@ -149,8 +155,8 @@ User Function zExpTabs()
 	fWrite(nHdl, '</html>' + CRLF)
 	fClose(nHdl)
 	
-	//Se deseja visualizar o arquivo apÃ³s a geraÃ§Ã£o
-	If MsgYesNo("Arquivo gerado, deseja visualizar?", "AtenÃ§Ã£o")
+	//Se deseja visualizar o arquivo após a geração
+	If MsgYesNo("Arquivo gerado, deseja visualizar?", "Atenção")
 		ShellExecute("open", cArquivo, "", cDirect, 1)
 	EndIf
 	

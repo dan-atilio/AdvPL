@@ -1,16 +1,22 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/01/10/funcao-para-liberar-manualmente-um-pedido-de-venda-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zLibPed
-FunÃ§Ã£o para liberaÃ§Ã£o de pedido de venda
+Função para liberação de pedido de venda
 @type function
 @author Atilio
 @since 28/08/2016
 @version 1.0
-	@param cPedido, character, NÃºmero do Pedido
+	@param cPedido, character, Número do Pedido
 	@example
 	u_zLibPed("000001")
-	@obs FunÃ§Ã£o utilizada para testes!
+	@obs Função utilizada para testes!
 /*/
 
 User Function zLibPed(cPedido)
@@ -45,7 +51,7 @@ User Function zLibPed(cPedido)
 	
 			//Percorre todos os itens
 			While ! SC6->(EoF()) .And. SC6->C6_FILIAL = FWxFilial('SC6') .And. SC6->C6_NUM == cPedido
-				//Posiciona na liberaÃ§Ã£o do item do pedido e estorna a liberaÃ§Ã£o
+				//Posiciona na liberação do item do pedido e estorna a liberação
 				SC9->(DbSeek(FWxFilial('SC9')+SC6->C6_NUM+SC6->C6_ITEM))
 				While  (!SC9->(Eof())) .AND. SC9->(C9_FILIAL+C9_PEDIDO+C9_ITEM) == FWxFilial('SC9')+SC6->(C6_NUM+C6_ITEM)
 					SC9->(a460Estorna(.T.))

@@ -1,17 +1,23 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/07/25/funcao-sobe-um-arquivo-em-um-ftp-advpl/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zFTPEnv
-Fun√ß√£o que envia um arquivo para um servidor FTP
+FunÁ„o que envia um arquivo para um servidor FTP
 @author Atilio
 @since 28/03/2017
 @version 1.0
-	@param cEndereco, Caracter, Endere√ßo do FTP
-	@param nPorta, Numerico, Porta de Conex√£o
-	@param cUsr, Caracter, Usu√°rio
+	@param cEndereco, Caracter, EndereÁo do FTP
+	@param nPorta, Numerico, Porta de Conex„o
+	@param cUsr, Caracter, Usu·rio
 	@param cPass, Caracter, Senha
 	@param cArq, Caracter, Arquivo a ser enviado (deve estar dentro da \System\)
-	@return lRet, Retorno l√≥gico se deu certo ou n√£o o envio
+	@return lRet, Retorno lÛgico se deu certo ou n„o o envio
 /*/
 
 User Function zFTPEnv(cEndereco, nPorta, cUsr, cPass, cArq)
@@ -26,7 +32,7 @@ User Function zFTPEnv(cEndereco, nPorta, cUsr, cPass, cArq)
 		//Desativa o firewall
 		FTPSetPasv(.F.)		
 		
-		//Se n√£o conseguir dar o upload
+		//Se n„o conseguir dar o upload
 		If !FTPUpload(cDirAbs, cArq)
 			//Realiza mais uma tentativa
 			If !FTPUpload(cDirAbs, cArq)

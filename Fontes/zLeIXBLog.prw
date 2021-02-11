@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/11/15/funcao-le-log-ixblog-retorna-somente-lista-dos-execblock-executados/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
@@ -5,12 +11,12 @@
 #Define STR_PULA   Chr(13)+Chr(10)
 
 /*/{Protheus.doc} zLeIXBLog
-FunÃ§Ã£o que lÃª arquivo gerado pelo IXBLog, e gera um outro apenas com o nome dos pontos de entrada executado
+Função que lÃª arquivo gerado pelo IXBLog, e gera um outro apenas com o nome dos pontos de entrada executado
 @type function
 @author Atilio
 @since 05/08/2016
 @version 1.0
-	@param cArquivo, character, (DescriÃ§Ã£o do parÃ¢metro)
+	@param cArquivo, character, (Descrição do parÃ¢metro)
 	@example
 	u_zLeIXBLog("E:\administrador_026270.log")
 /*/
@@ -28,7 +34,7 @@ User Function zLeIXBLog(cArquivo)
 	//Se o arquivo pode ser aberto
 	If (oFile:Open())
 	
-		//Se nÃ£o for fim do arquivo
+		//Se não for fim do arquivo
 		If ! (oFile:EoF())
 		
 			//Enquanto houver linhas a serem lidas
@@ -39,7 +45,7 @@ User Function zLeIXBLog(cArquivo)
 				If "ExecBlock" $ cLinAtu
 					cNomePonto := Alltrim(StrTran(cLinAtu, 'ExecBlock   :', ''))
 					
-					//Se ele nÃ£o estiver contido, adiciona no texto
+					//Se ele não estiver contido, adiciona no texto
 					If ! cNomePonto $ cPEs
 						cPEs += "> "+cNomePonto+STR_PULA
 					EndIf

@@ -1,3 +1,8 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 

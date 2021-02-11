@@ -1,8 +1,14 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/06/27/funcao-valida-todos-os-campos-de-uma-grid/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zVldGrid
-Executa as valida√ß√µes da Grid
+Executa as validaÁ√µes da Grid
 @author Atilio
 @since 18/02/2017
 @version 1.0
@@ -27,14 +33,14 @@ User Function zVldGrid()
 	For nAtual := 1 To Len(aColsAux)
 		n := nAtual
 		
-		//Percorre o cabe√ßalho da linha atual
+		//Percorre o cabeÁalho da linha atual
 		For nColAtu := 1 To Len(aHeaderAux)
 			cCampoAtu := aHeaderAux[nColAtu][2]
 			__ReadVar := cCampoAtu
 			cVldPad := GetSX3Cache(cCampoAtu, 'X3_VALID')
 			cVldUsr := GetSX3Cache(cCampoAtu, 'X3_VLDUSR')
 			
-			//Se tiver valida√ß√£o padr√£o, executa
+			//Se tiver validaÁ„o padr„o, executa
 			If !Empty(cVldPad)
 				lOk := &(cVldPad)
 				If !lOk
@@ -42,7 +48,7 @@ User Function zVldGrid()
 				EndIf
 			EndIf
 			
-			//Se tiver ok e tiver valida√ß√£o de usu√°rio, executa
+			//Se tiver ok e tiver validaÁ„o de usu·rio, executa
 			If lOk .And. !Empty(cVldUsr)
 				lOk := &(cVldUsr)
 				If !lOk
@@ -52,9 +58,9 @@ User Function zVldGrid()
 		Next
 	Next
 	
-	//Caso tenha mensagem de erro nos campos, mostra ao usu√°rio
+	//Caso tenha mensagem de erro nos campos, mostra ao usu·rio
 	If !Empty(cMsg)
-		Aviso("Aten√ß√£o", "Erros nos campos: "+CRLF+cMsg, {"OK"}, 2)
+		Aviso("AtenÁ„o", "Erros nos campos: "+CRLF+cMsg, {"OK"}, 2)
 	EndIf
 	
 	__ReadVar := cVarBkp

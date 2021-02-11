@@ -1,8 +1,14 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/09/06/criando-graficos-advpl-fwchartbar/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"  
 
 /*/{Protheus.doc} zTstChart
-Fun√ß√£o de teste da classe FWChartBar
+FunÁ„o de teste da classe FWChartBar
 @type function
 @author Atilio
 @since 01/12/2015
@@ -25,23 +31,23 @@ User Function zTstChart()
 		//Inicializa pertencendo a janela
 		oChart:Init(oDlg, .T., .T. )
 		
-		//Seta o t√≠tulo do gr√°fico
+		//Seta o t√≠tulo do gr·fico
 		oChart:SetTitle("T√≠tulo", CONTROL_ALIGN_CENTER)
 		
-		//Adiciona as s√©ries, com as descri√ß√µes e valores
+		//Adiciona as sÈries, com as descriÁ√µes e valores
 		oChart:addSerie("Ano 2011", 20044453.50)
 		oChart:addSerie("Ano 2012", 21044453.35)
 		oChart:addSerie("Ano 2013", 22044453.15)
 		oChart:addSerie("Ano 2014", 23044453.10)
 		oChart:addSerie("Ano 2015", 25544453.01)
 		
-		//Define que a legenda ser√° mostrada na esquerda
+		//Define que a legenda ser· mostrada na esquerda
 		oChart:setLegend( CONTROL_ALIGN_LEFT )
 		
-		//Seta a m√°scara mostrada na r√©gua
+		//Seta a m·scara mostrada na rÈgua
 		oChart:cPicture := "@E 999,999,999,999,999.99"
 		
-		//Define as cores que ser√£o utilizadas no gr√°fico
+		//Define as cores que ser„o utilizadas no gr·fico
 		aAdd(aRand, {"084,120,164", "007,013,017"})
 		aAdd(aRand, {"171,225,108", "017,019,010"})
 		aAdd(aRand, {"207,136,077", "020,020,006"})
@@ -52,7 +58,7 @@ User Function zTstChart()
 		oChart:oFWChartColor:aRandom := aRand
 		oChart:oFWChartColor:SetColor("Random")
 		
-		//Constr√≥i o gr√°fico
+		//ConstrÛi o gr·fico
 		oChart:Build()
 	ACTIVATE MSDIALOG oDlg CENTERED
 Return

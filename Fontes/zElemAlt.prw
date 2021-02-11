@@ -1,15 +1,21 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/11/28/funcao-altera-posicao-de-um-elemento-de-um-array/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zElemAlt
-Fun√ß√£o que altera a posi√ß√£o de um elemento do Array
+FunÁ„o que altera a posiÁ„o de um elemento do Array
 @author Atilio
 @since 02/08/2017
 @version 1.0
-@param aArray, array, Array com os dados que ser√£o ordenados
+@param aArray, array, Array com os dados que ser„o ordenados
 @param nColSeq, numeric, Coluna que possui a sequ√™ncia
-@param nLinOld, numeric, Linha antiga que ser√° alterada
-@param nLinNew, numeric, Linha nova que ser√° alterada
+@param nLinOld, numeric, Linha antiga que ser· alterada
+@param nLinNew, numeric, Linha nova que ser· alterada
 @type function
 @example Exemplo abaixo
 	aDados := {}
@@ -22,7 +28,7 @@ Fun√ß√£o que altera a posi√ß√£o de um elemento do Array
 	nLinhaAntiga := 4
 	nLinhaNova   := 2
 	
-	//Altera a marmota da posi√ß√£o 4 para 2
+	//Altera a marmota da posiÁ„o 4 para 2
 	u_zElemAlt(@aDados, nColuna, nLinhaAntiga, nLinhaNova)
 /*/
 
@@ -56,7 +62,7 @@ User Function zElemAlt(aArray, nColSeq, nLinOld, nLinNew)
 		//Agora a linha nova, vai ter o valor da antiga que foi exclu√≠da
 		aArray[nLinNew] := aClone(aLinhaBkp)
 		
-		//Refa√ßo o tamanho do array
+		//RefaÁo o tamanho do array
 		aSize(aArray, nTamanOrig)
 		
 		//Percorre os elementos do array, e refaz a coluna de sequ√™ncia

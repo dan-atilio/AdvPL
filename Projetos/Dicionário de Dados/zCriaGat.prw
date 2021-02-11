@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/01/03/funcao-para-criar-gatilhos-sx7-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zCriaGat
-FunÃ§Ã£o que cria os gatilhos na base
+Função que cria os gatilhos na base
 @type function
 @author Atilio
 @since 22/09/2015
@@ -20,7 +26,7 @@ FunÃ§Ã£o que cria os gatilhos na base
 		[nLinha][06] - Alias
 		[nLinha][07] - Ordem
 		[nLinha][08] - Chave
-		[nLinha][09] - CondiÃ§Ã£o
+		[nLinha][09] - Condição
 /*/
 
 User Function zCriaGat(aSX7)
@@ -39,10 +45,10 @@ User Function zCriaGat(aSX7)
 	For nAtual := 1 To Len(aSX7)
 		lCria := .T.
 		
-		//Percorrendo a SX7, verificando se jÃ¡ nÃ£o existe o campo com a conta domÃ­nio e a regra
+		//Percorrendo a SX7, verificando se já não existe o campo com a conta domÃ­nio e a regra
 		SX7->(DbGoTop())
 		While ! SX7->(EoF())
-			//Se encontrar o gatilho, nÃ£o serÃ¡ criado
+			//Se encontrar o gatilho, não será criado
 			If	Alltrim(SX7->X7_CAMPO) == Alltrim(aSX7[nAtual][01]) .And.;
 				Alltrim(SX7->X7_CDOMIN) == Alltrim(aSX7[nAtual][02]) .And.;
 				Alltrim(SX7->X7_REGRA) == Alltrim(aSX7[nAtual][03])
@@ -57,7 +63,7 @@ User Function zCriaGat(aSX7)
 			cTabAux := AliasCpo(aSX7[nAtual][01])
 			cSeqAux := fSeqSX7(aSX7[nAtual][01])
 			
-			//Grava a informaÃ§Ã£o
+			//Grava a informação
 			RecLock("SX7", .T.)
 				X7_CAMPO	:= aSX7[nAtual][01]
 				X7_SEQUENC	:= cSeqAux
@@ -84,14 +90,14 @@ User Function zCriaGat(aSX7)
 				EndIf
 			EndIf
 			
-			//Atualiza o DicionÃ¡rio
+			//Atualiza o Dicionário
 			X31UpdTable(cTabAux)
 
 			//Se houve Erro na Rotina
 			If __GetX31Error()
-				cMsgAux := "Houveram erros na atualizaÃ§Ã£o do gatilho "+aSX7[nAtual][01]+" -> "+aSX7[nAtual][02]+", com a regra '"+aSX7[nAtual][03]+"':"+Chr(13)+Chr(10)
+				cMsgAux := "Houveram erros na atualização do gatilho "+aSX7[nAtual][01]+" -> "+aSX7[nAtual][02]+", com a regra '"+aSX7[nAtual][03]+"':"+Chr(13)+Chr(10)
 				cMsgAux += __GetX31Trace()
-				Aviso('AtenÃ§Ã£o', cMsgAux, {'OK'}, 03)
+				Aviso('Atenção', cMsgAux, {'OK'}, 03)
 			EndIf
 		EndIf
 	Next
@@ -103,7 +109,7 @@ Return
  | Func:  fSeqSX7                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  22/09/2015                                                   |
- | Desc:  FunÃ§Ã£o que pega a prÃ³xima sequencia da SX7 conforme campo    |
+ | Desc:  Função que pega a próxima sequencia da SX7 conforme campo    |
  *---------------------------------------------------------------------*/
  
 Static Function fSeqSX7(cCampo)

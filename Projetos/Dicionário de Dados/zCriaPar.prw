@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/12/20/funcao-para-criar-parametros-sx6-codigo-fonte-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zCriaPar
-FunÃ§Ã£o para criaÃ§Ã£o de parÃ¢metros (SX6)
+Função para criação de parÃ¢metros (SX6)
 @type function
 @author Atilio
 @since 12/11/2015
@@ -14,8 +20,8 @@ FunÃ§Ã£o para criaÃ§Ã£o de parÃ¢metros (SX6)
 	@obs Abaixo a estrutura do array:
 		[01] - ParÃ¢metro (ex.: "MV_X_TST")
 		[02] - Tipo (ex.: "C")
-		[03] - DescriÃ§Ã£o (ex.: "ParÃ¢metro Teste")
-		[04] - ConteÃºdo (ex.: "123;456;789")
+		[03] - Descrição (ex.: "ParÃ¢metro Teste")
+		[04] - Conteúdo (ex.: "123;456;789")
 /*/
 
 User Function zCriaPar(aPars)
@@ -29,18 +35,18 @@ User Function zCriaPar(aPars)
 	
 	//Percorrendo os parÃ¢metros e gerando os registros
 	For nAtual := 1 To Len(aPars)
-		//Se nÃ£o conseguir posicionar no parÃ¢metro cria
+		//Se não conseguir posicionar no parÃ¢metro cria
 		If !(SX6->(DbSeek(xFilial("SX6")+aPars[nAtual][1])))
 			RecLock("SX6",.T.)
 				//Geral
 				X6_VAR		:=	aPars[nAtual][1]
 				X6_TIPO	:=	aPars[nAtual][2]
 				X6_PROPRI	:=	"U"
-				//DescriÃ§Ã£o
+				//Descrição
 				X6_DESCRIC	:=	aPars[nAtual][3]
 				X6_DSCSPA	:=	aPars[nAtual][3]
 				X6_DSCENG	:=	aPars[nAtual][3]
-				//ConteÃºdo
+				//Conteúdo
 				X6_CONTEUD	:=	aPars[nAtual][4]
 				X6_CONTSPA	:=	aPars[nAtual][4]
 				X6_CONTENG	:=	aPars[nAtual][4]

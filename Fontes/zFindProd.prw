@@ -1,8 +1,14 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2019/06/19/funcao-para-procurar-produtos-em-uma-grid-de-forma-rapida/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zFindProd
-Fun√ß√£o feita para agilizar a procura de produtos na grid de rotinas padr√µes
+FunÁ„o feita para agilizar a procura de produtos na grid de rotinas padr√µes
 @author Atilio
 @since 31/10/2018
 @version undefined
@@ -13,7 +19,7 @@ Fun√ß√£o feita para agilizar a procura de produtos na grid de rotinas padr√µes
 		SetKey(K_CTRL_Y, { || u_zFindProd() })  //Ctrl + Y
 	Return
 	
-@obs Essa rotina foi feita usando o padr√£o de grids que usam aCols e aHeader, se for em MVC, para posicionar na linha seria algo +- assim:
+@obs Essa rotina foi feita usando o padr„o de grids que usam aCols e aHeader, se for em MVC, para posicionar na linha seria algo +- assim:
 	
 	...
 	oModelPad  := FWModelActive()
@@ -28,36 +34,36 @@ User Function zFindProd()
 	Private oPai       := GetWndDefault()
 	Private aControles := oPai:aControls
 	
-	//Se for chamada pela tela de pedido de vendas, o campo ser√° o C6_PRODUTO
+	//Se for chamada pela tela de pedido de vendas, o campo ser· o C6_PRODUTO
 	If IsInCallStack("MATA410")
 		cCampo := "C6_PRODUTO"
 	
-	//Sen√£o, se for chamada pela tela de pedido de compras, o campo ser√° o C7_PRODUTO
+	//Sen„o, se for chamada pela tela de pedido de compras, o campo ser· o C7_PRODUTO
 	ElseIf IsInCallStack("MATA121")
 		cCampo := "C7_PRODUTO"
 	EndIf
 	
-	//Se houver campo, ser√° carregado a tela
+	//Se houver campo, ser· carregado a tela
 	If ! Empty(cCampo)
-		//Pega a posi√ß√£o do aCols
+		//Pega a posiÁ„o do aCols
 		nPosProd := GDFieldPos(cCampo)
 		
-		//Chama a fun√ß√£o de procura
+		//Chama a funÁ„o de procura
 		fProcura()
 		
 	Else
-		MsgStop("Procura de Produtos n√£o pode ser chamada!", "Aten√ß√£o")
+		MsgStop("Procura de Produtos n„o pode ser chamada!", "AtenÁ„o")
 	EndIf
 	
 Return
 
 /*---------------------------------------*
  | Func.: fProcura                       |
- | Desc.: Fun√ß√£o que procura o registro  |
+ | Desc.: FunÁ„o que procura o registro  |
  *---------------------------------------*/
 
 Static Function fProcura()
-	//Vari√°veis da tela
+	//Vari·veis da tela
 	Private oDlgPesq
 	Private oGrpPesq
 	Private oGetPesq
@@ -69,10 +75,10 @@ Static Function fProcura()
 	
 	//Criando a janela
 	DEFINE MSDIALOG oDlgPesq TITLE "zFindProd - Pesquisa de Produtos" FROM 000, 000  TO nJanAltu, nJanLarg COLORS 0, 16777215 PIXEL
-		//Grupo F√≥rmula com o Get
+		//Grupo FÛrmula com o Get
 		@ 003, 003  GROUP oGrpPesq TO (nJanAltu/2)-3, (nJanLarg/2)-1        PROMPT "Produto: " OF oDlgPesq COLOR 0, 16777215 PIXEL
 			@ 010, 006  MSGET oGetPesq VAR cGetPesq SIZE (nJanLarg/2)-29, 013 OF oDlgPesq COLORS 0, 16777215 VALID (fConfirma()) PIXEL
-			oGetPesq:cPlaceHold := "Insira o c√≥digo do Produto ou um trecho do c√≥digo..."
+			oGetPesq:cPlaceHold := "Insira o cÛdigo do Produto ou um trecho do cÛdigo..."
 			
 			@ 010, (nJanLarg/2)-21 BUTTON oBtnExec PROMPT "OK" SIZE 016, 015 OF oDlgPesq ACTION(fConfirma()) PIXEL
 		
@@ -93,16 +99,16 @@ Static Function fConfirma()
 	//Primeiro tenta encontrar exatamente igual
 	nLinNov := aScan(aCols, {|x| AllTrim(x[nPosProd]) == cPesquisa})
 	
-	//Se n√£o encontrou, busca pelo trecho
+	//Se n„o encontrou, busca pelo trecho
 	If nLinNov == 0
 		nLinNov := aScan(aCols, {|x| cPesquisa $ AllTrim(x[nPosProd])})
 	Endif
 	
-	//Se mesmo assim n√£o encontrou, mostra mensagem
+	//Se mesmo assim n„o encontrou, mostra mensagem
 	If nLinNov == 0
-		MsgStop("Trecho '" + cPesquisa + "' n√£o foi encontrado!", "Aten√ß√£o")
+		MsgStop("Trecho '" + cPesquisa + "' n„o foi encontrado!", "AtenÁ„o")
 		
-	//Do contr√°rio, posiciona na linha correta e encerra a tela
+	//Do contr·rio, posiciona na linha correta e encerra a tela
 	Else
 		fPosiciona(nLinNov)
 		oDlgPesq:End()
@@ -121,10 +127,10 @@ Static Function fPosiciona(nLinhaNew)
 	//Percorrendo os objetos criados da tela
 	For nAtual := 1 To Len(aControles)
 	
-		//Se tiver Colunas, √© uma grid
+		//Se tiver Colunas, È uma grid
 		If Type("aControles[" + cValToChar(nAtual) + "]:aColumns") != "U"
 			
-			//Se tiver o mesmo n√∫mero de colunas que o aHeader
+			//Se tiver o mesmo n˙mero de colunas que o aHeader
 			If Len(aControles[nAtual]:aColumns) == Len(aHeader)
 				
 				//Pega a Grid

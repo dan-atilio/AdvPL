@@ -1,3 +1,9 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/08/16/consulta-padrao-dados-de-array/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
@@ -6,7 +12,7 @@
 #Define STR_PULA		Chr(13)+Chr(10)
 
 /*/{Protheus.doc} zTstCons
-Fun√ß√£o de exemplo de consulta de dados via Array (zConsArr)
+FunÁ„o de exemplo de consulta de dados via Array (zConsArr)
 @type function
 @author Atilio
 @since 30/07/2016
@@ -27,23 +33,23 @@ User Function zTstCons()
 	
 	//Se foi confirmado, mostra mensagem
 	If lOk
-		MsgInfo("O escolhido foi: "+__cRetorn+"!", "Aten√ß√£o")
+		MsgInfo("O escolhido foi: "+__cRetorn+"!", "AtenÁ„o")
 	EndIf
 Return lOk
 
 /*/{Protheus.doc} zConsArr
-Fun√ß√£o para consulta gen√©rica
+FunÁ„o para consulta genÈrica
 @author Daniel Atilio
 @since 05/06/2015
 @version 1.0
 	@param aDadosM, Array, Array multidimensional que tem o retorno
-	@param nPosRetM, Num√©rico, Posi√ß√£o de retorno
-	@param nColsM, Num√©rico, Quantidade de colunas
+	@param nPosRetM, NumÈrico, PosiÁ„o de retorno
+	@param nColsM, NumÈrico, Quantidade de colunas
 	@param aTitulosM, Array, Array com os t√≠tulos dos campos
-	@return lRetorn, retorno se a consulta foi confirmada ou n√£o
+	@return lRetorn, retorno se a consulta foi confirmada ou n„o
 	@example
 	u_zConsArr(aDados, 1, 3, {"Campo1","Campo2","Campo3"}, {10, 10, 20})
-	@obs O retorno da consulta √© p√∫blica (__cRetorn) para ser usada em consultas espec√≠ficas
+	@obs O retorno da consulta È p˙blica (__cRetorn) para ser usada em consultas espec√≠ficas
 /*/
 
 User Function zConsArr(aDadosM, nPosRetM, nColsM, aTitulosM, aTamanM)
@@ -76,9 +82,9 @@ User Function zConsArr(aDadosM, nPosRetM, nColsM, aTitulosM, aTamanM)
 	Private nTamanRet := Iif(Len(aDadosM) >= 1, Len(aDadosM[1][nPosRet]), 18)
 	Public  __cRetorn := ""
 	
-	//Se tiver o alias em branco ou n√£o tiver campos
+	//Se tiver o alias em branco ou n„o tiver campos
 	If Len(aDadosM) <= 0 .Or. (nPosRetM == 0) .Or. (nColsM == 0)
-		MsgStop("Sem campos!", "Aten√ß√£o")
+		MsgStop("Sem campos!", "AtenÁ„o")
 		Return lRetorn
 	EndIf
 	
@@ -116,8 +122,8 @@ User Function zConsArr(aDadosM, nPosRetM, nColsM, aTitulosM, aTamanM)
 			//Populando os dados da MsNewGetDados
 			fPopula()
 		
-		//A√ß√µes
-		@ (nJanAltu/2)-25, 003 GROUP oGrpAcoes TO (nJanAltu/2)-3, (nJanLarg/2)-3 PROMPT "A√ß√µes: "	OF oDlgEspe COLOR 0, 16777215 PIXEL
+		//AÁ√µes
+		@ (nJanAltu/2)-25, 003 GROUP oGrpAcoes TO (nJanAltu/2)-3, (nJanLarg/2)-3 PROMPT "AÁ√µes: "	OF oDlgEspe COLOR 0, 16777215 PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*1)+06) BUTTON oBtnConf PROMPT "Confirmar" SIZE nTamBtn, 013 OF oDlgEspe ACTION(fConfirm())     PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*2)+09) BUTTON oBtnLimp PROMPT "Limpar" SIZE nTamBtn, 013 OF oDlgEspe ACTION(fLimpar())     PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*3)+12) BUTTON oBtnCanc PROMPT "Cancelar" SIZE nTamBtn, 013 OF oDlgEspe ACTION(fCancela())     PIXEL
@@ -133,7 +139,7 @@ Return lRetorn
  | Func:  fCriaMsNew                                                   |
  | Autor: Daniel Atilio                                                |
  | Data:  05/06/2015                                                   |
- | Desc:  Fun√ß√£o para criar a estrutura da MsNewGetDados               |
+ | Desc:  FunÁ„o para criar a estrutura da MsNewGetDados               |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -158,7 +164,7 @@ Static Function fCriaMsNew()
 			nTamanAtu := aTaman[nAtual]
 		EndIf
 		
-		//Cabe√ßalho ...	Titulo			Campo			Mask		Tamanho	Dec		Valid	Usado	Tip		F3	CBOX
+		//CabeÁalho ...	Titulo			Campo			Mask		Tamanho	Dec		Valid	Usado	Tip		F3	CBOX
 		aAdd(aHeadAux,{	cTituloAux,	cCampoAtu,		"",			nTamanAtu,			0,		".F.",	".F.",	"C",	"",	""})
 	Next
 Return
@@ -167,7 +173,7 @@ Return
  | Func:  fPopula                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  05/06/2015                                                   |
- | Desc:  Fun√ß√£o que popula a tabela auxiliar da MsNewGetDados         |
+ | Desc:  FunÁ„o que popula a tabela auxiliar da MsNewGetDados         |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -179,7 +185,7 @@ Static Function fPopula()
 	For nLinha := 1 To Len(aCampos)
 		lFiltro := .F.
 		
-		//Se tiver filtro, verifica um a um se tem a express√£o
+		//Se tiver filtro, verifica um a um se tem a express„o
 		If !Empty(cGetPesq)
 			//percorrendo colunas
 			For nColuna := 1 To nCols
@@ -194,7 +200,7 @@ Static Function fPopula()
 				EndIf
 			Next
 		
-		//Se n√£o tiver filtro, traz tudo
+		//Se n„o tiver filtro, traz tudo
 		Else
 			lFiltro := .T.
 		EndIf
@@ -212,7 +218,7 @@ Static Function fPopula()
 		EndIf
 	Next
 	
-	//Se n√£o tiver dados, adiciona linha em branco
+	//Se n„o tiver dados, adiciona linha em branco
 	If Len(aColsAux) == 0
 		aAux := {}
 		//Percorrendo os campos e adicionando no acols (junto com o recno e com o delet
@@ -233,7 +239,7 @@ Return
  | Func:  fConfirm                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  05/06/2015                                                   |
- | Desc:  Fun√ß√£o de confirma√ß√£o da rotina                              |
+ | Desc:  FunÁ„o de confirmaÁ„o da rotina                              |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -252,7 +258,7 @@ Return
  | Func:  fLimpar                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  05/06/2015                                                   |
- | Desc:  Fun√ß√£o que limpa os dados da rotina                          |
+ | Desc:  FunÁ„o que limpa os dados da rotina                          |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -272,7 +278,7 @@ Return
  | Func:  fCancela                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  05/06/2015                                                   |
- | Desc:  Fun√ß√£o de cancelamento da rotina                             |
+ | Desc:  FunÁ„o de cancelamento da rotina                             |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -287,17 +293,17 @@ Return
  | Func:  fVldPesq                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  05/06/2015                                                   |
- | Desc:  Fun√ß√£o que valida o campo digitado                           |
+ | Desc:  FunÁ„o que valida o campo digitado                           |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
 Static Function fVldPesq()
 	Local lRet := .T.
 	
-	//Se tiver ap√≥strofo ou porcentagem, a pesquisa n√£o pode prosseguir
+	//Se tiver apÛstrofo ou porcentagem, a pesquisa n„o pode prosseguir
 	If "'" $ cGetPesq .Or. "%" $ cGetPesq
 		lRet := .F.
-		MsgAlert("<b>Pesquisa inv√°lida!</b><br>A pesquisa n√£o pode ter <b>'</b> ou <b>%</b>.", "Aten√ß√£o")
+		MsgAlert("<b>Pesquisa inv·lida!</b><br>A pesquisa n„o pode ter <b>'</b> ou <b>%</b>.", "AtenÁ„o")
 	EndIf
 	
 	//Se houver retorno, atualiza grid

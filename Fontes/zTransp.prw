@@ -1,9 +1,15 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2020/03/27/funcao-para-rastrear-informacoes-em-transportadoras-via-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Totvs.ch"
 #Include "TopConn.ch"
 
 /*/{Protheus.doc} zTransp
-FunÃ§Ã£o para consultar pedidos em transportadoras
+Função para consultar pedidos em transportadoras
 @type  Function
 @author Atilio
 @since 25/11/2019
@@ -87,7 +93,7 @@ Static Function fMontaBusca()
         // - Braspress
         ElseIf QRY_PED->C5_TRANSP == "000670"
             cUrl := "https://www.braspress.com/acesso-rapido/rastreie-sua-encomenda/"
-            u_MsgLog("AtenÃ§Ã£o", "Preencha CNPJ [" + QRY_PED->A1_CGC + "] e NF [" + cValToChar(Val(QRY_PED->C5_NOTA)) + "]")
+            u_MsgLog("Atenção", "Preencha CNPJ [" + QRY_PED->A1_CGC + "] e NF [" + cValToChar(Val(QRY_PED->C5_NOTA)) + "]")
 
         // - Setex do Brasil
         ElseIf QRY_PED->C5_TRANSP == "001569"

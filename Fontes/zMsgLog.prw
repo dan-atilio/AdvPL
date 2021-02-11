@@ -1,17 +1,23 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/08/22/funcao-mostra-uma-mensagem-de-log-opcao-de-salvar-em-advpl/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "Rwmake.ch"
 
 /*/{Protheus.doc} zMsgLog
-Fun√ß√£o que mostra uma mensagem de Log com a op√ß√£o de salvar em txt
+FunÁ„o que mostra uma mensagem de Log com a opÁ„o de salvar em txt
 @type function
 @author Atilio
 @since 14/04/2017
 @version 1.0
 @param cMsg, character, Mensagem de Log
 @param cTitulo, character, T√≠tulo da Janela
-@param nTipo, num√©rico, Tipo da Janela (1 = Ok; 2 = Confirmar e Cancelar)
-@param lEdit, l√≥gico, Define se o Log pode ser editado pelo usu√°rio
+@param nTipo, numÈrico, Tipo da Janela (1 = Ok; 2 = Confirmar e Cancelar)
+@param lEdit, lÛgico, Define se o Log pode ser editado pelo usu·rio
 @return lRetMens, Define se a janela foi confirmada
 @example
 	u_zMsgLog("Daniel Teste 123", "T√≠tulo", 1, .T.)
@@ -49,25 +55,25 @@ User Function zMsgLog(cMsg, cTitulo, nTipo, lEdit)
 			oMsg:lReadOnly := .T.
 		EndIf
 		
-		//Se for Tipo 1, cria somente o bot√£o OK
+		//Se for Tipo 1, cria somente o bot„o OK
 		If (nTipo==1)
 			@ 127, 144 BUTTON oBtnOk  PROMPT cTxtConf   SIZE 051, 019 ACTION (lRetMens:=.T., oDlgMens:End()) OF oDlgMens PIXEL
 		
-		//Sen√£o, cria os bot√µes OK e Cancelar
+		//Sen„o, cria os bot√µes OK e Cancelar
 		ElseIf(nTipo==2)
 			@ 127, 144 BUTTON oBtnOk  PROMPT cTxtConf   SIZE 051, 009 ACTION (lRetMens:=.T., oDlgMens:End()) OF oDlgMens PIXEL
 			@ 137, 144 BUTTON oBtnCnc PROMPT cTxtCancel SIZE 051, 009 ACTION (lRetMens:=.F., oDlgMens:End()) OF oDlgMens PIXEL
 		EndIf
 		
-		//Bot√£o de Salvar em Txt
+		//Bot„o de Salvar em Txt
 		@ 127, 004 BUTTON oBtnSlv PROMPT "&Salvar em .txt" SIZE 051, 019 ACTION (fSalvArq(cMsg, cTitulo)) OF oDlgMens PIXEL
 	ACTIVATE MSDIALOG oDlgMens CENTERED
 
 Return lRetMens
 
 /*-----------------------------------------------*
- | Fun√ß√£o: fSalvArq                              |
- | Descr.: Fun√ß√£o para gerar um arquivo texto    |
+ | FunÁ„o: fSalvArq                              |
+ | Descr.: FunÁ„o para gerar um arquivo texto    |
  *-----------------------------------------------*/
 
 Static Function fSalvArq(cMsg, cTitulo)
@@ -79,29 +85,29 @@ Static Function fSalvArq(cMsg, cTitulo)
 	//Pegando o caminho do arquivo
 	cFileNom := cGetFile( "Arquivo TXT *.txt | *.txt", "Arquivo .txt...",,'',.T., GETF_LOCALHARD)
 
-	//Se o nome n√£o estiver em branco	
+	//Se o nome n„o estiver em branco	
 	If !Empty(cFileNom)
-		//Teste de exist√™ncia do diret√≥rio
+		//Teste de exist√™ncia do diretÛrio
 		If ! ExistDir(SubStr(cFileNom,1,RAt('\',cFileNom)))
-			Alert("Diret√≥rio n√£o existe:" + CRLF + SubStr(cFileNom, 1, RAt('\',cFileNom)) + "!")
+			Alert("DiretÛrio n„o existe:" + CRLF + SubStr(cFileNom, 1, RAt('\',cFileNom)) + "!")
 			Return
 		EndIf
 		
 		//Montando a mensagem
-		cTexto := "Fun√ß√£o   - "+ FunName()       + CRLF
-		cTexto += "Usu√°rio  - "+ cUserName       + CRLF
+		cTexto := "FunÁ„o   - "+ FunName()       + CRLF
+		cTexto += "Usu·rio  - "+ cUserName       + CRLF
 		cTexto += "Data     - "+ dToC(dDataBase) + CRLF
 		cTexto += "Hora     - "+ Time()          + CRLF
 		cTexto += "Mensagem - "+ cTitulo + cQuebra  + cMsg + cQuebra
 		
-		//Testando se o arquivo j√° existe
+		//Testando se o arquivo j· existe
 		If File(cFileNom)
-			lOk := MsgYesNo("Arquivo j√° existe, deseja substituir?", "Aten√ß√£o")
+			lOk := MsgYesNo("Arquivo j· existe, deseja substituir?", "AtenÁ„o")
 		EndIf
 		
 		If lOk
 			MemoWrite(cFileNom, cTexto)
-			MsgInfo("Arquivo Gerado com Sucesso:"+CRLF+cFileNom,"Aten√ß√£o")
+			MsgInfo("Arquivo Gerado com Sucesso:"+CRLF+cFileNom,"AtenÁ„o")
 		EndIf
 	EndIf
 Return

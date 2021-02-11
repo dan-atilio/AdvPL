@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/10/25/funcao-converte-valor-soma1-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zCnvSoma1
-FunÃ§Ã£o de conversÃ£o do Soma1
+Função de conversão do Soma1
 @type function
 @author Atilio
 @since 03/08/2016
@@ -33,7 +39,7 @@ User Function zCnvSoma1(cValor)
 Return nValConv
 
 /*/{Protheus.doc} zCnvTipo2
-FunÃ§Ã£o para conversÃ£o do Soma1 (sem utilizar o While)
+Função para conversão do Soma1 (sem utilizar o While)
 @type function
 @author Atilio
 @since 03/08/2016
@@ -42,13 +48,13 @@ FunÃ§Ã£o para conversÃ£o do Soma1 (sem utilizar o While)
 	@return nValor, Valor Convertido
 	@example
 	u_zCnvSoma1("ZZ")
-	@obs Essa funÃ§Ã£o nÃ£o foi finalizada 100%!
-	NÃ£o foi encontrado um fator exato de conversÃ£o, em testes realizados, com valores de tamanho 1 e 2, a funÃ§Ã£o funciona
-	perfeitamente (por exemplo, A0, ZZ, Z, M9, etc), porÃ©m para valores de tamanho 3 para cima nÃ£o.
+	@obs Essa função não foi finalizada 100%!
+	Não foi encontrado um fator exato de conversão, em testes realizados, com valores de tamanho 1 e 2, a função funciona
+	perfeitamente (por exemplo, A0, ZZ, Z, M9, etc), porém para valores de tamanho 3 para cima não.
 	Para valores de tamanho 1, a rotina funciona
 	Para valores de tamanho 2, a rotina funciona
-	Para valores de tamanho 3, a inconsistÃªncia comeÃ§a partir do AB0  (apÃ³s o AAZ)  - 2357  registros
-	Para valores de tamanho 4, a inconsistÃªncia comeÃ§a partir do 9AB0 (apÃ³s o 9AAZ) - 11356 registros
+	Para valores de tamanho 3, a inconsistÃªncia começa partir do AB0  (após o AAZ)  - 2357  registros
+	Para valores de tamanho 4, a inconsistÃªncia começa partir do 9AB0 (após o 9AAZ) - 11356 registros
 /*/
 
 User Function zCnvTipo2(cNumero)
@@ -94,7 +100,7 @@ User Function zCnvTipo2(cNumero)
 			If cCaract $ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 				cAscii := cValToChar(Asc(cCaract) - 64 + 9)
 				
-				//Se for a partir da segunda posiÃ§Ã£o e nÃ£o for a Ãºltima
+				//Se for a partir da segunda posição e não for a última
 				If nAtual > nPosIni .And. nAtual != Len(cNumero)
 					nValAux := Val(cAscii + cZeros) + Iif(nAtual != Len(cNumero), 26 * (Asc(cCaract) - 64), 0)
 					nValAux *= Val(cAscii)
@@ -105,9 +111,9 @@ User Function zCnvTipo2(cNumero)
 					nValor += Val(cAscii + cZeros) + Iif(nAtual != Len(cNumero), 26 * (Asc(cCaract) - 64), 0)
 				EndIf
 			
-			//Se for somente nÃºmeros
+			//Se for somente números
 			Else
-				//Se for a partir da segunda posiÃ§Ã£o e nÃ£o for a Ãºltima
+				//Se for a partir da segunda posição e não for a última
 				If nAtual > nPosIni .And. nAtual != Len(cNumero)
 					nValor += Val(cCaract + cZeros) + (36 * 26) + (26*Val(cCaract))
 				Else

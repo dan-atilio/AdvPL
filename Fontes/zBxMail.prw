@@ -1,12 +1,18 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2020/07/24/baixando-anexos-de-e-mail-via-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "RWMake.ch"
 #Include "Ap5Mail.ch"
 
-Static nVez := 2 //Se for caixas no hotmail.com / outlook.com, deve-se rodar a rotina duas vezes seguidas, pois ele nÃ£o consegue "mover" de pasta na primeira vez
+Static nVez := 2 //Se for caixas no hotmail.com / outlook.com, deve-se rodar a rotina duas vezes seguidas, pois ele não consegue "mover" de pasta na primeira vez
 
 /*/{Protheus.doc} zBxMail
-FunÃ§Ã£o para buscar anexos de e-Mails da Locaweb / Uol
+Função para buscar anexos de e-Mails da Locaweb / Uol
 @author Atilio
 @since 27/09/2018
 @version 1.0
@@ -14,7 +20,7 @@ FunÃ§Ã£o para buscar anexos de e-Mails da Locaweb / Uol
 @obs Abaixo algumas observacoes:
 
 	1 - Essa funcao utiliza a classe tMailManager com contas IMAP, mas tambem e possivel utilizar com POP
-	2 - Se for uma conta em hotmail.com / outlook.com, deve-se rodar a rotina duas vezes seguidas, pois ele nÃ£o consegue "mover" de pasta na primeira vez
+	2 - Se for uma conta em hotmail.com / outlook.com, deve-se rodar a rotina duas vezes seguidas, pois ele não consegue "mover" de pasta na primeira vez
 		Portanto, se estiver usando dessa forma, altere a variavel nVez para 1, para que assim ele execute "2 vezes"
 	3 - Essa rotina baixa emails para a pasta \x_importacao\ dentro da Protheus Data, porem voce pode configurar para outros diretorios, dentro da Protheus Data
 	4 - O download e feito a partir da linha 184, onde nesse exemplo e efetuado download de qualquer txt vindo por email, mas e possivel aplicar outros filtros
@@ -28,7 +34,7 @@ User Function zBxMail()
 	If nVez <= 2
 		//Alert("[zBxMail] Processo iniciado - "+Time())
 	
-		//Se nÃ£o tiver aberto o dicionÃ¡rio (rotina executada sem abrir o Protheus)
+		//Se não tiver aberto o dicionário (rotina executada sem abrir o Protheus)
 		If Select("SX2") <= 0
 			RPCClearEnv()
 			 
@@ -36,18 +42,18 @@ User Function zBxMail()
 			lJobPvt := .T.
 	
 		Else
-			If ! MsgYesNo("Deseja acessar a caixa de entrada e baixar os arquivos TXT?", "AtenÃ§Ã£o")
+			If ! MsgYesNo("Deseja acessar a caixa de entrada e baixar os arquivos TXT?", "Atenção")
 				Return
 			EndIf
 		EndIf
 		
-		//Se existir o semÃ¡foro, dÃ¡ mensagem de erro
+		//Se existir o semáforo, dá mensagem de erro
 		If File(cArqSem)
-			//Alert("[zBxMail] SemÃ¡foro existente (" + MemoRead(cArqSem) + ") - "+Time())
+			//Alert("[zBxMail] Semáforo existente (" + MemoRead(cArqSem) + ") - "+Time())
 			
 			//Mostrando mensagem
 			If ! lJobPvt
-				Aviso("AtenÃ§Ã£o", "SemÃ¡foro existente (Processo iniciado em " + MemoRead(cArqSem) + ")")
+				Aviso("Atenção", "Semáforo existente (Processo iniciado em " + MemoRead(cArqSem) + ")")
 			EndIf
 			
 		Else
@@ -56,9 +62,9 @@ User Function zBxMail()
 			//Chamando o processamento de dados
 			Processa({|| fProcessa() }, "Processando...")
 		
-			//Mostrando mensagem de conclusÃ£o
+			//Mostrando mensagem de conclusão
 			If ! lJobPvt
-				Aviso("AtenÃ§Ã£o", "Processo concluÃ­do.")
+				Aviso("Atenção", "Processo concluÃ­do.")
 			EndIf
 			
 			FErase(cArqSem)
@@ -74,7 +80,7 @@ Return
 
 /*---------------------------------------------------------------*
  | Func.: fProcessa                                              |
- | Desc.: FunÃ§Ã£o de processamento para buscar os arquivos        |
+ | Desc.: Função de processamento para buscar os arquivos        |
  *---------------------------------------------------------------*/
 
 Static Function fProcessa()
@@ -93,21 +99,21 @@ Static Function fProcessa()
 	cServer   := Iif(':' $ cSrvFull, SubStr(cSrvFull, 1, At(':', cSrvFull)-1), cSrvFull)
 	nPort     := Iif(':' $ cSrvFull, Val(SubStr(cSrvFull, At(':', cSrvFull)+1, Len(cSrvFull))), 110)
 	
-	//Se o Ãºltimo caracter nÃ£o for barra, retira ela
+	//Se o último caracter não for barra, retira ela
 	If SubStr(cDirBase, Len(cDirBase), 1) == '\'
 		cDirBase := SubStr(cDirBase, 1, Len(cDirBase)-1)
 	EndIf
 	
-	//O diretÃ³rio cheio, serÃ¡ o caminho absoluto + conteÃºdo do parÃ¢metro, por exemplo, D:\TOTVS\TOTVS Protheus\Protheus_Data\x_importacao_email
+	//O diretório cheio, será o caminho absoluto + conteúdo do parÃ¢metro, por exemplo, D:\TOTVS\TOTVS Protheus\Protheus_Data\x_importacao_email
 	cDirFull := cDirBase + cDirPad
 	
-	//Chama a importaÃ§Ã£o
+	//Chama a importação
 	fBaixa()
 Return
 
 /*---------------------------------------------------------------*
  | Func.: fBaixa                                                 |
- | Desc.: FunÃ§Ã£o que baixa as mensagens do e-Mail                |
+ | Desc.: Função que baixa as mensagens do e-Mail                |
  *---------------------------------------------------------------*/
 
 Static Function fBaixa()
@@ -130,21 +136,21 @@ Static Function fBaixa()
 	cBkpConf := GetPvProfString( "MAIL", "Protocol", "", cArqINI )
 	WritePProString('MAIL', 'PROTOCOL', 'IMAP', cArqINI)
 
-	//Cria a conexÃ£o base no gerenciamento
+	//Cria a conexão base no gerenciamento
 	oManager := tMailManager():New()
 	oManager:SetUseSSL(.T.)
 	oManager:SetUseTLS(.T.)
 	oManager:Init(cServer, "", cConta, cSenha, nPort, 0)
 	
-	//Caso nÃ£o consiga setar 120 segundos como timeout (2 minutos), nÃ£o continua
+	//Caso não consiga setar 120 segundos como timeout (2 minutos), não continua
 	If oManager:SetPopTimeOut(120) != 0
 		//Alert("[zBxMail] Falha ao setar o timeout" )
 	Else
 		
-		//Faz a conexÃ£o com IMAP
+		//Faz a conexão com IMAP
 		nRet := oManager:IMAPConnect()
 		
-		//Se nÃ£o conseguir conectar, mostra qual Ã© a mensagem de erro
+		//Se não conseguir conectar, mostra qual é a mensagem de erro
 		If nRet != 0
 			//Alert("[zBxMail] Falha ao conectar" )
 			//Alert("[zBxMail][ERROR] " + StrZero(nRet, 6), oManager:GetErrorString(nRet))
@@ -152,7 +158,7 @@ Static Function fBaixa()
 		Else
 			//Alert("[zBxMail] Sucesso ao conectar" )
 
-			//Busca o nÃºmero de mensagens na caixa de entrada
+			//Busca o número de mensagens na caixa de entrada
 			nNumMsg := 0
 			oManager:GetNumMsgs(@nNumMsg)
 			
@@ -160,7 +166,7 @@ Static Function fBaixa()
 			If nNumMsg > 0
 				ProcRegua(nNumMsg)
 				
-				//Percorre o nÃºmero de mensagens
+				//Percorre o número de mensagens
 				For nMsgAtu := 1 To nNumMsg
 					IncProc("Baixando e-Mail " + cValToChar(nMsgAtu) + " de " + cValToChar(nNumMsg) + "...")
 					
@@ -178,10 +184,10 @@ Static Function fBaixa()
 					
 					//Percorre todos os anexos
 					For nAnexoAtu := 1 To nTotAnexo
-						//Busca as informaÃ§Ãµes do anexo
+						//Busca as informaçÃµes do anexo
 						aInfAttach := oMessage:GetAttachInfo(nAnexoAtu)
 						
-						//Se tiver conteÃºdo, e for do tipo TXT
+						//Se tiver conteúdo, e for do tipo TXT
 						If ! Empty(aInfAttach[1]) .And. Upper(Right(AllTrim(aInfAttach[1]),4)) == '.TXT' //.And. "REMETENTE" $ Upper(oMessage:cFrom)
 							lEntrou := .T.
 							
@@ -191,11 +197,11 @@ Static Function fBaixa()
 								//Alert("+================================+")
 								//Alert("[zBxMail] e-Mail Lido com Anexo: ")
 								//Alert("e-Mail Origem:      " + cConta)
-								//Alert("NÃºmero da Mensagem: " + cValToChar(nMsgAtu))
+								//Alert("Número da Mensagem: " + cValToChar(nMsgAtu))
 								//Alert("De:                 " + oMessage:cFrom)
-								//Alert("CÃ³pia:              " + oMessage:cCc)
+								//Alert("Cópia:              " + oMessage:cCc)
 								//Alert("Assunto:            " + oMessage:cSubject)
-								//Alert("NÃºmero Anexo:       " + cValToChar(nAnexoAtu))
+								//Alert("Número Anexo:       " + cValToChar(nAnexoAtu))
 								//Alert("Anexo " + StrZero(nAnexoAtu, 3) + ":          " + aInfAttach[1] )
 								//Alert("Corpo:              " + oMessage:cBody)
 								//Alert("+================================+")
@@ -212,11 +218,11 @@ Static Function fBaixa()
 					If lOk
 						If lEntrou
 							If ! (oManager:MoveMsg(nMsgAtu, "Importados"))
-								//Alert("[zBxMail] NÃ£o foi possÃ­vel mover a mensagem - " + cValToChar(nMsgAtu) + "...")
+								//Alert("[zBxMail] Não foi possÃ­vel mover a mensagem - " + cValToChar(nMsgAtu) + "...")
 							EndIf
 						Else
 							If ! (oManager:MoveMsg(nMsgAtu, "Processados"))
-								//Alert("[zBxMail] NÃ£o foi possÃ­vel mover a mensagem - " + cValToChar(nMsgAtu) + "...")
+								//Alert("[zBxMail] Não foi possÃ­vel mover a mensagem - " + cValToChar(nMsgAtu) + "...")
 							EndIf
 						EndIf
 					EndIf
@@ -225,7 +231,7 @@ Static Function fBaixa()
 				Next nMsgAtu
 				
 			Else
-				//Alert("[zBxMail] NÃ£o existem mensagens para processamento...")
+				//Alert("[zBxMail] Não existem mensagens para processamento...")
 			EndIf
 
 			//Desconecta do servidor IMAP
@@ -233,7 +239,7 @@ Static Function fBaixa()
 		EndIf
 	EndIf
 	
-	//Volta a configuraÃ§Ã£o de Protocol no arquivo appserver.ini
+	//Volta a configuração de Protocol no arquivo appserver.ini
 	WritePProString('MAIL', 'PROTOCOL', cBkpConf, cArqINI)
 	
 	RestArea(aArea)

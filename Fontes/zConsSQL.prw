@@ -1,3 +1,9 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/05/09/tela-de-consulta-de-dados-atraves-de-uma-query-advpl/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
@@ -6,22 +12,22 @@
 #Define STR_PULA		Chr(13)+ Chr(10)
 
 /*/{Protheus.doc} zConsSQL
-Fun√ß√£o para consulta gen√©rica
+FunÁ„o para consulta genÈrica
 @author Daniel Atilio
 @since 15/12/2016
 @version 1.0
 	@param cConsSQLM, Caracter, Consulta SQL
-	@param cRetorM, Caracter, Campo que ser√° retornado
+	@param cRetorM, Caracter, Campo que ser· retornado
 	@param cAgrupM, Caracter, Group By do SQL
 	@param cOrderM, Caracter, Order By do SQL
-	@return lRetorn, retorno se a consulta foi confirmada ou n√£o
+	@return lRetorn, retorno se a consulta foi confirmada ou n„o
 	@example
 	lOK := u_zConsSQL("SELECT B1_COD, B1_DESC FROM SB1010 WHERE D_E_L_E_T_ = ' ' ", "B1_COD", "", "B1_COD")
 	...
 	u_zConsSQL("SELECT * FROM ZA0990", "ZA0_COD", "", "")
 	...
-	@obs O retorno da consulta √© p√∫blica (__cRetorno) para ser usada em consultas espec√≠ficas
-	A consulta n√£o pode ter ORDER BY, pois ele j√° √© especificado em um par√¢metro
+	@obs O retorno da consulta È p˙blica (__cRetorno) para ser usada em consultas espec√≠ficas
+	A consulta n„o pode ter ORDER BY, pois ele j· È especificado em um par√¢metro
 /*/
 
 User Function zConsSQL(cConsSQLM, cRetorM, cAgrupM, cOrderM)
@@ -58,9 +64,9 @@ User Function zConsSQL(cConsSQLM, cRetorM, cAgrupM, cOrderM)
 	Private lRetorn := .F.
 	Public  __cRetorno := ""
 	
-	//Se tiver o alias em branco ou n√£o tiver campos
+	//Se tiver o alias em branco ou n„o tiver campos
 	If Empty(cConsSQLM) .Or. Empty(cRetorM)
-		MsgStop("SQL e / ou retorno em branco!", "Aten√ß√£o")
+		MsgStop("SQL e / ou retorno em branco!", "AtenÁ„o")
 		Return lRetorn
 	EndIf
 	
@@ -99,8 +105,8 @@ User Function zConsSQL(cConsSQLM, cRetorM, cAgrupM, cOrderM)
 			//Populando os dados da MsNewGetDados
 			fPopula()
 		
-		//A√ß√µes
-		@ (nJanAltu/2)-25, 003 GROUP oGrpAcoes TO (nJanAltu/2)-3, (nJanLarg/2)-3 PROMPT "A√ß√µes: "	OF oDlgEspe COLOR 0, 16777215 PIXEL
+		//AÁ√µes
+		@ (nJanAltu/2)-25, 003 GROUP oGrpAcoes TO (nJanAltu/2)-3, (nJanLarg/2)-3 PROMPT "AÁ√µes: "	OF oDlgEspe COLOR 0, 16777215 PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*1)+06) BUTTON oBtnConf PROMPT "Confirmar" SIZE nTamBtn, 013 OF oDlgEspe ACTION(fConfirm())     PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*2)+09) BUTTON oBtnLimp PROMPT "Limpar" SIZE nTamBtn, 013 OF oDlgEspe ACTION(fLimpar())     PIXEL
 			@ (nJanAltu/2)-19, (nJanLarg/2)-((nTamBtn*3)+12) BUTTON oBtnCanc PROMPT "Cancelar" SIZE nTamBtn, 013 OF oDlgEspe ACTION(fCancela())     PIXEL
@@ -116,7 +122,7 @@ Return lRetorn
  | Func:  fCriaMsNew                                                   |
  | Autor: Daniel Atilio                                                |
  | Data:  15/12/2016                                                   |
- | Desc:  Fun√ß√£o para criar a estrutura da MsNewGetDados               |
+ | Desc:  FunÁ„o para criar a estrutura da MsNewGetDados               |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -125,7 +131,7 @@ Static Function fCriaMsNew()
 	Local cQuery  := ""
 	Local nAtual  := 0
 
-	//Zerando o cabe√ßalho e a estrutura
+	//Zerando o cabeÁalho e a estrutura
 	aHeadAux := {}
 	aColsAux := {}
 	
@@ -158,7 +164,7 @@ Static Function fCriaMsNew()
 	
 		//Se coneguir posicionar no campo
 		If SX3->(DbSeek(cCampoAtu))
-			//Cabe√ßalho ...	Titulo		Campo		Mask									Tamanho				Dec					Valid	Usado	Tip				F3	CBOX
+			//CabeÁalho ...	Titulo		Campo		Mask									Tamanho				Dec					Valid	Usado	Tip				F3	CBOX
 			aAdd(aHeadAux,{	X3Titulo(),	cCampoAtu,	PesqPict(SX3->X3_ARQUIVO, cCampoAtu),	SX3->X3_TAMANHO,	SX3->X3_DECIMAL,	".F.",	".F.",	SX3->X3_TIPO,	"",	""})
 			
 			//Se o campo atual for retornar, aumenta o tamanho do retorno
@@ -167,7 +173,7 @@ Static Function fCriaMsNew()
 			EndIf
 			
 		Else
-			//Cabe√ßalho ...	Titulo									Campo		Mask	Tamanho					Dec						Valid	Usado	Tip						F3	CBOX
+			//CabeÁalho ...	Titulo									Campo		Mask	Tamanho					Dec						Valid	Usado	Tip						F3	CBOX
 			aAdd(aHeadAux,{	Capital(StrTran(cCampoAtu, '_', ' ')),	cCampoAtu,	"",		aStruAux[nAtual][3],	aStruAux[nAtual][4],	".F.",	".F.",	aStruAux[nAtual][2],	"",	""})
 			
 			//Se o campo atual for retornar, aumenta o tamanho do retorno
@@ -184,7 +190,7 @@ Return
  | Func:  fPopula                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  15/12/2016                                                   |
- | Desc:  Fun√ß√£o que popula a tabela auxiliar da MsNewGetDados         |
+ | Desc:  FunÁ„o que popula a tabela auxiliar da MsNewGetDados         |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -261,7 +267,7 @@ Static Function fPopula()
 	EndDo
 	QRY_DAD->(DbCloseArea())
 	
-	//Se n√£o tiver dados, adiciona linha em branco
+	//Se n„o tiver dados, adiciona linha em branco
 	If Len(aColsAux) == 0
 		aAux := {}
 		
@@ -283,7 +289,7 @@ Return
  | Func:  fConfirm                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  15/12/2016                                                   |
- | Desc:  Fun√ß√£o de confirma√ß√£o da rotina                              |
+ | Desc:  FunÁ„o de confirmaÁ„o da rotina                              |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -314,7 +320,7 @@ Static Function fConfirm()
 		If Len(__cRetorno) < nTamanRet
 			__cRetorno += Space(nTamanRet - Len(__cRetorno))
 		
-		//Sen√£o se for maior, diminui
+		//Sen„o se for maior, diminui
 		ElseIf Len(__cRetorno) > nTamanRet
 			__cRetorno := SubStr(__cRetorno, 1, nTamanRet)
 		EndIf
@@ -328,7 +334,7 @@ Return
  | Func:  fLimpar                                                      |
  | Autor: Daniel Atilio                                                |
  | Data:  15/12/2016                                                   |
- | Desc:  Fun√ß√£o que limpa os dados da rotina                          |
+ | Desc:  FunÁ„o que limpa os dados da rotina                          |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -348,7 +354,7 @@ Return
  | Func:  fCancela                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  15/12/2016                                                   |
- | Desc:  Fun√ß√£o de cancelamento da rotina                             |
+ | Desc:  FunÁ„o de cancelamento da rotina                             |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
@@ -363,17 +369,17 @@ Return
  | Func:  fVldPesq                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  15/12/2016                                                   |
- | Desc:  Fun√ß√£o que valida o campo digitado                           |
+ | Desc:  FunÁ„o que valida o campo digitado                           |
  | Obs.:  /                                                            |
  *---------------------------------------------------------------------*/
 
 Static Function fVldPesq()
 	Local lRet := .T.
 	
-	//Se tiver ap√≥strofo ou porcentagem, a pesquisa n√£o pode prosseguir
+	//Se tiver apÛstrofo ou porcentagem, a pesquisa n„o pode prosseguir
 	If "'" $ cGetPesq .Or. "%" $ cGetPesq
 		lRet := .F.
-		MsgAlert("<b>Pesquisa inv√°lida!</b><br>A pesquisa n√£o pode ter <b>'</b> ou <b>%</b>.", "Aten√ß√£o")
+		MsgAlert("<b>Pesquisa inv·lida!</b><br>A pesquisa n„o pode ter <b>'</b> ou <b>%</b>.", "AtenÁ„o")
 	EndIf
 	
 	//Se houver retorno, atualiza grid

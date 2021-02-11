@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/04/19/funcao-retorna-semanas-entre-duas-datas-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
@@ -6,9 +12,9 @@ Retorna as semanas entre duas datas
 @author Atilio
 @since 15/01/2015
 @version 1.0
-	@param dDataIni, Data, Data Inicial para verificaÃ§Ã£o
-	@param dDataFim, Data, Data Final para verificaÃ§Ã£o
-	@param lQuebDif, LÃ³gico, Define se a quebra da semana serÃ¡ conforme o primeiro dia (dDataIni) ou se serÃ¡ o padrÃ£o (sÃ¡bado)
+	@param dDataIni, Data, Data Inicial para verificação
+	@param dDataFim, Data, Data Final para verificação
+	@param lQuebDif, Lógico, Define se a quebra da semana será conforme o primeiro dia (dDataIni) ou se será o padrão (sábado)
 	@return aSemanas, Array com as datas da semana
 	@example
 	u_zSemanas(dDatabase,dDatabase)
@@ -32,14 +38,14 @@ User Function zSemanas(dDataIni, dDataFim, lQuebDif)
 		cDiaQueb := Alltrim(Lower(cDoW(dDataIni)))
 	EndIf
 	
-	//Zerando variÃ¡veis
+	//Zerando variáveis
 	dDataAtu := dDataIni
 	aAdd(aSemanas, {dDataAtu, dDataAtu, dToS(dDataAtu)+";"})
 	nAtual := 1
 	
-	//Enquanto o dia atual for diferente do Ãºltimo dia
+	//Enquanto o dia atual for diferente do último dia
 	While dDataAtu <= dDataFim
-		//Se for sÃ¡bado, quebra a semana
+		//Se for sábado, quebra a semana
 		If Alltrim( Lower( cDow(dDataAtu) ) ) == cDiaQueb
 			aSemanas[nAtual][2] := dDataAtu
 			aSemanas[nAtual][3] += dToS(dDataAtu)+";"

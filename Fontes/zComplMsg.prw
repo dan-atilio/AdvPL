@@ -1,10 +1,16 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2019/11/21/como-adicionar-mensagem-complementar-na-danfe-atraves-de-uma-user-function/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 #Include "Protheus.ch"
 #Include "TopConn.ch" 
 
-#DEFINE MAXMENLIN 080 // MÃ¡ximo de caracteres por linha de dados adicionais - deixar igual o do fonte danfeii.prw
+#DEFINE MAXMENLIN 080 // Máximo de caracteres por linha de dados adicionais - deixar igual o do fonte danfeii.prw
 
-//1 - Criar uma FÃ³rmula (SM4), com u_zComplMsg()
-//2 - Colocar o cÃ³digo dessa fÃ³rmula no campo C5_MENPAD
+//1 - Criar uma Fórmula (SM4), com u_zComplMsg()
+//2 - Colocar o código dessa fórmula no campo C5_MENPAD
 
 User Function zComplMsg()
 	Local aArea	   := GetArea()
@@ -19,7 +25,7 @@ User Function zComplMsg()
 	Local cMens    := ""          
 	Local cAux     := ""
 	
-	cAux := "Beluguinha, BelugÃ£o... Acesse Terminal de InformaÃ§Ã£o (https://terminaldeinformacao.com)"
+	cAux := "Beluguinha, Belugão... Acesse Terminal de Informação (https://terminaldeinformacao.com)"
 	cMens += fLinhaDanfe(cAux)
 	
 	RestArea(aAreaSD2)
@@ -38,7 +44,7 @@ Static Function fLinhaDanfe(cLinhaTexto)
 
 	//Se houver texto
 	If !Empty(cLinhaTexto)
-		//Enquanto o tamnho for maior que o mÃ¡ximo da linha, vai quebrando 
+		//Enquanto o tamnho for maior que o máximo da linha, vai quebrando 
 		While Len(cLinhaTexto) > MAXMENLIN
 			cLinhaTrans += Substr(cLinhaTexto, 1, MAXMENLIN)
 			cLinhaTexto := Substr(cLinhaTexto, MAXMENLIN + 1, Len(cLinhaTexto) - MAXMENLIN)

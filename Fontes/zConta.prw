@@ -1,8 +1,14 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/04/04/funcao-conta-repeticao-de-caracteres-em-uma-string-em-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zConta
-FunÃ§Ã£o que conta quantos caracteres repetem em uma string
+Função que conta quantos caracteres repetem em uma string
 @type function
 @author Atilio
 @since 13/11/2016
@@ -30,7 +36,7 @@ User Function zConta(cPalavra, cCaracter, lMaiusculo)
 	
 	//Percorre todas as letras da palavra
 	For nAtual := 1 To Len(cPalavra)
-		//Se a posiÃ§Ã£o atual for igual ao caracter procurado, incrementa o valor
+		//Se a posição atual for igual ao caracter procurado, incrementa o valor
 		If SubStr(cPalavra, nAtual, 1) == cCaracter
 			nTotal++
 		EndIf

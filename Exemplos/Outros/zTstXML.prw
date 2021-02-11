@@ -1,9 +1,15 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/11/01/exemplo-de-manipulacao-de-xml-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
 
 /*/{Protheus.doc} zTstXML
-FunÃ§Ã£o que testa a CriaÃ§Ã£o e Leitura de um arquivo XML
+Função que testa a Criação e Leitura de um arquivo XML
 @type function
 @author Atilio
 @since 17/08/2016
@@ -17,7 +23,7 @@ User Function zTstXML()
 	Private cDirect  := GetTempPath()
 	Private cArquivo := "teste.xml"
 	
-	//CriaÃ§Ã£o do arquivo XML
+	//Criação do arquivo XML
 	fCriaXML()
 	
 	//Leitura do arquivo XML
@@ -30,7 +36,7 @@ Return
  | Func:  fCriaXML                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  17/08/2016                                                   |
- | Desc:  FunÃ§Ã£o que cria o arquivo XML                                |
+ | Desc:  Função que cria o arquivo XML                                |
  *---------------------------------------------------------------------*/
 		
 Static Function fCriaXML()
@@ -42,12 +48,12 @@ Static Function fCriaXML()
 	//Cria o arquivo
 	nHdl := fCreate(cDirect+cArquivo)
 		
-	//Se houve erro na criaÃ§Ã£o
+	//Se houve erro na criação
 	If nHdl == -1
-		MsgStop("NÃ£o foi possÃ­vel gerar o arquivo!")
+		MsgStop("Não foi possÃ­vel gerar o arquivo!")
 	
 	Else
-		//Monta a query de produtos (pega atÃ© o recno 50)
+		//Monta a query de produtos (pega até o recno 50)
 		cQry := " SELECT "
 		cQry += "    B1_COD, B1_DESC "
 		cQry += " FROM "
@@ -91,7 +97,7 @@ Return
  | Func:  fLeXML                                                       |
  | Autor: Daniel Atilio                                                |
  | Data:  17/08/2016                                                   |
- | Desc:  FunÃ§Ã£o que faz a leitura do arquivo XML                      |
+ | Desc:  Função que faz a leitura do arquivo XML                      |
  *---------------------------------------------------------------------*/
 		
 Static Function fLeXML()
@@ -108,14 +114,14 @@ Static Function fLeXML()
 		//Lendo o arquivo com XMLParser (lÃª a string), caso queira ler o arquivo direto, utilize o XMLParserFile (o arquivo deve estar dentro da system)
 		oLido := XmlParser(MemoRead(cDirect+cArquivo), cReplace, @cErros, @cAvisos)
 		
-		//Se tiver erros, mostra ao usuÃ¡rio
+		//Se tiver erros, mostra ao usuário
 		If !Empty(cErros)
-			Aviso('AtenÃ§Ã£o', "Erros: "+cErros, {'Ok'}, 03)
+			Aviso('Atenção', "Erros: "+cErros, {'Ok'}, 03)
 		EndIf
 		
-		//Se tiver avisos, mostra ao usuÃ¡rio
+		//Se tiver avisos, mostra ao usuário
 		If !Empty(cAvisos)
-			Aviso('AtenÃ§Ã£o', "Avisos: "+cAvisos, {'Ok'}, 03)
+			Aviso('Atenção', "Avisos: "+cAvisos, {'Ok'}, 03)
 		EndIf
 		
 		//Montando a Mensagem, data e hora
@@ -132,6 +138,6 @@ Static Function fLeXML()
 		Next
 		
 		//Mostrando a mensagem do xml lido
-		Aviso('AtenÃ§Ã£o', cMsg, {'Ok'}, 03)
+		Aviso('Atenção', cMsg, {'Ok'}, 03)
 	EndIf
 Return

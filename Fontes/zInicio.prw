@@ -1,5 +1,11 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/02/21/criando-programas-para-serem-executados-na-abertura-smartclient/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 /*/{Protheus.doc} zInicio1
-FunÃ§Ã£o executada no Programa Inicial, sem precisar usuÃ¡rio e senha
+Função executada no Programa Inicial, sem precisar usuário e senha
 @type function
 @author Atilio
 @since 03/10/2016
@@ -16,7 +22,7 @@ User Function zInicio1()
 	//Seta o tema do Protheus (SUNSET = Vermelho; OCEAN = Azul)
 	PtSetTheme("SUNSET")
 	
-	//Define o programa de inicializaÃ§Ã£o 
+	//Define o programa de inicialização 
 	oApp:bMainInit:= {|| MsgRun("Configurando ambiente...","Aguarde...",;
 		{|| RpcSetEnv("99","01"), }),;
 		MATA010(),;
@@ -33,7 +39,7 @@ User Function zInicio1()
 Return Nil
 
 /*/{Protheus.doc} zInicio2
-FunÃ§Ã£o executada no Programa Inicial, utilizando login
+Função executada no Programa Inicial, utilizando login
 @type function
 @author Atilio
 @since 03/10/2016
@@ -50,7 +56,7 @@ User Function zInicio2()
 	//Seta o tema do Protheus (SUNSET = Vermelho; OCEAN = Azul)
 	PtSetTheme("OCEAN")
 	
-	//Define o programa que serÃ¡ executado apÃ³s o login
+	//Define o programa que será executado após o login
 	oApp:cStartProg	:= 'MATA010'
 	
 	//Seta Atributos 

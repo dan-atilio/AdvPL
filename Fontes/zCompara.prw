@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2017/03/07/relatorio-compara-campos-protheus-campos-sql/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"
@@ -6,7 +12,7 @@
 #Define STR_PULA		Chr(13)+Chr(10)
 
 /*/{Protheus.doc} zCompara
-ComparaÃ§Ã£o de campos do DicionÃ¡rio x SQL Server
+Comparação de campos do Dicionário x SQL Server
 @author Atilio
 @since 02/08/2016
 @version 1.0
@@ -31,7 +37,7 @@ User Function zCompara()
 		cAliasAt := MV_PAR02
 		nTipo    := MV_PAR03
 		
-		//Definindo atributos e propriedades e gerando relatÃ³rio TReport
+		//Definindo atributos e propriedades e gerando relatório TReport
 		oReport := fReportDef()
 		oReport:PrintDialog()
 	EndDo
@@ -45,7 +51,7 @@ Return
  | Func:  fReportDef                                                             |
  | Autor: Daniel Atilio                                                          |
  | Data:  02/08/2016                                                             |
- | Desc:  FunÃ§Ã£o que monta a definiÃ§Ã£o do relatÃ³rio                              |
+ | Desc:  Função que monta a definição do relatório                              |
  *-------------------------------------------------------------------------------*/
 
 Static Function fReportDef()
@@ -53,14 +59,14 @@ Static Function fReportDef()
 	Local oSectPar := nil
 	Local oSectCom := nil
 
-	//CriaÃ§Ã£o do componente de impressÃ£o
-	oReport := TReport():New(	"zCompara",;														//Nome do RelatÃ³rio
-									"ComparaÃ§Ã£o DicionÃ¡rio x SQL",;									//TÃ­tulo
-									,;																	//Pergunte ... Se eu defino a pergunta aqui, serÃ¡ impresso uma pÃ¡gina com os parÃ¢metros, conforme privilÃ©gio 101
-									{|oReport| fRepPrint(oReport)},;								//Bloco de cÃ³digo que serÃ¡ executado na confirmaÃ§Ã£o da impressÃ£o
-									)																	//DescriÃ§Ã£o
-	oReport:SetLandscape(.T.)   //Define a orientaÃ§Ã£o de pÃ¡gina do relatÃ³rio como paisagem  ou retrato. .F.=Retrato; .T.=Paisagem
-	oReport:SetTotalInLine(.F.) //Define se os totalizadores serÃ£o impressos em linha ou coluna
+	//Criação do componente de impressão
+	oReport := TReport():New(	"zCompara",;														//Nome do Relatório
+									"Comparação Dicionário x SQL",;									//TÃ­tulo
+									,;																	//Pergunte ... Se eu defino a pergunta aqui, será impresso uma página com os parÃ¢metros, conforme privilégio 101
+									{|oReport| fRepPrint(oReport)},;								//Bloco de código que será executado na confirmação da impressão
+									)																	//Descrição
+	oReport:SetLandscape(.T.)   //Define a orientação de página do relatório como paisagem  ou retrato. .F.=Retrato; .T.=Paisagem
+	oReport:SetTotalInLine(.F.) //Define se os totalizadores serão impressos em linha ou coluna
 	If !Empty(oReport:uParam)
 		Pergunte(oReport:uParam,.F.)
 	EndIf
@@ -69,27 +75,27 @@ Static Function fReportDef()
 	// PARÃ‚METROS
 	//*******************
 	
-	//Criando a seÃ§Ã£o de parÃ¢metros e as cÃ©lulas
-	oSectPar := TRSection():New(	oReport,;				//Objeto TReport que a seÃ§Ã£o pertence
-										"ParÃ¢metros",;		//DescriÃ§Ã£o da seÃ§Ã£o
-										{""})					//Tabelas utilizadas, a primeira serÃ¡ considerada como principal da seÃ§Ã£o
-	oSectPar:SetTotalInLine(.F.)  //Define se os totalizadores serÃ£o impressos em linha ou coluna. .F.=Coluna; .T.=Linha
+	//Criando a seção de parÃ¢metros e as células
+	oSectPar := TRSection():New(	oReport,;				//Objeto TReport que a seção pertence
+										"ParÃ¢metros",;		//Descrição da seção
+										{""})					//Tabelas utilizadas, a primeira será considerada como principal da seção
+	oSectPar:SetTotalInLine(.F.)  //Define se os totalizadores serão impressos em linha ou coluna. .F.=Coluna; .T.=Linha
 	
-	//CÃ©lulas da seÃ§Ã£o parÃ¢metros
+	//Células da seção parÃ¢metros
 	TRCell():New(		oSectPar,"PARAM"			,"   ","ParÃ¢metro",	"@!"       ,         30,/*lPixel*/,/*{|| code-block de impressao }*/)
-	TRCell():New(		oSectPar,"CONTEUDO"		,"   ","ConteÃºdo",	"@!"       ,         30,/*lPixel*/,/*{|| code-block de impressao }*/)
+	TRCell():New(		oSectPar,"CONTEUDO"		,"   ","Conteúdo",	"@!"       ,         30,/*lPixel*/,/*{|| code-block de impressao }*/)
 	
 	//*******************
 	// Comparacao
 	//*******************
 	
-	//Criando a seÃ§Ã£o de dados e as cÃ©lulas
-	oSectCom := TRSection():New(	oReport,;					//Objeto TReport que a seÃ§Ã£o pertence
-										"Comparacao",;			//DescriÃ§Ã£o da seÃ§Ã£o
-										{""})						//Tabelas utilizadas, a primeira serÃ¡ considerada como principal da seÃ§Ã£o
-	oSectCom:SetTotalInLine(.F.)  //Define se os totalizadores serÃ£o impressos em linha ou coluna. .F.=Coluna; .T.=Linha
+	//Criando a seção de dados e as células
+	oSectCom := TRSection():New(	oReport,;					//Objeto TReport que a seção pertence
+										"Comparacao",;			//Descrição da seção
+										{""})						//Tabelas utilizadas, a primeira será considerada como principal da seção
+	oSectCom:SetTotalInLine(.F.)  //Define se os totalizadores serão impressos em linha ou coluna. .F.=Coluna; .T.=Linha
 	
-	//Colunas do relatÃ³rio
+	//Colunas do relatório
 	TRCell():New(	oSectCom,"XX_ALISQL"		,"","Alias SQL"		,/*Picture*/, 06,/*lPixel*/,/*{|| code-block de impressao }*/,/*cAlign*/,/*lLineBreak*/,/*cHeaderAlign */,/*lCellBreak*/,/*nColSpace*/,/*lAutoSize*/,/*nClrBack*/,/*nClrFore*/,/*lBold*/)
 	TRCell():New(	oSectCom,"XX_ALIPRO"		,"","Alias Protheus"	,/*Picture*/, 03,/*lPixel*/,/*{|| code-block de impressao }*/,/*cAlign*/,/*lLineBreak*/,/*cHeaderAlign */,/*lCellBreak*/,/*nColSpace*/,/*lAutoSize*/,/*nClrBack*/,/*nClrFore*/,/*lBold*/)
 	TRCell():New(	oSectCom,"XX_CAMSQL"		,"","Campo"			,/*Picture*/, 10,/*lPixel*/,/*{|| code-block de impressao }*/,/*cAlign*/,/*lLineBreak*/,/*cHeaderAlign */,/*lCellBreak*/,/*nColSpace*/,/*lAutoSize*/,/*nClrBack*/,/*nClrFore*/,/*lBold*/)
@@ -102,7 +108,7 @@ Static Function fReportDef()
 
 	//Acrescentando totalizador nos dados
 	oFunTot := TRFunction():New(oSectCom:Cell("XX_ALISQL"),,"COUNT",,,"@E 99999999999")
-	oFunTot:SetEndReport(.F.)	//Define se serÃ¡ impresso o total tambÃ©m ao finalizar o relatÃ³rio (Total Geral)
+	oFunTot:SetEndReport(.F.)	//Define se será impresso o total também ao finalizar o relatório (Total Geral)
 
 Return oReport
 
@@ -110,7 +116,7 @@ Return oReport
  | Func:  fRepPrint                                                              |
  | Autor: Daniel Atilio                                                          |
  | Data:  02/08/2016                                                             |
- | Desc:  FunÃ§Ã£o que imprime o relatÃ³rio                                         |
+ | Desc:  Função que imprime o relatório                                         |
  *-------------------------------------------------------------------------------*/
 
 Static Function fRepPrint(oReport)
@@ -134,16 +140,16 @@ Static Function fRepPrint(oReport)
 	SX3->(DbSetOrder(2)) //X3_CAMPO
 	SX3->(DbGoTop())
 	
-	//Pegando as seÃ§Ãµes do relatÃ³rio
+	//Pegando as seçÃµes do relatório
 	oSecPar := oReport:Section(1)
 	oSecCom := oReport:Section(2)
 
-	//Setando os conteÃºdos da seÃ§Ã£o de parÃ¢metros
+	//Setando os conteúdos da seção de parÃ¢metros
 	oSecPar:Init()
 	oSecPar:Cell("PARAM"):SetValue("Alias De?")
 	oSecPar:Cell("CONTEUDO"):SetValue(cAliasDe)
 	oSecPar:PrintLine()
-	oSecPar:Cell("PARAM"):SetValue("Alias AtÃ©?")
+	oSecPar:Cell("PARAM"):SetValue("Alias Até?")
 	oSecPar:Cell("CONTEUDO"):SetValue(cAliasAt)
 	oSecPar:PrintLine()
 	oSecPar:Cell("PARAM"):SetValue("Tipo?")
@@ -184,7 +190,7 @@ Static Function fRepPrint(oReport)
 	cQryCom += " ORDER BY "																	+STR_PULA
 	cQryCom += " 	TABELA, COLUNA "															+STR_PULA
 
-	//Executando consulta e setando o total da rÃ©gua
+	//Executando consulta e setando o total da régua
 	TCQuery cQryCom New Alias "QRY_COM"
 	Count to nTotal
 	oReport:SetMeter(nTotal)
@@ -217,7 +223,7 @@ Static Function fRepPrint(oReport)
 			cTipoPro  := SX3->X3_TIPO
 			xTamanPro := SX3->X3_TAMANHO
 			
-			//ComparaÃ§Ã£o de Tamanho
+			//Comparação de Tamanho
 			If xTamanPro != xTamanSQL
 				If 	!(Alltrim(Upper(cTipoSQL)) == 'FLOAT' .And. xTamanSQL == 8) .And.;
 					!(Alltrim(Upper(cTipoSQL)) == 'IMAGE' .And. xTamanSQL == 16 .And. xTamanPro == 10)
@@ -226,7 +232,7 @@ Static Function fRepPrint(oReport)
 				EndIf
 			EndIf
 			
-			//ComparaÃ§Ã£o de Tipo
+			//Comparação de Tipo
 			If 	(cTipoPro $ ('C;D') .And. Alltrim(Upper(cTipoSQL)) != 'VARCHAR') .Or.;
 				(cTipoPro $ ('N') .And. Alltrim(Upper(cTipoSQL)) != 'FLOAT') .Or.;
 				(cTipoPro $ ('M') .And. Alltrim(Upper(cTipoSQL)) != 'IMAGE')
@@ -239,11 +245,11 @@ Static Function fRepPrint(oReport)
 			cObserv += "Campo inexistente no Protheus; "
 		EndIf
 		
-		//Transformando os nÃºmeros
+		//Transformando os números
 		xTamanSQL := Transform(xTamanSQL, "@E 999")
 		xTamanPro := Transform(xTamanPro, "@E 999")
 		
-		//Se nÃ£o tiver na filtragem, pula a impressÃ£o
+		//Se não tiver na filtragem, pula a impressão
 		If (nTipo == 2 .And. cStatus == "IGUAL") .Or. (nTipo == 3 .And. cStatus == "DIFERENTE")
 			oReport:IncMeter()
 			QRY_COM->(DbSkip())
@@ -267,7 +273,7 @@ Static Function fRepPrint(oReport)
 		QRY_COM->(DbSkip())
 	EndDo
 	
-	//Finalizando a seÃ§Ã£o de dados
+	//Finalizando a seção de dados
 	oSecCom:Finish()	
 	QRY_COM->(DbCloseArea())
 Return
@@ -276,12 +282,12 @@ Return
  | Func:  fVldPerg                                                     |
  | Autor: Daniel Atilio                                                |
  | Data:  02/08/2016                                                   |
- | Desc:  FunÃ§Ã£o para criar o grupo de perguntas                       |
+ | Desc:  Função para criar o grupo de perguntas                       |
  *---------------------------------------------------------------------*/
 
 Static Function fVldPerg(cPerg)
 	//(		cGrupo,	cOrdem,	cPergunt,			cPergSpa,		cPergEng,	cVar,		cTipo,	nTamanho,		nDecimal,	nPreSel,	cGSC,	cValid,	cF3,	cGrpSXG,	cPyme,	cVar01,		cDef01,	cDefSpa1,	cDefEng1,	cCnt01,	cDef02,		cDefSpa2,	cDefEng2,	cDef03,			cDefSpa3,		cDefEng3,	cDef04,	cDefSpa4,	cDefEng4,	cDef05,	cDefSpa5,	cDefEng5,	aHelpPor,	aHelpEng,	aHelpSpa,	cHelp)
 	PutSx1(cPerg,		"01",		"Alias De?",		"",				"",			"mv_ch0",	"C",	003,			0,			0,			"G",	"", 		"",		"",			"",		"mv_par01",	"",			"",			"",			"",			"",				"",			"",			"",					"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
-	PutSx1(cPerg,		"02",		"Alias AtÃ©?",		"",				"",			"mv_ch1",	"C",	003,			0,			0,			"G",	"", 		"",		"",			"",		"mv_par02",	"",			"",			"",			"",			"",				"",			"",			"",					"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
+	PutSx1(cPerg,		"02",		"Alias Até?",		"",				"",			"mv_ch1",	"C",	003,			0,			0,			"G",	"", 		"",		"",			"",		"mv_par02",	"",			"",			"",			"",			"",				"",			"",			"",					"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
 	PutSx1(cPerg,		"03",		"Tipo?",			"",				"",			"mv_ch2",	"N",	001,			0,			0,			"C",	"", 		"",		"",			"",		"mv_par03",	"Ambos",	"",			"",			"",			"Diferentes",	"",			"",			"Iguais",			"",				"",			"",			"",			"",			"",			"",			"",			{},			{},			{},			"")
 Return

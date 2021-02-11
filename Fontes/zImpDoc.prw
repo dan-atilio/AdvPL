@@ -1,9 +1,15 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2020/09/04/como-importar-arquivos-para-o-banco-de-conhecimento/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "TOTVS.ch"
 #Include "FileIO.ch"
  
 /*/{Protheus.doc} zImpDoc
-Fun√ß√£o para importar objetos para o Banco de Conhecimento
+FunÁ„o para importar objetos para o Banco de Conhecimento
 @author Atilio
 @since 02/08/2020
 @version 1.0
@@ -45,20 +51,20 @@ Static Function fRunProc()
         IncProc("Importando objeto (" + cValToChar(nAtual) + " de " + cValToChar(Len(aDir)) + ")...")
         cArqAtu := aDir[nAtual, 1]
          
-        //Faz a c√≥pia da origem, para a pasta do banco de conhecimento
+        //Faz a cÛpia da origem, para a pasta do banco de conhecimento
         Copy File &(cDirOrig + cArqAtu) To &(cPathBco + cArqAtu)
          
-        //Se n√£o conseguiu copiar, mostra um alerta, e volta o la√ßo
+        //Se n„o conseguiu copiar, mostra um alerta, e volta o laÁo
         If ! File(cPathBco + cArqAtu)
             MsgAlert("Erro ao importar: " + cPathBco + cArqAtu, "Atencao!")
             Loop
         EndIf
          
-        //Pegando o c√≥digo e loja, a partir da posi√ß√£o 2, com 8 caracteres (XXXXXXYY)
+        //Pegando o cÛdigo e loja, a partir da posiÁ„o 2, com 8 caracteres (XXXXXXYY)
         cCodLoja := SubStr(cArqAtu, 2, 8)
         cAliasAtu := ""
          
-        //Se come√ßar com a letra C, √© cliente
+        //Se comeÁar com a letra C, È cliente
         If Upper(SubStr(cArqAtu, 1, 1)) == "C"
             DbSelectArea("SA1")
             SA1->(DbSetOrder(1))
@@ -66,7 +72,7 @@ Static Function fRunProc()
             cTipo     := "Cliente"
             cAliasAtu := "SA1"
              
-        //Sen√£o, se come√ßar com a letra F, √© fornecedor
+        //Sen„o, se comeÁar com a letra F, È fornecedor
         ElseIf Upper(SubStr(cArqAtu, 1, 1)) == "F"
             DbSelectArea("SA2")
             SA2->(DbSetOrder(1))
@@ -74,22 +80,22 @@ Static Function fRunProc()
             cTipo     := "Fornecedor"
             cAliasAtu := "SA2"
              
-        //Sen√£o, pula o objeto
+        //Sen„o, pula o objeto
         Else
             Loop
         EndIf
          
-        //Se conseguir posicionar conforme a √∫ltima tabela aberta com DbSelectArea
+        //Se conseguir posicionar conforme a ˙ltima tabela aberta com DbSelectArea
         If (cAliasAtu)->(DbSeek(FWxFilial(cAliasAtu) + cCodLoja))
              
-            //Pega o pr√≥ximo registro da ACB
+            //Pega o prÛximo registro da ACB
             DbSelectArea("ACB")
             ACB->(DbSetOrder(1))
             ACB->(DbGoBottom())
             cProxObj := StrZero((Val(ACB->ACB_CODOBJ) + 1), 10)
             ACB->(DbSetOrder(2))
              
-            //Se n√£o tiver o arquivo na ACB, ir√° incluir
+            //Se n„o tiver o arquivo na ACB, ir· incluir
             If ! ACB->(DbSeek(FWxFilial('ACB') + cArqAtu))
                 Reclock("ACB", .T.)
                     ACB->ACB_FILIAL := FWxFilial('ACB')
@@ -98,7 +104,7 @@ Static Function fRunProc()
                     ACB->ACB_DESCRI := cArqAtu
                 ACB->(MsUnlock())
                  
-                //Se n√£o existir na tabela de vinculos, ir√° criar
+                //Se n„o existir na tabela de vinculos, ir· criar
                 DbSelectArea("AC9")
                 AC9->(DbSetOrder(1))
                 If ! AC9->(DbSeek(FWxFilial('AC9') + cProxObj + cCodLoja))
@@ -114,9 +120,9 @@ Static Function fRunProc()
             //Exclui o arquivo da origem
             FErase(cDirOrig + cArqAtu)
          
-        //Se n√£o conseguir dar um Seek na tabela, mostra mensagem de falha
+        //Se n„o conseguir dar um Seek na tabela, mostra mensagem de falha
         Else
-            MsgStop("Codigo de " + cTipo + " invalido no arquivo: " + cArqAtu, "Aten√ß√£o")
+            MsgStop("Codigo de " + cTipo + " invalido no arquivo: " + cArqAtu, "AtenÁ„o")
         EndIf
     Next
 Return

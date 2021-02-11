@@ -1,13 +1,19 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2016/10/04/funcao-tira-caracteres-especiais-dos-campos-protheus/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Protheus.ch"
 
 /*/{Protheus.doc} zLimpaEsp
-Fun√ß√£o que limpa os caracteres especiais dentro de um campo
+FunÁ„o que limpa os caracteres especiais dentro de um campo
 @type function
 @author Atilio / Achoa
 @since 25/04/2016
 @version 1.0
-@param lEndereco, L√≥gico, Define se o campo √© endere√ßo (caso sim, o tra√ßo e v√≠rgula ser√£o ignorados)
+@param lEndereco, LÛgico, Define se o campo È endereÁo (caso sim, o traÁo e v√≠rgula ser„o ignorados)
 	@example
 	u_zLimpaEsp()
 /*/
@@ -50,24 +56,24 @@ User Function zLimpaEsp(lEndereco)
 	cConteudo := StrTran(cConteudo, '¬∞', '')
 	cConteudo := StrTran(cConteudo, '¬™', '')
 	
-	//Se n√£o for endere√ßo, retira tamb√©m o - e a ,
+	//Se n„o for endereÁo, retira tambÈm o - e a ,
 	If !lEndereco
 		cConteudo := StrTran(cConteudo, ",", "")
 		cConteudo := StrTran(cConteudo, "-", "")
 	EndIf
 	
-	//Adicionando os espa√ßos a direita
+	//Adicionando os espaÁos a direita
 	cConteudo := Alltrim(cConteudo)
 	cConteudo += Space(nTamOrig - Len(cConteudo))
 	
-	//Definindo o conte√∫do do campo
+	//Definindo o conte˙do do campo
 	&(cCampo+" := '"+cConteudo+"' ")
 	
 	RestArea(aArea)
 Return .T.
 
 /*/{Protheus.doc} zCarEspec
-Script para atualiza√ß√£o de campos que ter√£o sua valida√ß√£o de usu√°rio alterada
+Script para atualizaÁ„o de campos que ter„o sua validaÁ„o de usu·rio alterada
 @type function
 @author Atilio
 @since 25/04/2016
@@ -82,9 +88,9 @@ User Function zCarEspec()
 	
 	//Adicionando textos da rotina
 	aAdd(aTexto, 'Esta rotina tem por objetivo atualizar campos para ')
-	aAdd(aTexto, 'n√£o aceitar caracteres especiais em cadastros.')
+	aAdd(aTexto, 'n„o aceitar caracteres especiais em cadastros.')
 	aAdd(aTexto, '')
-	aAdd(aTexto, 'Ser√° atualizado:')
+	aAdd(aTexto, 'Ser· atualizado:')
 	aAdd(aTexto, 'Par√¢metro MV_ACENTO')
 	aAdd(aTexto, 'Tabelas SA1, SA2, SA4 e SB1')
 
@@ -92,8 +98,8 @@ User Function zCarEspec()
 	aAdd(aBotoes, {1, .T., {|| lContinua := .T., FechaBatch()}})
 	aAdd(aBotoes, {2, .T., {|| lContinua := .F., FechaBatch()}})
 
-	//Mostra o batch esperando intera√ß√£o do usu√°rio
-	FormBatch("Atualiza√ß√£o de campos", aTexto, aBotoes) 
+	//Mostra o batch esperando interaÁ„o do usu·rio
+	FormBatch("AtualizaÁ„o de campos", aTexto, aBotoes) 
 		
 	//Se for para continuar o processamento
 	If lContinua
@@ -107,7 +113,7 @@ Return
  | Func:  fAtualiza                                                    |
  | Autor: Daniel Atilio                                                |
  | Data:  25/04/2016                                                   |
- | Desc:  Fun√ß√£o que atualiza os dados                                 |
+ | Desc:  FunÁ„o que atualiza os dados                                 |
  *---------------------------------------------------------------------*/
 
 Static Function fAtualiza()
@@ -135,12 +141,12 @@ Static Function fAtualiza()
 	aAdd(aCampos, 'A4_BAIRRO')
 	aAdd(aCampos, 'B1_DESC')
 	
-	//Campos de endere√ßo
+	//Campos de endereÁo
 	aAdd(aCamposEnd, 'A1_END')
 	aAdd(aCamposEnd, 'A2_END')
 	aAdd(aCamposEnd, 'A4_END')
 	
-	//Atualiza o MV_ACENTO para n√£o aceitar acentua√ß√£o no sistema
+	//Atualiza o MV_ACENTO para n„o aceitar acentuaÁ„o no sistema
 	IncProc("Atualizando par√¢metro...")
 	PutMV('MV_ACENTO', 'N')
 	
@@ -152,18 +158,18 @@ Static Function fAtualiza()
 		If SX3->(DbSeek(aCampos[nAtual]))
 			cValidUsr := Alltrim(SX3->X3_VLDUSER)
 			
-			//Se j√° tiver, pula o campo
+			//Se j· tiver, pula o campo
 			If "U_ZLIMPAESP" $ Upper(cValidUsr)
 				nAtual++
 				Loop
 			EndIf
 			
-			//Se tiver conte√∫do, adiciona .And. no valid
+			//Se tiver conte˙do, adiciona .And. no valid
 			If !Empty(cValidUsr)
 				cValidUsr += ".And."
 			Endif
 			
-			//Definindo a express√£o
+			//Definindo a express„o
 			cValidUsr += "u_zLimpaEsp()"
 			
 			//Atualiza no banco
@@ -173,26 +179,26 @@ Static Function fAtualiza()
 		EndIf
 	Next
 	
-	//Percorrendo os campos de endere√ßo
-	IncProc("Atualizando campos de endere√ßo...")
+	//Percorrendo os campos de endereÁo
+	IncProc("Atualizando campos de endereÁo...")
 	SX3->(DbGoTop())
 	For nAtual := 1 To Len(aCamposEnd)
 		//Se conseguir posicionar
 		If SX3->(DbSeek(aCamposEnd[nAtual]))
 			cValidUsr := Alltrim(SX3->X3_VLDUSER)
 			
-			//Se j√° tiver, pula o campo
+			//Se j· tiver, pula o campo
 			If "U_ZLIMPAESP" $ Upper(cValidUsr)
 				nAtual++
 				Loop
 			EndIf
 			
-			//Se tiver conte√∫do, adiciona .And. no valid
+			//Se tiver conte˙do, adiciona .And. no valid
 			If !Empty(cValidUsr)
 				cValidUsr += ".And."
 			Endif
 			
-			//Definindo a express√£o
+			//Definindo a express„o
 			cValidUsr += "u_zLimpaEsp(.T.)"
 			
 			//Atualiza no banco

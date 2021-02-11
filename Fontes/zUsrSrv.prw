@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2020/06/05/script-para-validar-usuarios-locais-nos-servidores-utilizando-advpl/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Totvs.ch"
 
@@ -27,7 +33,7 @@ User Function zUsrSrv()
     Private aServers := {}
     Private cDirSpool := "C:\spool\"
 
-    //Se nÃ£o estiver preparado, prepara o ambiente
+    //Se não estiver preparado, prepara o ambiente
 	If Select("SX2") == 0  
    	 	RPCSetEnv("01", "01", "Admin", cPsw, "", "", {})
 	EndIf
@@ -177,7 +183,7 @@ Static Function fCompara()
         //MemoWrite("C:\Users\daniel.atilio\Desktop\arquivo_tst.html", cMensagem)
 
         //Disparando o e-Mail
-        u_EnviarEmail(	cPara,;                                    //DestinatÃ¡rio do e-Mail
+        u_EnviarEmail(	cPara,;                                    //Destinatário do e-Mail
                         "[dominio] - Usuarios Locais nos Servidores ",;   //Assunto
                         cMensagem,;                                    //Corpo do e-Mail
                         "",;                          //Arquivo anexo

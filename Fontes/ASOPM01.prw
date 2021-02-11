@@ -1,14 +1,20 @@
+/* ===
+    Esse È um exemplo disponibilizado no Terminal de InformaÁ„o
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2020/12/10/como-integrar-protheus-com-a-sophus/
+    Caso queira ver outros conte˙dos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "Totvs.ch"
  
 /*/{Protheus.doc} User Function ASOPM01
-Fun√ß√£o que retorna o XML de consulta no Sophus
+FunÁ„o que retorna o XML de consulta no Sophus
 @type  Function
 @author Atilio
 @since 17/10/2020
 @version version
 @see http://www.sophus.com.br/downloads/Sockets.rar
-@obs no exemplo abaixo, se vier CNPJ ir√° tratar com a consulta 621, se vier CPF ir√° tratar com a consulta 309
+@obs no exemplo abaixo, se vier CNPJ ir· tratar com a consulta 621, se vier CPF ir· tratar com a consulta 309
 /*/
  
 User Function ASOPM01(cCGC)
@@ -23,7 +29,7 @@ User Function ASOPM01(cCGC)
     Local cCPF       := ''
     Default cCGC     := ''
  
-    //Somente far√° as tratativas se tiver vindo CGC (CNPJ ou CPF)
+    //Somente far· as tratativas se tiver vindo CGC (CNPJ ou CPF)
     If ! Empty(cCGC)
         //Faz a tratativa se for CNPJ ou CPF
         cCGC := Alltrim(cCGC)
@@ -67,7 +73,7 @@ User Function ASOPM01(cCGC)
         cSendXML += '   </SOLICITACAO>'
         cSendXML += '</SPCA-XML>'
  
-        //Envia o XML, e se tudo der certo, armazena na vari√°vel cResultXML
+        //Envia o XML, e se tudo der certo, armazena na vari·vel cResultXML
         cResultXML := HttpPost('https://www.scpc.inf.br/cgi-bin/spcaxml',; // cURL
             ,; // cGetParms
             cSendXML,; // cPostParms
