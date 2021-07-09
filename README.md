@@ -1,7 +1,7 @@
 Saiba mais em - [Terminal de Informação](http://terminaldeinformacao.com)
 
-# AdvPL
-Fontes desenvolvidos utilizando a linguagem AdvPL com intuito de auxiliar e ajudar outros analistas.
+# AdvPL e TL++
+Fontes desenvolvidos utilizando as linguagens AdvPL e TL++ com intuito de auxiliar e ajudar outros analistas.
 Todos esses fontes são exemplos disponibilizados no site Terminal de Informação.
 Abaixo as categorias, explicando um pouco sobre cada fonte.
 
@@ -95,6 +95,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zArrToTxt.prw**: Função recursiva, que transforma array em texto
    * **zAtuPerg.prw**: Função que atualiza o conteúdo de uma pergunta
    * **zBxMail.prw**: Função que acessa uma caixa de e-Mail e faz o download de anexos
+   * **zBrw2Exc.prw**: Função que exporta os dados de um FWBrowse para Excel
    * **zCarEspec.prw**: Função que remove caracteres especiais de um campo
    * **zChooseFile.prw**: Função para escolher o arquivo através do Windows
    * **zCliFor.prw**: Função que cria fornecedor a partir de cliente
@@ -105,6 +106,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zCompara.prw**: Função que gera relatório comparando Dicionário com SQL Server
    * **zComplMsg.prw**: Função para complementar mensagens na DANFE
    * **zCompX3XG.prw**: Relatório que compara grupo de campos (SXG) e campos do dicionário (SX3)
+   * **zConOut.prw**: Função para substituir o ConOut padrão usando FWLogMsg
    * **zConsArr.prw**: Consulta Específica (F3), com dados de Array
    * **zConsEsp.prw**: Consulta Específica (F3), com dados de SQL e opção de LIKE, enviando dados em Array
    * **zConsMark.prw**: Consulta Específica (F3), com marcação de dados
@@ -113,6 +115,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zCpyReg.prw**: Função que copia um registro de uma filial para outra com opção de mudança de código
    * **zCriaLog.prw**: Função para gravar log de registro na base
    * **zCriaCEsp.prw**: Função para criar consultas específicas via código fonte
+   * **zCxArren.prw**: Função que monta um box / quadro com borda arredondada para usar em relatórios com FWMSPrinter
    * **zDbTree.prw**: Função de cadastro utilizando o componente DbTree
    * **zDiasUteis.prw**: Função que retorna os dias úteis entre duas datas
    * **zDelDoc.prw**: Função para excluir documento de entrada e pré nota
@@ -120,12 +123,14 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zEditTmp.prw**: Função que edita uma tabela temporária (com opção de incluir, alterar e excluir)
    * **zElemAlt.prw**: Função que altera a posição de um elemento do array
    * **zEnvMail.prw**: Função para disparo de e-Mail com vários anexos
+   * **zErro.prw**: Função que força um Error Log para analisar a pilha de chamadas
    * **zExcel2DBF.prw**: Função de conversão de arquivos XLS para DBF
    * **zExpMail.prw**: Função para exportar uma lista de emails para importar na Locaweb
    * **zExpPars.prw**: Função que exporta parâmetros do Protheus para HTML (1 único arquivo)
    * **zExpTabs.prw**: Função que exporta tabelas do Protheus para HTML (1 único arquivo)
    * **zExpTab2.prw**: Função que exporta tabelas do Protheus para HTML (vários arquivos)
    * **zFecPSS.prw**: Função para fechar o arquivo de senhas para recuperar a senha de admin
+   * **zFilCNPJ.prw**: Função que retorna a filial conforme CNPJ informado
    * **zFindProd.prw**: Função para pesquisar produto em uma grid dentro do Pedido de Venda / Pedido de Compra
    * **zFTPEnv.prw**: Função que envia arquivo para um servidor FTP
    * **zFunTit.prw**: Função que retorna o título da rotina atual
@@ -151,6 +156,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zMemoToA.prw**: Função que converte campo Memo para Array para impressão
    * **zMiniForm.prw**: Execução de fórmulas de forma compacta
    * **zMsgLog.prw**: Função que mostra uma mensagem ao usuário com opção de salvar
+   * **zMsgPopup.prw**: Função que mostra uma mensagem na área de notificação no Windows
    * **zNameFile.prw**: Função que verifica se o nome do arquivo é válido
    * **zOutlook.prw**: Função para abertura do Outlook com uma nova mensagem via AdvPL
    * **zParComma.prw**: Função para editar um parâmetro com separações (como ponto e vírgula)
@@ -159,6 +165,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zPrettyXML.prw**: Função que transforma uma string XML indentando o conteúdo e as linhas
    * **zPutSX1.prw**: Função que cria um grupo de perguntas (mesmo no Protheus 12)
    * **zQry2Excel.prw**: Função que gera um arquivo do Excel através de uma query SQL
+   * **zQuinto.prw**: Função que retorna o quinto dia útil
    * **zRecurDir.prw**: Função recursiva para buscar vários arquivos em diretórios e sub diretórios
    * **zRepSX3.prw**: Função que atualiza o conteúdo da SX3 conforme arquivo dbf / dtc
    * **zSalvaProc.prw**: Função que salva a lista da pilha de Chamadas
@@ -183,6 +190,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zVazio.prw**: Função que verifica se um Array está vazio
    * **zVerTrans.prw**: Função que verifica se um pedido já foi transmitido na filial
    * **zVldGrid.prw**: Função que executa as validações da grid
+   * **zX3ToArr.prw**: Função que exporta a SX3 adicionando uma linha no array
    * **zWsCliente.prw**: WebService de exemplo que traz dados de clientes
 
 ###### Projetos
