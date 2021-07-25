@@ -29,13 +29,13 @@ User Function zConOut(cTexto)
 		"INFO",;    //cSeverity      - Informe a severidade da mensagem de log. As opções possíveis são: INFO, WARN, ERROR, FATAL, DEBUG
 		,;          //cTransactionId - Informe o Id de identificação da transação para operações correlatas. Informe "LAST" para o sistema assumir o mesmo id anterior
 		"ZCONOUT",; //cGroup         - Informe o Id do agrupador de mensagem de Log
-		FunName(),; //cCategory      - Informe o Id da categoria da mensagem
-		"",;        //cStep          - Informe o Id do passo da mensagem
-		"01",;      //cMsgId         - Informe o Id do código da mensagem
+		,;          //cCategory      - Informe o Id da categoria da mensagem
+		,;          //cStep          - Informe o Id do passo da mensagem
+		,;          //cMsgId         - Informe o Id do código da mensagem
 		cTexto,;    //cMessage       - Informe a mensagem de log. Limitada à 10K
-		0,;         //nMensure       - Informe a uma unidade de medida da mensagem
-		0,;         //nElapseTime    - Informe o tempo decorrido da transação
-		{};         //aMessage       - Informe a mensagem de log em formato de Array - Ex: { {"Chave" ,"Valor"} }
+		,;          //nMensure       - Informe a uma unidade de medida da mensagem
+		,;          //nElapseTime    - Informe o tempo decorrido da transação
+		;           //aMessage       - Informe a mensagem de log em formato de Array - Ex: { {"Chave" ,"Valor"} }
 	) 
 	
 	RestArea(aArea)
