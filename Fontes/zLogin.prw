@@ -83,24 +83,13 @@ Static Function fVldUsr()
 	Local cCodAux := ""
 	
 	//Pega o código do usuário
-	PswOrder(2)
-	If !Empty(cUsrAux) .And. PswSeek(cUsrAux)
- 		cCodAux := PswRet(1)[1][1]
- 	
- 		//Agora verifica se a senha bate com o usuário
- 		If !PswName(cPswAux)
- 			cGetErr := "Senha inválida!"
- 			oGetErr:Refresh()
-			Return
-		
-		//Senão, atualiza o retorno como verdadeiro
-		Else
-			lRetorno := .T.
-		endif
+	RPCClearEnv()
+	If RpcSetEnv("01", "", cGetUsr, cGetPsw)
+		cCodAux := RetCodUsr()
  	
  	//Senão atualiza o erro e retorna para a rotina
  	Else
- 		cGetErr := "Usuário não encontrado!"
+ 		cGetErr := "Usuário e/ou senha inválidos!"
  		oGetErr:Refresh()
  		Return
 	EndIf
