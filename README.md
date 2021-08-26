@@ -193,6 +193,14 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zX3ToArr.prw**: Função que exporta a SX3 adicionando uma linha no array
    * **zWsCliente.prw**: WebService de exemplo que traz dados de clientes
 
+###### NETiZAP - Integração com WhatsApp
+   * **zZapDanfe.prw**: Funções para notificar o cliente quando um novo pedido é feito, emitido a NF e enviar a DANFE
+   * **zZapEmoji.prw**: Exemplo de envio de mensagens com emoji
+   * **zZapMenu.prw**: Exemplo de chatbot no WhatsApp com respostas pelo Protheus
+   * **zZapNew.prw**: Exemplos de mensagens de boas vindas no WhatsApp para clientes, fornecedores e vendedores
+   * **zZapSend.prw**: Função de envio de mensagens para o WhatsApp
+   * **zZapTest.prw**: Função para testar o envio de mensagens para o WhatsApp
+
 ###### Projetos
 1. Dicionário de Dados
    * **zCadSX5.prw**: Função para cadastro de tabelas genéricas (SX5), similar ao AxCadastro e mBrowse (em MVC)
