@@ -88,6 +88,7 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
 	  
 ###### Fontes
    * **ASOPM01.prw**: Função com exemplo de integração com a SOPHUS
+   * **wTransporte.prw**: Exemplo de WebService em REST usando paginação
    * **zAbreArq.prw**: Função que abre arquivo, conforme sistema operacional (por exemplo, abrir um .txt pelo notepad)
    * **zAltPar.prw**: Função para modificação de parâmetros (SX6)
    * **zAltSC5.prw**: Função para alteração de pedido de venda já liberado / faturado
