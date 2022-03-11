@@ -220,3 +220,9 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zTstWeb.prw**: Função que testa a utilização da rotina de WebCam no cadastro de clientes pelo Ações Relacionadas
 3. ProtheusDOC
    * **PDoc_Ti.rar**: Arquivo compactado com a base do Protheus Doc
+   
+###### Ti Responde
+   * **zLogGeneric.prw**: Exemplo de Classe para gerar arquivos de log
+   * **zVid01.prw**: Exemplo para demonstrar a utilização de legendas no Protheus
+   * **zVid02.prw**: Exemplo de como adicionar opções no Outras Ações quando a rotina não tem ponto de entrada
+   
