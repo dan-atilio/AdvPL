@@ -1,10 +1,3 @@
-/* ===
-    Esse é um exemplo disponibilizado no Terminal de Informação
-    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/02/07/quais-sao-as-cores-de-legenda-disponiveis-no-protheus-ti-responde-001/
-    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
-=== */
-
-
 //Bibliotecas
 #Include "Totvs.ch"
 #Include "FWMVCDef.ch"
@@ -13,7 +6,7 @@
 Static cTitulo := "Grupo de Produtos"
 Static cAliasMVC := "SBM"
 
-/*/{Protheus.doc} User Function zVid01
+/*/{Protheus.doc} User Function zVid0001
 Video 01
 @author Daniel Atilio
 @since 27/11/2021
@@ -23,7 +16,7 @@ Video 01
 @see http://autumncodemaker.com
 /*/
 
-User Function zVid01()
+User Function zVid0001()
 	Local aArea   := GetArea()
 	Local oBrowse
 	Local nIgnore := 1
@@ -56,7 +49,7 @@ User Function zVid01()
 Return Nil
 
 /*/{Protheus.doc} MenuDef
-Menu de opcoes na funcao zVid01
+Menu de opcoes na funcao zVid0001
 @author Daniel Atilio
 @since 27/11/2021
 @version 1.0
@@ -69,12 +62,12 @@ Static Function MenuDef()
 	Local aRotina := {}
 
 	//Adicionando opcoes do menu
-	ADD OPTION aRotina TITLE "Visualizar" ACTION "VIEWDEF.zVid01" OPERATION 1 ACCESS 0
+	ADD OPTION aRotina TITLE "Visualizar" ACTION "VIEWDEF.zVid0001" OPERATION 1 ACCESS 0
 
 Return aRotina
 
 /*/{Protheus.doc} ModelDef
-Modelo de dados na funcao zVid01
+Modelo de dados na funcao zVid0001
 @author Daniel Atilio
 @since 27/11/2021
 @version 1.0
@@ -93,7 +86,7 @@ Static Function ModelDef()
 
 
 	//Cria o modelo de dados para cadastro
-	oModel := MPFormModel():New("zVid01M", bPre, bPos, bCommit, bCancel)
+	oModel := MPFormModel():New("zVid0001M", bPre, bPos, bCommit, bCancel)
 	oModel:AddFields("SBMMASTER", /*cOwner*/, oStruct)
 	oModel:SetDescription("Modelo de dados - " + cTitulo)
 	oModel:GetModel("SBMMASTER"):SetDescription( "Dados de - " + cTitulo)
@@ -101,7 +94,7 @@ Static Function ModelDef()
 Return oModel
 
 /*/{Protheus.doc} ViewDef
-Visualizacao de dados na funcao zVid01
+Visualizacao de dados na funcao zVid0001
 @author Daniel Atilio
 @since 27/11/2021
 @version 1.0
@@ -111,7 +104,7 @@ Visualizacao de dados na funcao zVid01
 /*/
 
 Static Function ViewDef()
-	Local oModel := FWLoadModel("zVid01")
+	Local oModel := FWLoadModel("zVid0001")
 	Local oStruct := FWFormStruct(2, cAliasMVC)
 	Local oView
 
