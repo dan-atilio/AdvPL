@@ -222,7 +222,14 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **PDoc_Ti.rar**: Arquivo compactado com a base do Protheus Doc
    
 ###### Ti Responde
+   * **AfterLogin.prw**: Canivete Suíço de Atalhos Úteis
    * **zLogGeneric.prw**: Exemplo de Classe para gerar arquivos de log
-   * **zVid01.prw**: Exemplo para demonstrar a utilização de legendas no Protheus
-   * **zVid02.prw**: Exemplo de como adicionar opções no Outras Ações quando a rotina não tem ponto de entrada
+   * **zVid0001.prw**: Exemplo para demonstrar a utilização de legendas no Protheus
+   * **zVid0002.prw**: Exemplo de como adicionar opções no Outras Ações quando a rotina não tem ponto de entrada
+   * **zVid0004.prw**: Realçar a informação de empresa e filial no cabeçalho do Protheus
+   * **zVid0005.prw**: Validar o tamanho de um arquivo em AdvPL
+   * **zVid0008.prw**: Validar se campo existe com FieldPos
+   * **zVid0011.prw**: Copiar vários arquivos de uma pasta a outra
+   * **zVid0012.prw**: Como usar a função SoftLock
+   * **zVid0013.prw**: Importação de pré nota de entrada (via csv ou txt)
    

@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/03/21/realcar-a-informacao-de-empresa-e-filial-no-cabecalho-do-protheus-ti-responde-004/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include 'TOTVS.CH'
 

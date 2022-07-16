@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/02/21/como-adicionar-opcoes-em-uma-rotina-padrao-sem-ter-ponto-de-entrada-no-menudef-ti-responde-002/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include "TOTVS.ch"
 #Include "FWMVCDef.ch"

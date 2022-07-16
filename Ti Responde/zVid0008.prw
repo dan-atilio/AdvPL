@@ -1,3 +1,9 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/05/16/validar-se-campo-existe-com-fieldpos-ti-responde-008/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include 'Totvs.ch'
  
