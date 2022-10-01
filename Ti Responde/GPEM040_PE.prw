@@ -1,9 +1,15 @@
+/* ===
+    Esse é um exemplo disponibilizado no Terminal de Informação
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/07/25/disparo-de-e-mail-na-admissao-e-demissao-de-funcionarios-ti-responde-015/
+    Caso queira ver outros conteúdos envolvendo AdvPL e TL++, veja em: https://terminaldeinformacao.com/advpl/
+=== */
+
 //Bibliotecas
 #Include 'TOTVS.ch'
 #Include 'TopConn.ch'
 
 /*/{Protheus.doc} User Function GPEM040
-Ponto de entrada ao dmeitir o funcionário
+Ponto de entrada ao demitir o funcionário
 @type  Function
 @author Atilio
 @since 03/03/2022

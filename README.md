@@ -223,7 +223,12 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    
 ###### Ti Responde
    * **AfterLogin.prw**: Canivete Suíço de Atalhos Úteis
+   * **GP010AGRV**: Ponto de entrada após gravar na rotina de cadastro de funcionários (Disparo de e-Mail na admissão e demissão de funcionários)
+   * **GPEM040_PE**: Ponto de entrada ao demitir o funcionário (Disparo de e-Mail na admissão e demissão de funcionários)
+   * **zExporta**: Função que realiza a exportação das tabelas para arquivos txt dentro da Protheus Data (Como usar BI com TCloud)
+   * **zImporta**: Função que realiza a importação dos arquivos da Protheus Data para a Base Local (Como usar BI com TCloud)
    * **zLogGeneric.prw**: Exemplo de Classe para gerar arquivos de log
+   * **zPDFSize**: Função que diminui o tamanho de um pdf para enviar por e-Mail
    * **zVid0001.prw**: Exemplo para demonstrar a utilização de legendas no Protheus
    * **zVid0002.prw**: Exemplo de como adicionar opções no Outras Ações quando a rotina não tem ponto de entrada
    * **zVid0004.prw**: Realçar a informação de empresa e filial no cabeçalho do Protheus
@@ -232,4 +237,11 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zVid0011.prw**: Copiar vários arquivos de uma pasta a outra
    * **zVid0012.prw**: Como usar a função SoftLock
    * **zVid0013.prw**: Importação de pré nota de entrada (via csv ou txt)
-   
+   * **zVid0014.prw**: Visualização Pedidos x Itens x Liberações SC5 x SC6 x SC9 (Duas Grids para um Cabeçalho em MVC)
+   * **zVid0017.prw**: Como percorrer uma grid em MVC
+   * **zVid0018.prw**: Comprimir um arquivo PDF via AdvPL
+   * **zVid0019.prw**: O que é mensagem vazia em validações MVC
+   * **zVid0020.prw**: Tela com vários componentes gráficos, usando FWLayer
+   * **zVid0021.prw**: Alterando o rodapé de um TReport
+   * **zVid0022.prw**: Temporária em MVC com FWTemporaryTable
+   * **zVldData**: Função para validar a data digitada nos campos
