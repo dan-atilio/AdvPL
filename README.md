@@ -194,6 +194,9 @@ Abaixo as categorias, explicando um pouco sobre cada fonte.
    * **zX3ToArr.prw**: Função que exporta a SX3 adicionando uma linha no array
    * **zWsCliente.prw**: WebService de exemplo que traz dados de clientes
 
+###### Maratona de Exemplos
+Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 552 códigos fontes com exemplos de funções, classes, comandos e operadores da nossa série Maratona de Exemplos no YouTube.
+
 ###### NETiZAP - Integração com WhatsApp
    * **zZapDanfe.prw**: Funções para notificar o cliente quando um novo pedido é feito, emitido a NF e enviar a DANFE
    * **zZapEmoji.prw**: Exemplo de envio de mensagens com emoji
