@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/11/07/transformando-string-em-objeto-json-ti-responde-029/ 
+    
+*/
+
+
 //Bibliotecas
 #Include "TOTVS.ch"
 

@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2023/01/09/inicializar-grid-temporaria-em-mvc-ti-responde-038/ 
+    
+*/
+
+
 #Include 'Totvs.ch'
 #Include 'FWMVCDef.ch'
  

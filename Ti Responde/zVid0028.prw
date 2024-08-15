@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/10/31/configurar-uma-pasta-de-impressoras-automaticamente-ti-responde-028/ 
+    
+*/
+
+
 //Bibliotecas
 #Include "TOTVS.ch"
 

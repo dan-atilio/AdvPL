@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/10/17/criando-funcao-de-duplo-clique-numa-grid-ti-responde-026/ 
+    
+*/
+
+
 //Bibliotecas
 #Include "Totvs.ch"
 #Include "FWMVCDef.ch"

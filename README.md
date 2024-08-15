@@ -248,3 +248,44 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0021.prw**: Alterando o rodapé de um TReport
    * **zVid0022.prw**: Temporária em MVC com FWTemporaryTable
    * **zVldData**: Função para validar a data digitada nos campos
+   * **zVid0024.prw**: Copiar Linha Em Msnewgetdados
+   * **zVid0025.prw**: Criacao De Gatilho Que Gera Campo Sequencial
+   * **zVid0026.prw**: Criando Funcao De Duplo Clique Numa Grid
+   * **zVid0027.prw**: Executando Validacao De Campo E Gatilho Via Advpl
+   * **zVid0028.prw**: Configurar Uma Pasta De Impressoras Automaticamente
+   * **zVid0029.prw**: Transformando String Em Objeto Json
+   * **zVid0030.prw**: Excluir Vinculos De Uma Tabela Atraves De Um P E
+   * **zVid0031.prw**: Acionar A Posicao Do Cliente Em Uma Customizacao
+   * **zVid0032.prw**: Fazer Um Combo Filtrar Outro Combo
+   * **zVid0034.prw**: Bloquear O Colar Ou Ctrlv Em Tgets E Campos
+   * **zVid0035.prw**: Validar Se Uma String Tem Apenas Numeros
+   * **zVid0036.prw**: Acionar O F4 Do Produto Em Uma Customizacao
+   * **zVid0038.prw**: Inicializar Grid Temporaria Em Mvc
+   * **zVid0042.prw**: Aspas A Mais Em Variavel Caractere
+   * **zVid0043.prw**: Como Fazer Um Tget Que Posiciona Nele Mesmo
+   * **zVid0045.prw**: Incluir Registros Em Uma Tela Sem Execauto Sem Reclock E Sem Ser Mvc
+   * **zVid0046.prw**: Criando Pesquisa Em Uma Fwmarkbrowse
+   * **zVid0047.prw**: Extrair Imagens Do Cadastro De Produtos
+   * **zVid0048.prw**: Preencher O Acols De Uma Tela Padrao
+   * **zVid0049.prw**: Quais Produtos Estao Sem Saldo No Help Ma240negat
+   * **zVid0050.prw**: Deixar A Enchoice Nao Editavel Em Mvc
+   * **zVid0051.prw**: Qual A Diferenca Entre Count To E Reccount
+   * **zVid0052.prw**: Gerar Treport Em Pdf
+   * **zVid0053.prw**: Pegar O Valor De Um Campo Totalizador Mvc
+   * **zVid0054.prw**: Incrementar Minutos Em Uma Variavel De Hora
+   * **zVid0055.prw**: Seek Nao Encontra Registro Mesmo Existindo No Sql
+   * **zVid0056.prw**: Alterar Titulo De Um Campo Em Mvc
+   * **zVid0057.prw**: Filtrar Dados De Uma Grid Mvc
+   * **zVid0058.prw**: Procurando Linhas Em Mvc Com Seekline
+   * **zVid0059.prw**: Execauto De Estorno Na Mata241
+   * **zVid0060.prw**: Criar Ordenacao Em Clique De Colunas Com Fwbrowse
+   * **zVid0061.prw**: Adicionar Legenda Numa Tela Sem Pe
+   * **zVid0062.prw**: Fazer Uma Condicao Em Um Trfunction
+   * **zVid0063.prw**: Posicionar Em Coordenadas E Clicar Via Advpl
+   * **zVid0064.prw**: Deixar Um Campo Obrigatorio Via Customizacao
+   * **zVid0067.prw**: Baixar Arquivo De Webservice Com Base64
+   * **zVid0068.prw**: F3 Customizado Em Mvc
+   * **zVid0069.prw**: Como Fazer Copiar Em Mvc
+   * **zVid0070.prw**: Como Atualizar Um Browse Ao Alternar De Linha De Outro Browse
+   * **zVid0071.prw**: Como Bloquear Remover Uma Opcao Do Menu Via Ponto De Entrada
+   * **zVid0072.prw**: Como Extrair Todas As Imagens Do Rpo Em Uma Pasta

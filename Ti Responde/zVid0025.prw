@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/10/10/criacao-de-gatilho-que-gera-campo-sequencial-ti-responde-025/ 
+    
+*/
+
+
 //Bibliotecas
 #Include "TOTVS.ch"
 #Include "TopConn.ch"

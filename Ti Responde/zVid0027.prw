@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/10/24/executando-validacao-de-campo-e-gatilho-via-advpl-ti-responde-027/ 
+    
+*/
+
+
 //Bibliotecas
 #Include "TOTVS.ch"
 

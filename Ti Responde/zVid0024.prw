@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/10/03/copiar-linha-em-msnewgetdados-ti-responde-024/ 
+    
+*/
+
+
 //Bibliotecas
 #Include "Protheus.ch"
 #Include "TopConn.ch"

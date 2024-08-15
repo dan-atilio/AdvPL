@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/12/19/validar-se-uma-string-tem-apenas-numeros-ti-responde-036/ 
+    
+*/
+
+
 //Bibliotecas
 #Include "TOTVS.ch"
 

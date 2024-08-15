@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2023/02/06/aspas-a-mais-em-variavel-caractere-ti-responde-042/ 
+    
+*/
+
+
 //Bibliotecas
 #Include "TOTVS.ch"
 

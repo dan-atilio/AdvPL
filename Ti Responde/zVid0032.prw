@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/11/28/fazer-um-combo-filtrar-outro-combo-ti-responde-032/ 
+    
+*/
+
+
 //Bibliotecas
 #Include 'TOTVS.ch'
 

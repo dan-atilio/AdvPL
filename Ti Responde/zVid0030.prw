@@ -1,3 +1,11 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2022/11/14/excluir-vinculos-de-uma-tabela-atraves-de-um-p-e-ti-responde-030/ 
+    
+*/
+
+
 //Bibliotecas
 #Include "TOTVS.ch"
 
