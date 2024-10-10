@@ -289,3 +289,16 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0070.prw**: Como Atualizar Um Browse Ao Alternar De Linha De Outro Browse
    * **zVid0071.prw**: Como Bloquear Remover Uma Opcao Do Menu Via Ponto De Entrada
    * **zVid0072.prw**: Como Extrair Todas As Imagens Do Rpo Em Uma Pasta
+   * **zVid0073.prw**: Como fazer relatório FWMSPrinter em Paisagem e Retrato
+   * **zVid0074.prw**: Itens diferentes em um ComboBox dependendo se é Inclusão ou Alteração
+   * **zVid0075.prw**: Como fazer uma tela mobile usando apenas AdvPL
+   * **zVid0076.prw**: Como testar uma query antes de executar em AdvPL
+   * **zVid0077.prw**: Como ver quais são os atalhos em memória
+   * **zVid0080.prw**: Como colocar título em uma coluna de legenda em um FWmBrowse
+   * **zVid0081.prw**: Como gerar um excel com a FWPrinterXLSX
+   * **zVid0082.prw**: Como imprimir um texto manualmente em um TReport
+   * **zVid0083.prw**: Como usar TSystemTray com SIGAMDI
+   * **zVid0085.prw**: ExecAuto do Retornar do Pedido de Vendas
+   * **zVid0086.prw**: Filtrar um browse através de atalho via AdvPL
+   * **zVid0087.prw**: Gerar TReport em Excel e enviar por eMail
+   * **zVid0088.prw**: Gravando campos customizados na SC9 através do M440SC9I
