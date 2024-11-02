@@ -302,3 +302,10 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0086.prw**: Filtrar um browse através de atalho via AdvPL
    * **zVid0087.prw**: Gerar TReport em Excel e enviar por eMail
    * **zVid0088.prw**: Gravando campos customizados na SC9 através do M440SC9I
+   * **zVid0089.prw**: MarkBrowse com coluna editável
+   * **zVid0090.prw**: Atualizar o browse conforme KeyPress em um Get
+   * **zVid0091.prw**: Percorrer um array dentro de outro em MVC
+   * **zVid0092.prw**: Exemplo de códigos de barra em um FWMSPrinter
+   * **zVid0093.prw**: Posicionar em uma determinada linha e coluna num FWBrowse
+   * **zVid0094.prw**: Abrir arquivo CTREE
+   * **zVid0095.prw**: Grid Opcional em MVC
