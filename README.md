@@ -308,4 +308,13 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0092.prw**: Exemplo de códigos de barra em um FWMSPrinter
    * **zVid0093.prw**: Posicionar em uma determinada linha e coluna num FWBrowse
    * **zVid0094.prw**: Abrir arquivo CTREE
-   * **zVid0095.prw**: Grid Opcional em MVC
+   * **zVid0095.prw**: Grid Opcional em MVC   
+   * **zVid0096.prw**: Como enviar um PDF via REST usando AdvPL
+   * **zVid0097.prw**: Como fazer zebrado no TReport
+   * **zVid0098.prw**: Como fazer um Excel com cores diferentes via AdvPL
+   * **zVid0099.prw**: Diferenças entre DbStruct e métodos da FWSX3Util
+   * **zVid0100.prw**: Como forçar um refresh de uma FWBrowse
+   * **zVid0102.prw**: Como fazer um browse listar registros excluídos
+   * **zVid0104.tlpp**: Como usar Expressão regular no Protheus
+   * **zVid0105.prw**: Quais são os botões disponíveis para usar no FormBatch
+   * **zVid0106.prw**: Como colocar uma imagem em um TButton
