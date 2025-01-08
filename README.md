@@ -318,3 +318,10 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0104.tlpp**: Como usar Expressão regular no Protheus
    * **zVid0105.prw**: Quais são os botões disponíveis para usar no FormBatch
    * **zVid0106.prw**: Como colocar uma imagem em um TButton
+   * **zVid0107.prw**: Como pegar o nome do Banco de Dados via código fonte
+   * **zVid0108.prw**: Como configurar os botões em um browse tirando do Outras Ações e fixando na barra
+   * **zVid0109.prw**: Como fazer 2 validações em um único ponto de entrada
+   * **zVid0110.prw**: Como atualizar o MV_SPEDURL da base de Teste automaticamente via código fonte
+   * **zVid0112.prw**: Criando visualização de texto com número de linha e pesquisa
+   * **zVid0113.prw**: Buscando o último registro inserido em uma tabela com a LastRec
+   * **zVid0114.prw**: Como fazer um mesmo relatório gerar tanto em PDF como EXCEL
