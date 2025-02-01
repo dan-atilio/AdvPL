@@ -325,3 +325,7 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0112.prw**: Criando visualização de texto com número de linha e pesquisa
    * **zVid0113.prw**: Buscando o último registro inserido em uma tabela com a LastRec
    * **zVid0114.prw**: Como fazer um mesmo relatório gerar tanto em PDF como EXCEL
+   * **zVid0115.prw**: Como fazer uma quebra e totalizador em relatório com FWMSPrinter
+   * **zVid0118.prw**: Como pegar uma alíquota do MV_ESTICM via AdvPL
+   * **zVid0120.prw**: Gatilho em um Pergunte
+   * **zVid0121.prw**: Como trocar um ícone de legenda de uma rotina do Protheus
