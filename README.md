@@ -329,3 +329,12 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0118.prw**: Como pegar uma alíquota do MV_ESTICM via AdvPL
    * **zVid0120.prw**: Gatilho em um Pergunte
    * **zVid0121.prw**: Como trocar um ícone de legenda de uma rotina do Protheus
+   * **zVid0122.prw**: Criar um Documento de Entrada em outra filial ao emitir um Documento de Saída
+   * **zVid0123.prw**: Como adicionar um F3 em uma FWBrwColumn
+   * **zVid0124.prw**: Como adicionar um botão de legenda em tela em MVC
+   * **zVid0125.prw**: Como gatilhar uma informação em uma grid com FWBrowse
+   * **zVid0126.prw**: Como abrir um site pelo navegador via código fonte
+   * **zVid0127.prw**: Como alterar os acessos de um usuário em tempo de execução
+   * **zVid0128.prw**: Tela Modelo 3 MVC com tabelas temporárias
+   * **zVid0130.prw**: Como definir para exibir apenas algumas colunas na FWmBrowse
+   * **zVid0131.prw**: Como fazer um relatório com quadros no FWMSPrinter
