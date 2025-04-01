@@ -1,0 +1,49 @@
+/*
+    
+    Esse é um exemplo disponibilizado no eBook AdvPL e TLPP 
+    Esse eBook, está disponível no seguinte link: https://www.amazon.com.br/dp/B0F32JV54N 
+    
+*/
+
+
+//Constantes
+#Define CarriageReturnLineFeed Chr(13) + Chr(10) //CRLF
+
+//Declaração da namespace
+Namespace custom.book
+
+/*/{Protheus.doc} User Function extractInclude
+Função de Exemplo para baixar as includes do arquivo tlpp.rpo
+@type  Function
+@author Atilio
+@since 05/03/2024
+@see https://tdn.totvs.com/pages/viewpage.action?pageId=555860439
+/*/
+
+User Function extractInclude()
+    Local lOk          := .F. As Logical
+    Local cReturn      := ""  As Character
+    Local cMessageLog  := ""  As Character
+    Local aMessages    := {}  As Array
+    Local nCurrent     := 0   As Numeric
+
+    //Extraindo as includes
+    lOk := tlpp.environment.getIncludesTLPP(@cReturn, @aMessages)
+
+    //Se não deu certo a extração
+    If ! lOk
+        cMessageLog := "Houve uma falha na extração: " + cReturn + CarriageReturnLineFeed
+
+        //Percorre o array de mensagens
+        For nCurrent := 1 to Len(aMessages)
+            cMessageLog += "[" + StrZero(nCurrent, 5) + "] Error: " + cValToChar(aMessages[nCurrent]) + CarriageReturnLineFeed
+        Next
+
+    //Do contrário, será mensagem de sucesso
+    Else
+        cMessageLog := "Sucesso na extração: " + cReturn + CarriageReturnLineFeed
+    EndIf
+
+    //Exibe a mensagem
+    ShowLog(cMessageLog)
+Return

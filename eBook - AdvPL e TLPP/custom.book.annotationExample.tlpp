@@ -1,0 +1,62 @@
+/*
+    
+    Esse é um exemplo disponibilizado no eBook AdvPL e TLPP 
+    Esse eBook, está disponível no seguinte link: https://www.amazon.com.br/dp/B0F32JV54N 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.book
+
+//Cria a anotação
+@annotation annotationExample
+    cName      As Character Default ""
+@end
+
+/*/{Protheus.doc} User Function testFunction
+Função de teste
+@type Function
+@author Atilio
+@since 12/03/2024
+@example custom.book.u_testFunction("aaa")
+/*/
+
+User function testFunction(@annotationExample("Informe o Nome do Funcionário") cName)
+    Local aArea     := FWGetArea() As Array
+    Local cMensagem := ""          As Character
+
+    //Mostra uma mensagem de Teste
+    cMensagem := FormatStr("Nome: %c ", {cName})
+    FWAlertInfo(cMensagem, "Título Teste")
+
+    FWRestArea(aArea)
+Return
+
+
+
+// --
+
+
+
+/*/{Protheus.doc} User Function reflectionUse
+Busca as anotações através da Reflection
+@type Function
+@author Atilio
+@since 12/03/2024
+@example custom.book.u_reflectionUse()
+/*/
+
+User Function reflectionUse()
+    Local aArea   := FWGetArea()   As Array
+    Local jResult                  As Json
+
+    //Busca as anotações do primeiro parâmetro de uma função
+    jResult := Reflection.getFunctionParamAnnotation("reflectionUse.tlpp", "u_testFunction", 1, "annotationExample")
+    ShowLog(jResult:ToJson())
+
+    FWRestArea(aArea)
+Return

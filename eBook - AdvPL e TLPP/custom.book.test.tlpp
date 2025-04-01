@@ -1,0 +1,26 @@
+/*
+    
+    Esse é um exemplo disponibilizado no eBook AdvPL e TLPP 
+    Esse eBook, está disponível no seguinte link: https://www.amazon.com.br/dp/B0F32JV54N 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.book
+
+/*/{Protheus.doc} User Function test
+Função para exibir uma mensagem de teste
+@type  Function
+@author Atilio
+@since 24/09/2024
+@version 1.0
+@example custom.book.u_test()
+/*/
+
+User Function test()
+    Alert("Olá Mundo")
+Return

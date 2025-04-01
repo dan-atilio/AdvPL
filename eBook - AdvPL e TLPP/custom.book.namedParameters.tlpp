@@ -1,0 +1,71 @@
+/*
+    
+    Esse é um exemplo disponibilizado no eBook AdvPL e TLPP 
+    Esse eBook, está disponível no seguinte link: https://www.amazon.com.br/dp/B0F32JV54N 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.book
+
+//Constantes
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function namedParameters
+Mostra como acionar parâmetros nomeados
+@type Function
+@author Atilio
+@since 12/03/2024
+@see https://tdn.totvs.com/pages/viewpage.action?pageId=776520543
+@example custom.book.u_namedParameters()
+/*/
+
+User Function namedParameters()
+    Local aArea     := FWGetArea()                 As Array
+    Local cName     := "Daniel"                    As Character
+    Local cSurname  := "Atilio"                    As Character
+    Local cWebSite  := "terminaldeinformacao.com"  As Character
+
+    //Aciona do modo clássico, passando cada parâmetro em uma posição
+    testFunction(cName, , cSurname, , cWebSite)
+
+    //Aciona do modo passando os parâmetros nomeados (inclusive em outra ordem)
+    testFunction(cWebSiteURL = cWebSite, cEmplyeeSurname = cSurname, cEmployeeName = cName)
+
+    FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} testFunction
+Função criada de teste para exibir uma mensagem conforme os parâmetros vindos no acionamento
+@type  Static Function
+@author Atilio
+@since 12/03/2024
+/*/
+
+Static Function testFunction(cEmployeeName, dBirthday, cEmplyeeSurname, cWhatsAppNumber, cWebSiteURL)
+    Local aArea               := FWGetArea() As Array
+    Local cMessageToShow      := ""          As Character
+    Default cEmployeeName     := ""
+    Default dBirthday         := sToD("")
+    Default cEmplyeeSurname   := ""
+    Default cWhatsAppNumber   := ""
+    Default cWebSiteURL       := ""
+
+    //Monta a mensagem que será exibida
+    cMessageToShow := "Informações vindas nos parâmetros: " + CRLF
+    cMessageToShow += "--"                                  + CRLF
+    cMessageToShow += "Nome:      " + cEmployeeName      + CRLF
+    cMessageToShow += "Dt. Nasc.: " + dToS(dBirthday)       + CRLF
+    cMessageToShow += "SobreNome: " + cEmplyeeSurname + CRLF
+    cMessageToShow += "WhatsApp:  " + cWhatsAppNumber       + CRLF
+    cMessageToShow += "Site:      " + cWebSiteURL            + CRLF
+
+    //Exibe a mensagem
+    ShowLog(cMessageToShow)
+
+    FWRestArea(aArea)
+Return

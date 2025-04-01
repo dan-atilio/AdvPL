@@ -1,0 +1,35 @@
+/*
+    
+    Esse é um exemplo disponibilizado no eBook AdvPL e TLPP 
+    Esse eBook, está disponível no seguinte link: https://www.amazon.com.br/dp/B0F32JV54N 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.book
+
+/*/{Protheus.doc} User Function longNames
+Função de Exemplo demonstrando a utilização de nomes longos
+@type  Function
+@author Atilio
+@since 05/03/2024
+@see https://tdn.totvs.com/display/tec/Nomes+longos
+@example custom.book.longNames()
+/*/
+
+User Function longNames()
+    Local aAreaBackup        := FWGetArea() As Array
+    Local cEmployeeName      := "Daniel"    As Character
+    Local cEmployeeSurname   := "Atilio"    As Character
+    Local cMessageToShow     := ""          As Character
+
+    //Exibe uma mensagem
+    cMessageToShow := FormatStr("O nome do funcionário é %c e o sobrenome é %c", {cEmployeeName, cEmployeeSurname})
+    FWAlertInfo(cMessageToShow, "Atenção")
+
+    FWRestArea(aAreaBackup)
+Return

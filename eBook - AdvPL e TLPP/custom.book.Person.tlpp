@@ -1,0 +1,134 @@
+/*
+    
+    Esse é um exemplo disponibilizado no eBook AdvPL e TLPP 
+    Esse eBook, está disponível no seguinte link: https://www.amazon.com.br/dp/B0F32JV54N 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.book
+
+/*/{Protheus.doc} Person
+Criação da classe Pessoa usando TL++
+@author Atilio
+@since 22/01/2025
+@version 1.0
+@example
+    oObjeto := Person():new()
+@obs Abaixo os links de apoio para montagem desse exemplo de classe
+    Estrutura:               https://tdn.totvs.com/display/tec/Estrutura
+    Modificadores de Acesso: https://tdn.totvs.com/display/tec/Modificadores+de+Acesso
+    Método Estático:         https://tdn.totvs.com/pages/viewpage.action?pageId=334341656
+/*/
+ 
+Class Person
+    //  Protected só pode ser acionada dentro da classe e das herdadas
+    //  Private só pode ser acionada dentro da classe
+    //  Caso não seja informado nada, assumirá "Private"
+    //  Então ambas não podem ser acessadas diretamente como por exemplo oObjeto:nAge
+
+    //Atributos
+    Public Data    cName       As Character
+    Protected Data nAge        As Numeric
+    Private Data   dBirthDay   As Date
+    Data           cSurname    As Character
+ 
+    //Métodos
+    Public    Method new()             Constructor
+    Public    Method showAge()
+    Private   Method showName()
+    Protected Method showSurname()
+    Static    Method showDateTime()
+EndClass
+ 
+/*/{Protheus.doc} new
+Método que cria a instância com a classe Person
+@author Atilio
+@since 22/01/2025
+@version 1.0
+@param cName, Caracter, Nome da Pessoa
+@param cSurname, Caracter, Nome da Pessoa
+@param dBirthDay, Data, Data de Nascimento da Pessoa
+@example
+    oObjeto := Person():new("Daniel", "Atilio", sToD("19930712"))
+/*/
+ 
+Method new(cName, cSurname, dBirthDay) Class Person
+    //Atribuindo valores nos atributos do objeto instanciado
+    ::cName       := cName
+    ::dBirthDay   := dBirthDay
+    ::cSurname    := cSurname
+    ::nAge        := DateDiffYear(Date(), dBirthDay)
+Return Self
+ 
+/*/{Protheus.doc} showAge
+Método que mostra a idade da pessoa
+@author Atilio
+@since 22/01/2025
+@version 1.0
+@example
+    oObjeto:showAge()
+/*/
+ 
+Method showAge() Class Person
+    Local cMessage := ""
+     
+    //Criando e mostrando a mensagem
+    cMessage := "A <b>pessoa</b> " + ::cName + " tem " + cValToChar(::nAge) + " anos!"
+    FWAlertInfo(cMessage, "Atenção")
+Return
+
+/*/{Protheus.doc} showName
+Método que mostra o nome da pessoa
+@author Atilio
+@since 22/01/2025
+@version 1.0
+@example
+    oObjeto:showName()
+/*/
+ 
+Method showName() Class Person
+    Local cMessage := ""
+     
+    //Criando e mostrando a mensagem
+    cMessage := "A nome da <b>pessoa</b> é " + ::cName + "!"
+    FWAlertInfo(cMessage, "Atenção")
+Return
+
+/*/{Protheus.doc} showSurname
+Método que mostra o sobrenome da pessoa
+@author Atilio
+@since 22/01/2025
+@version 1.0
+@example
+    oObjeto:showSurname()
+/*/
+ 
+Method showSurname() Class Person
+    Local cMessage := ""
+     
+    //Criando e mostrando a mensagem
+    cMessage := "A Sobrenome da <b>pessoa</b> é " + ::cSurname + "!"
+    FWAlertInfo(cMessage, "Atenção")
+Return
+
+/*/{Protheus.doc} showDateTime
+Método que mostra a data e hora atual e não precisa carregar o Objeto
+@author Atilio
+@since 22/01/2025
+@version 1.0
+@example
+    Person():showDateTime()
+/*/
+ 
+Method showDateTime() Class Person
+    Local cMessage := ""
+     
+    //Criando e mostrando a mensagem
+    cMessage := "Data atual é " + dToC(Date()) + " às " + Time() + "!"
+    FWAlertInfo(cMessage, "Atenção")
+Return

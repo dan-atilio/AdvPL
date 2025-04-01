@@ -1,0 +1,47 @@
+/*
+    
+    Esse é um exemplo disponibilizado no eBook AdvPL e TLPP 
+    Esse eBook, está disponível no seguinte link: https://www.amazon.com.br/dp/B0F32JV54N 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.book
+
+//Constantes
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function classInformation
+Busca os métodos e atributos de uma classe
+@type Function
+@author Atilio
+@since 12/03/2024
+@example custom.book.u_classInformation()
+/*/
+
+User Function classInformation()
+    Local aArea         := FWGetArea()                        As Array
+    Local aMethods      := custom.book.Person():TGetMethods() As Array
+    Local aAttributes   := custom.book.Person():TGetData()    As Array
+    Local cMessage      := ""                                 As Character
+
+    //Monta uma mensagem que será exibida
+    cMessage := "Classe Person na NameSpace 'custom.book'" + CRLF
+    
+    cMessage += CRLF
+    cMessage += "Métodos: " + CRLF
+    aEval(aMethods, {|x| cMessage += x + CRLF})
+
+    cMessage += CRLF
+    cMessage += "Atributos: " + CRLF
+    aEval(aAttributes, {|x| cMessage += x + CRLF})
+
+    //Exibe a mensagem
+    ShowLog(cMessage)
+    
+    FWRestArea(aArea)
+Return

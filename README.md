@@ -5,6 +5,9 @@ Fontes desenvolvidos utilizando as linguagens AdvPL e TL++ com intuito de auxili
 Todos esses fontes são exemplos disponibilizados no site Terminal de Informação.
 Abaixo as categorias, explicando um pouco sobre cada fonte.
 
+###### eBook - AdvPL e TLPP
+Fontes contidos nessa pasta, são exemplos demonstrados dentro do eBook sobre AdvPL e TLPP, disponível na Amazon: [clique aqui](https://www.amazon.com.br/dp/B0F32JV54N)
+
 ###### Exemplos
 1. Dialogs
    * **zExempF1.prw**: Exemplo de Help (F1) de campo, em Dialog customizada

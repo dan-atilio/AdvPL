@@ -1,0 +1,61 @@
+/*
+    
+    Esse é um exemplo disponibilizado no eBook AdvPL e TLPP 
+    Esse eBook, está disponível no seguinte link: https://www.amazon.com.br/dp/B0F32JV54N 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.book
+
+//Constantes
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function regexExample
+Exemplo de como usar Expressão Regular via TLPP
+@type  Function
+@author Atilio
+@since 13/03/2024
+@see https://tdn.totvs.com/display/tec/RegEx
+@obs Exemplo retirado do link https://support.google.com/a/answer/1371417?hl=pt
+@example custom.book.u_regexExample()
+/*/
+
+User Function regexExample()
+    Local aArea        := FWGetArea()                       As Array
+    Local cExample     := "f[a4@][s5\$][t7] +c[a4@][s5\$]h" As Character
+    Local oRegEx       := tlpp.regex.Regex():New("")        As Object
+    Local cSearch      := ""                                As Character
+    Local lResult      := .F.                               As Logical
+    Local cMessage     := ""                                As Character
+
+    //Faz as buscas, colhe o resultado e incrementa a mensagem
+    cSearch   := "f@st c@sh"
+    lResult   := oRegEx:Matches(cExample, cSearch)
+    cMessage  += "[" + cValToChar(lResult) + "] " + cSearch + CRLF
+
+    cSearch   := "f@$t c@$h"
+    lResult   := oRegEx:Matches(cExample, cSearch)
+    cMessage  += "[" + cValToChar(lResult) + "] " + cSearch + CRLF
+
+    cSearch   := "fa$t ca$h"
+    lResult   := oRegEx:Matches(cExample, cSearch)
+    cMessage  += "[" + cValToChar(lResult) + "] " + cSearch + CRLF
+
+    cSearch   := "FAST CASH"
+    lResult   := oRegEx:Matches(cExample, cSearch)
+    cMessage  += "[" + cValToChar(lResult) + "] " + cSearch + CRLF
+
+    cSearch   := "Fast Teste Atilio"
+    lResult   := oRegEx:Matches(cExample, cSearch)
+    cMessage  += "[" + cValToChar(lResult) + "] " + cSearch + CRLF
+
+    //Exibe o resultado
+    ShowLog(cMessage)
+
+    FWRestArea(aArea)
+Return
