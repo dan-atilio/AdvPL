@@ -1,0 +1,55 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/04/29/fwinputbox-com-quebra-de-linha-ti-responde-0146/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function video0146
+Exemplo de como acionar uma tela maior para digitar observações
+@type  Function
+@author Atilio
+@since 24/04/2024
+@example
+    custom.terminal.youtube.u_video0146()
+/*/
+
+User Function video0146()
+    Local aArea           := FWGetArea()       As Array
+    Local cSmallerMessage := ""                As Character
+    Local cBiggerMessage  := ""                As Character
+    Local lEditMessage    := .T.               As Logical
+    Local nButtonClick    := 0                 As Numeric
+    Local cMessageToShow  := ""                As Character
+    
+    //Aciona a FWInputBox (sem quebra de linha)
+    cSmallerMessage := FWInputBox("Insira uma mensagem:")
+
+    //Agora aciona a Aviso (com quebra de linha)
+    nButtonClick := Aviso("Título de Teste", @cBiggerMessage, {"OK", "Cancelar"}, 3, "Insira uma mensagem:", /*nRotAutDefault*/, /*cBitmap*/, lEditMessage)
+
+    //Se clicou no cancelar, zera a mensagem
+    If nButtonClick != 1
+        cBiggerMessage := ""
+    EndIf
+
+    //Monta a mensagem que vai ser exibida e mostra com a ShowLog
+    cMessageToShow := "Abaixo as mensagens que foram inseridas: " + CRLF + CRLF
+    cMessageToShow += "** Menor - usando FWInputBox: " + CRLF
+    cMessageToShow += cSmallerMessage + CRLF
+    cMessageToShow += CRLF
+    cMessageToShow += "** Maior - usando Aviso com edição: " + CRLF
+    cMessageToShow += cBiggerMessage + CRLF
+    ShowLog(cMessageToShow)    
+
+    FWRestArea(aArea)
+Return

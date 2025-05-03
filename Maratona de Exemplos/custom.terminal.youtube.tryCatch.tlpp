@@ -5,29 +5,31 @@
 
 
 //Bibliotecas
-#Include "TOTVS.ch"
+#Include "tlpp-core.th"
 
-/*/{Protheus.doc} User Function zExe506
-Aciona tratativa e erro nos códigos (deve-se usar a extensão tlpp)
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function tryCatch
+Aciona tratativa e erro nos códigos
 @type Function
 @author Atilio
-@since 04/04/2023
+@since 12/03/2024
 @see https://tdn.totvs.com/display/tec/Try...Catch
-@obs 
-
-    **** Apoie nosso projeto, se inscreva em https://www.youtube.com/TerminalDeInformacao ****
+@example custom.terminal.youtube.u_tryCatch()
+@obs Exemplo 506 da série Maratona de Exemplos, foi padronizado conforme link: https://tdn.totvs.com/pages/releaseview.action?pageId=633537898
 /*/
 
-User Function zExe506()
-    Local aArea := FWGetArea()
-    Private oError
+User Function tryCatch()
+    Local aArea    := FWGetArea() As Array
+    Private oError := Nil         As Object
 
     //Tenta executar os comandos
     TRY
 
         //Se a pergunta for confirmada, irá forçar passar pelo ErrorClass
         If FWAlertYesNo("Deseja forçar o erro e a saída do Try?", "Continua?")
-            fForcar()
+            forceError()
         EndIf
         
         //Mostra mensagem
@@ -41,9 +43,9 @@ User Function zExe506()
     FWRestArea(aArea)
 Return
 
-Static Function fForcar()
+Static Function forceError()
     oError := ErrorClass():New()
     oError:genCode := 19584
-    oError:description := "Erro forçado dentro da função fForcar()"
+    oError:description := "Erro forçado dentro da função forceError()"
     THROW oError
 Return
