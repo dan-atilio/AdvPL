@@ -1,0 +1,57 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/05/13/como-buscar-o-nome-de-um-usuario-que-esta-bloqueando-um-registro-via-codigo-fonte-ti-responde-0150/ 
+    
+*/
+
+
+//Bibliotecas TLPP
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function video0150
+Função de teste demonstrando em como buscar o nome do usuário que esta travando o registro (Lock)
+@type  Function
+@author Atilio
+@since 09/05/2024
+@example custom.terminal.youtube.u_video0150()
+/*/
+
+User Function video0150()
+    Local aArea            := FWGetArea()       As Array
+    Local cCustomerID      := ""                As Character
+    Local cMessage         := ""                As Character
+
+    //Solicita para o usuário informar o código do cliente
+    cCustomerID := FWInputBox("Informe o código do cliente (A1_COD):")
+
+    //Tenta posicionar no cliente
+    DbSelectArea("SA1")
+    SA1->(DbSetOrder(1)) // A1_FILIAL + A1_COD + A1_LOJA
+    If SA1->(MsSeek(FWxFilial("SA1") + cCustomerID))
+
+        //Tenta travar o registro, se conseguir, não tem ninguém bloqueando e aí já desbloqueia em seguida
+        If SA1->(RLock())
+            cMessage := "Não tem ninguém bloqueando o registro."
+            SA1->(DBRUnlock())
+
+        //Do contrário, busca quem que está bloqueando através da TCInternal
+        Else
+            cMessage := "Esse registro esta bloqueado! Segue maiores informações: " + CRLF + CRLF
+            cMessage += SA1->(TCInternal(53))
+        EndIf
+
+    Else
+        cMessage := "Cliente não encontrado na base!"
+    EndIf
+
+    //Exibe a mensagem
+    ShowLog(cMessage)
+
+    FWRestArea(aArea)
+Return

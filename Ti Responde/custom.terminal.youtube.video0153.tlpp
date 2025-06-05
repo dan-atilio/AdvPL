@@ -1,0 +1,79 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/05/22/como-agrupar-as-informacoes-em-um-array-ti-responde-0153/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function video0153
+Exemplo de como agrupar as informações de um array
+@type  Function
+@author Atilio
+@since 29/04/2024
+@example
+    custom.terminal.youtube.u_video0153()
+/*/
+
+User Function video0153()
+    Local aArea            := FWGetArea() As Array
+    Local aNormalArray     := {}          As Array
+    Local aGroupArray      := {}          As Array
+    Local cGroupText       := ""          As Character
+    Local nFoundPosition   := 0           As Numeric
+    Local nUserChoice      := 0           As Numeric
+    Local nCurrentPosition := 0           As Numeric
+
+    //Monta um Array, com um texto e uma quantidade na direita
+    aAdd(aNormalArray, {"CHOCOLATE", 15})
+    aAdd(aNormalArray, {"SORVETE",   30})
+    aAdd(aNormalArray, {"IOGURTE",   10})
+    aAdd(aNormalArray, {"CHOCOLATE", 15})
+    aAdd(aNormalArray, {"IOGURTE",   10})
+
+    //Mostra uma mensagem para ver o que o usuário prefere
+    nUserChoice := Aviso("Qual forma?", "De qual forma gostaria de agrupar?", {"For", "aEval"}, 2)
+
+    //Se o usuário clicou no For
+    If nUserChoice == 1
+        //Percorre o Array
+        For nCurrentPosition := 1 To Len(aNormalArray)
+            //Passo 1 - captura o Texto e a Quantidade
+            cGroupText := aNormalArray[nCurrentPosition][1]
+            nQuantity       := aNormalArray[nCurrentPosition][2]
+
+            //Passo 2 - encontra a posição no Array agrupado
+            nFoundPosition := 0
+            If Len(aGroupArray) > 0
+                nFoundPosition := aScan(aGroupArray, {|y| y[1] == cGroupText})
+            EndIf
+
+            //Passo 3 - atualiza o Array agrupado (caso não encontre, cria a posição, senão incrementa a Quantidade)
+            If nFoundPosition == 0
+                aAdd(aGroupArray, {cGroupText, nQuantity})
+            Else
+                aGroupArray[nFoundPosition][2] += nQuantity
+            EndIf
+        Next
+    
+    //Senão, o usuário clicou no aEVal
+    Else
+        aEVal(aNormalArray, {|x| ;
+            cGroupText := x[1]                                                                                                , ; //Passo 1 - captura o Texto
+            nQuantity := x[2]                                                                                                 , ; //Passo 2 - captura a Quantidade
+            nFoundPosition := Iif(Len(aGroupArray) == 0, 0, aScan(aGroupArray, {|y| y[1] == cGroupText}))                     , ; //Passo 3 - busca a posição no array agrupado
+            Iif(nFoundPosition == 0, aAdd(aGroupArray, {cGroupText, nQuantity}), aGroupArray[nFoundPosition][2] += nQuantity)   ; //Passo 4 - Se não encontrou a posição, cria um elemento no array agrupado, senão incrementa a quantidade
+        })
+    EndIf
+
+    //Exibe via ShowLog o Array Agrupado
+    ShowLog(VarInfo("Array", aGroupArray, , .F.))
+
+    FWRestArea(aArea)
+Return

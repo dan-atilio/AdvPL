@@ -318,7 +318,15 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0099.prw**: Diferenças entre DbStruct e métodos da FWSX3Util
    * **zVid0100.prw**: Como forçar um refresh de uma FWBrowse
    * **zVid0102.prw**: Como fazer um browse listar registros excluídos
-   * **zVid0104.tlpp**: Como usar Expressão regular no Protheus
+   * **custom.terminal.youtube.video0104.tlpp**: Como usar Expressão regular no Protheus
+   * **custom.terminal.youtube.video0146.tlpp**: FWInputBox com quebra de linha
+   * **custom.terminal.youtube.video0148.tlpp**: Encontrando pulos de códigos em tabelas
+   * **custom.terminal.youtube.video0150.tlpp**: Como buscar o nome de um usuário que está bloqueando um registro via código fonte
+   * **custom.terminal.youtube.video0151.tlpp**: Validando usuários com a função FWAuthUser
+   * **custom.terminal.youtube.video0153.tlpp**: Como agrupar as informações em um Array
+   * **custom.terminal.youtube.video0154.tlpp**: Como apagar ou recuperar todas as linhas em uma Grid
+   * **custom.terminal.youtube.video0155.tlpp**: Como validar o espaço em disco disponível
+   * **custom.terminal.youtube.video0156.tlpp**: Consultar SINTEGRA direto via Dialog com TWebEngine e TWebChannel
    * **zVid0105.prw**: Quais são os botões disponíveis para usar no FormBatch
    * **zVid0106.prw**: Como colocar uma imagem em um TButton
    * **zVid0107.prw**: Como pegar o nome do Banco de Dados via código fonte
@@ -341,3 +349,17 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0128.prw**: Tela Modelo 3 MVC com tabelas temporárias
    * **zVid0130.prw**: Como definir para exibir apenas algumas colunas na FWmBrowse
    * **zVid0131.prw**: Como fazer um relatório com quadros no FWMSPrinter
+   * **zVid0132.prw**: Como percorrer vários pastas e subpastas via AdvPL com Batch no Windows
+   * **zVid0133.prw**: Como fazer uma Modelo 2 em MVC com abas
+   * **zVid0134.prw**: Mudar a cor de tema do Protheus via código fonte
+   * **zVid0135.prw**: Como fazer chover no Protheus
+   * **zVid0136.prw**: Como fazer um Combo num ParamBox conforme definições de um campo na SX3
+   * **zVid0137.prw**: Como liberar ou bloquear edição de campos no cabeçalho da classificação de uma NF
+   * **zVid0138.prw**: Como salvar uma imagem do FWQRCode
+   * **zVid0139.prw**: Como usar a eVal para somar valores
+   * **zVid0141.prw**: Como usar as funções PutGlbValue e GetGlbValue
+   * **zVid0142.prw**: Como calcular impostos de um Pedido de Compras
+   * **zVid0143.prw**: Como manipular uma tabela em SQLITE via AdvPL
+   * **zVid0144.prw**: Adicionar validação de eMail nos campos
+   * **zVid0145.prw**: Como criar uma FWmBrowse com uma dimensão menor
+   * **zVid0147.prw**: Como fazer relatório em Paisagem e Retrato com FWPrintSetup

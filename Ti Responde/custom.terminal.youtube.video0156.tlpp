@@ -1,0 +1,147 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/06/03/consultar-sintegra-direto-via-dialog-com-twebengine-e-twebchannel-ti-responde-0156/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function video0156
+Função para testar a consulta do Sintegra
+@type  Function
+@author Atilio
+@since 03/06/2024
+@example custom.terminal.youtube.u_video0156()
+/*/
+
+User Function video0156()
+    Local aArea       := FWGetArea() As Array
+    
+	//Acionando a função para abrir a tela do SINTEGRA
+    custom.terminal.youtube.u_consultSintegra()
+
+    FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} User Function consultSintegra
+Abre o Sintegra
+@author Atilio
+@since 03/06/2024
+@version 1.0
+@type function
+@param cParamUF,   Caractere, Abreviação do Estado (exemplo AC; SP; RJ;)
+@param cParamCNPJ,     Caractere, Número do CNPJ que será pesquisado
+@param cParamIE, Caractere, Número da Inscrição Estadual que será pesquisada
+/*/
+
+User Function consultSintegra(cParamUF, cParamCNPJ, cParamIE)
+	Local   aArea              := FWGetArea()                               As Array
+    Default cParamUF           := ""
+    Default cParamCNPJ         := ""
+    Default cParamIE           := ""
+    Private cUF                := cParamUF                                  As Character
+    Private cCNPJ              := cParamCNPJ                                As Character
+    Private cFormattedCNPJ     := Transform(cCNPJ, "@R 99.999.999/9999-99") As Character
+    Private cIE                := cParamIE                            As Character
+	
+    //Somente se tiver estado e CNPJ OU Inscrição Estadual que irá acionar a montagem da tela
+    //If ! Empty(cUF) .And. (! Empty(cCNPJ) .Or. ! Empty(cIE))
+    	Processa({|| makeDialog()})
+    //EndIf
+	
+	FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} makeDialog
+Montagem da tela
+@author Atilio
+@since 03/06/2024
+@version 1.0
+@type function
+/*/
+
+Static Function makeDialog()
+	Local aArea           := FWGetArea()                                 As Array
+	Local oDialogWeb                                                     As Object
+	Local cDialogTitle    := 'Consulta Sintegra'                         As Character
+    Local cUFId           := UfCodIBGE(cUF)                              As Character
+	//Tamanho da janela
+	Local aDialogSize     := FwGetDialogSize()                           As Array
+	Local nDialogWidth    := aDialogSize[4] / 2                          As Numeric
+	Local nDialogHeight   := aDialogSize[3] / 2                          As Numeric
+	//Blocos de código dos botões
+	Local bClose          := {|| oDialogWeb:DeActivate()}                As CodeBlock
+    Local bPrint          := {|| oWebEngine:PrintPDF()}                  As CodeBlock
+    Local bCopy           := {|| CopyToClipboard(cURLSintegra)}          As CodeBlock
+	//Variáveis dos objetos de navegação de páginas
+	Local cURLSintegra    := 'https://dfe-portal.svrs.rs.gov.br/NFE/CCC' As Character
+	Local nPortChannel    := 0                                           As Numeric
+	Local oPanelHtml                                                     As Object
+    Private aCommands     := {}                                          As Array
+	Private oWebChannel                                                  As Object
+	Private oWebEngine                                                   As Object
+
+    //Monta os comandos que vão ser executados via JavaScript
+    aAdd(aCommands, 'document.getElementById("CodUf").value = "' + cUFId + '"; ')
+    If ! Empty(cCNPJ)
+        aAdd(aCommands, 'document.getElementById("CodInscrMf").value = "' + cFormattedCNPJ + '" ; ')
+    EndIf
+    If ! Empty(cIE)
+        aAdd(aCommands, 'document.getElementById("CodIe").value = "' + cIE + '" ; ')
+    EndIf
+
+	//Instancia a classe, criando uma janela
+	oDialogWeb := FWDialogModal():New()
+	oDialogWeb:SetTitle(cDialogTitle)
+	oDialogWeb:SetSize(nDialogHeight, nDialogWidth)
+	oDialogWeb:EnableFormBar(.T.)
+	oDialogWeb:CreateDialog()
+	oDialogWeb:CreateFormBar()
+	oDialogWeb:AddButton('Fechar',       bClose,   'Fechar',       , .T., .F., .T., )
+    oDialogWeb:AddButton('Imprimir PDF', bPrint, 'Imprimir PDF', , .T., .F., .T., )
+    oDialogWeb:AddButton('Copiar URL',   bCopy,   'Copiar URL',   , .T., .F., .T., )
+
+	//Busca o painel principal da dialog
+	oPanelHtml := oDialogWeb:GetPanelMain()
+	
+	//Prepara o conector WebSocket
+	oWebChannel := TWebChannel():New()
+	nPortChannel := oWebChannel:connect()
+
+	//Cria componente
+	oWebEngine := TWebEngine():New(oPanelHtml, 0, 0, 100, 100, , nPortChannel)
+	oWebEngine:bLoadFinished := {|self, url| runScripts()}
+	oWebEngine:Navigate(cURLSintegra)
+	oWebEngine:Align := CONTROL_ALIGN_ALLCLIENT
+
+	//Abre a janela
+	oDialogWeb:Activate()
+
+	FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} runScripts
+Comandos que serão executados após carregar a página
+@author Atilio
+@since 03/06/2024
+@version 1.0
+@type function
+/*/
+
+Static Function runScripts()
+	Local aArea     := FWGetArea() As Array
+	Local nCurrent  := 0           As Numeric
+	
+	//Percorre os comandos e executa
+	For nCurrent := 1 To Len(aCommands)
+		oWebEngine:RunJavaScript(aCommands[nCurrent])
+	Next
+	
+	FWRestArea(aArea)
+Return

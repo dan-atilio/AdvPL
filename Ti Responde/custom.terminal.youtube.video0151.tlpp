@@ -1,0 +1,43 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/05/15/validando-usuarios-com-a-funcao-fwauthuser-ti-responde-0151/ 
+    
+*/
+
+
+//Bibliotecas TLPP
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function video0151
+Função que abre uma tela para um usuário informar o login e senha
+@type  Function
+@author Atilio
+@since 13/05/2024
+@example custom.terminal.youtube.u_video0151()
+/*/
+
+User Function video0151()
+    Local aArea            := FWGetArea()       As Array
+    Local cUserID          := ""                As Character
+    Local cMessage         := ""                As Character
+    Local lOk              := .F.               As Logical
+
+    //Exibe a tela para que o usuário informe o login e senha
+    lOk := FWAuthUser(@cUserID)
+
+    //Incrementa a mensagem
+    If lOk
+        cMessage := "Deu tudo certo, o código do usuário é " + cUserID + " ( " + UsrRetName(cUserID) + " )"
+    Else
+        cMessage := "Não deu certo, usuário clicou no cancelar ou fechar!"
+    EndIf
+
+    //Exibe a mensagem
+    FWAlertInfo(cMessage, "Atenção")
+
+    FWRestArea(aArea)
+Return

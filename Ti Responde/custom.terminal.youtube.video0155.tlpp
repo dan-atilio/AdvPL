@@ -1,0 +1,117 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/05/29/como-validar-o-espaco-em-disco-disponivel-ti-responde-0155/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function diskSpace
+Função que valida o espaço disponível no disco rígido
+@type  Function
+@author Atilio
+@since 10/05/2024
+@param cWindowsDiskDrive, Caractere, Letra do Drive do Windows (se não vier nada vai considerar C)
+@return aAvailableSpace, Array, Posições [1] = Espaço total em bytes; [2] = Espaço em GBs;
+@obs Foi usado como referência esse link - https://stackoverflow.com/questions/293780/free-space-in-a-cmd-shell
+@example
+    aEspaco := custom.terminal.youtube.u_diskSpace()
+    Alert(aEspaco[2])
+/*/
+
+User Function diskSpace(cWindowsDiskDrive)
+    Local aArea                := FWGetArea()        As Array
+    Local aAvailableSpace      := {0, 0}             As Array
+    Local cTempPath            := GetTempPath()      As Character
+    Local cBatchFile           := "busca_espaco.bat" As Character
+    Local cResultFile          := "espaco.txt"       As Character
+    Local cMSDosCommand        := ""                 As Character
+    Local cResultContent       := ""                 As Character
+    Local nTotalSpace          := 0                  As Numeric
+    Local nSpaceInGBs          := 0                  As Numeric
+    Local nConversionFactorGBs := 0                  As Numeric
+    Default cWindowsDiskDrive  := "C"
+
+    //Se o batch já existir, apaga ele
+    If File(cTempPath + cBatchFile)
+        FErase(cTempPath + cBatchFile)
+    EndIf
+
+    //Aciona o comando para buscar o espaço disponível no disco e gera um arquivo de resultado
+    //  Exemplo do comando completo:
+    //  wmic /node:"%COMPUTERNAME%" LogicalDisk Where DriveType="3" Get DeviceID,FreeSpace|find /I "C:" > "C:\Users\danat\AppData\Local\Temp\lista_arq.txt"
+    cMSDosCommand := 'wmic /node:"%COMPUTERNAME%" LogicalDisk Where DriveType="3" Get DeviceID,FreeSpace|find /I "' + cWindowsDiskDrive + ':"  > "' + cTempPath + cResultFile + '"'
+    MemoWrite(cTempPath + cBatchFile, cMSDosCommand)
+
+    //Agora executa o bat para gerar o arquivo
+    ShellExecute("OPEN", cTempPath + cBatchFile, "", cTempPath, 0 )
+
+    //Aguarda 5 segundos
+    Sleep(5000)
+
+    //Se conseguiu gerar o arquivo temporário
+    If File(cTempPath + cResultFile)
+        //Le todo o arquivo
+        cResultContent := MemoRead(cTempPath + cResultFile)
+
+        //Pega do primeiro espaço em branco em diante
+        cResultContent := SubStr(cResultContent, At(" ", cResultContent))
+
+        //Agora tira todos os espaços e converte para numérico
+        cResultContent := Alltrim(cResultContent)
+        nTotalSpace   := Val(cResultContent)
+
+        //Converte em GB
+        nConversionFactorGBs  := 1073741824 // 1.073.741.824
+        nSpaceInGBs      := Round(nTotalSpace / nConversionFactorGBs, 2)
+
+        //Define o retorno
+        aAvailableSpace[1] := nTotalSpace
+        aAvailableSpace[2] := nSpaceInGBs
+    EndIf
+
+    FWRestArea(aArea)
+Return aAvailableSpace
+
+/*/{Protheus.doc} User Function video0155
+Função de exemplo para acionar a diskSpace
+@type  Function
+@author Atilio
+@since 22/05/2024
+@example
+    custom.terminal.youtube.u_video0155()
+/*/
+User Function video0155()
+    Local aArea             := FWGetArea()              As Array
+    Local cWindowsDiskDrive := ""                       As Character
+    Local aSpaceInDisk      := {}                       As Array
+    Local cMessage          := ""                       As Character
+    Local cMask             := "@E 999,999,999,999,999" As Character
+
+    //Busca a unidade do Windows
+    cWindowsDiskDrive := FWInputBox("Informe a unidade a ser avalida (exemplos: C, D, E, etc)")
+
+    //Se o usuário informou uma unidade
+    If ! Empty(cWindowsDiskDrive)
+        //Força a pegar somente a primeira letra, caso houve alguma falha na digitação
+        cWindowsDiskDrive := Upper(Left(cWindowsDiskDrive, 1))
+
+        //Agora vamos acionar a função para calcular o espaço disponível
+        aSpaceInDisk := custom.terminal.youtube.u_diskSpace(cWindowsDiskDrive)
+
+        //Por fim, será montado a mensagem e em seguida exibir ela
+        cMessage := "Espaço livre total (bytes): " + Transform(aSpaceInDisk[1], cMask) + CRLF
+        cMessage += "Espaço livre em GBs:        " + Transform(aSpaceInDisk[2], cMask) + CRLF
+        ShowLog(cMessage)
+    EndIf
+
+    FWRestArea(aArea)
+Return

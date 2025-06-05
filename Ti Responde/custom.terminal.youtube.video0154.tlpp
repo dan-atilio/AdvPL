@@ -1,0 +1,85 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/05/27/como-apagar-ou-recuperar-todas-as-linhas-em-uma-grid-ti-responde-0154/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function video0154
+Função que percorre as linhas de um Array e vem apagando as linhas ou recuperando elas
+@type  Function
+@author Atilio
+@since 29/04/2024
+@param cGridName, Caractere, Nome da grid Detail em MVC
+@example
+    //Comum
+    custom.terminal.youtube.u_video0154()
+
+    //Em MVC
+    custom.terminal.youtube.u_video0154("DA1DETAIL")
+/*/
+
+User Function video0154(cGridName)
+    Local aArea              := FWGetArea() As Array
+    Local nCurrentLine       := 0           As Numeric
+    Local lLineStatus        := .F.         As Logical
+    Local nDeletePosition    := 0           As Numeric
+    Local oModelMain                        As Object
+    Local oModelGrid                        As Object
+    Default cGridName        := ""
+
+    //Se a pergunta for confirmada
+    If FWAlertYesNo("Deseja apagar/restaurar as linhas da grid?", "Confirma?")
+
+        //Se for uma rotina em MVC
+        If ! Empty(cGridName)
+            //Busca os modelos em memória
+            oModelMain  := FWModelActive()
+			oModelGrid := oModelMain:GetModel(cGridName)
+
+            //Percorrendo a grid com os itens
+			For nCurrentLine := 1 To oModelGrid:Length()
+				//Posicionando na linha atual
+				oModelGrid:GoLine(nCurrentLine)
+
+                //Se a linha tiver apagada, restaura ela
+                If oModelGrid:IsDeleted()
+                    oModelGrid:UndeleteLine()
+
+                //Senão, apaga a linha
+                Else
+                    oModelGrid:DeleteLine()
+                EndIf
+            Next
+
+            //Volta pra linha 1
+            oModelGrid:GoLine(1)
+
+        //Se for uma rotina clássica (tiver aCols)
+        ElseIf Type("aCols") != "U"
+            //Pega a posição da coluna que armazena se ta apagada a linha
+            nDeletePosition := Len(aHeader) + 1
+
+            //Percorre as linhas da grid
+            For nCurrentLine := 1 To Len(aCols)
+                //Busca o Status atual (se ta apagado ou não, e inverte ele com !)
+                lLineStatus := ! GDDeleted(nCurrentLine)
+
+                //Atualiza na grid
+                aCols[nCurrentLine][nDeletePosition] := lLineStatus
+            Next
+        EndIf
+
+        //Atualiza a tela
+        GetDRefresh()
+    EndIf
+
+    FWRestArea(aArea)
+Return

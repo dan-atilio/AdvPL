@@ -1,0 +1,121 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/05/06/encontrando-pulos-de-codigos-em-tabelas-ti-responde-0148/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function video0148
+Exemplo de como validar se houve saltos/pulos de códigos
+@type  Function
+@author Atilio
+@since 29/04/2024
+@example
+    custom.terminal.youtube.u_video0148()
+/*/
+
+User Function video0148()
+    Local   aArea        := FWGetArea()                       As Array    
+    Local   aParameters  := {}                                As Array
+    Private cTableAlias  := Space(3)                          As Character
+    Private cTableField  := Space(10)                         As Character
+    Private cFirstID     := Space(50)                         As Character
+    Private cLastID      := StrTran(cFirstID, " ", "Z") As Character
+    
+    //Adiciona as perguntas que vão ser exibidas na tela de parâmetros
+    aAdd(aParameters, {1, "Qual Tabela",      cTableAlias,  "", ".T.", "", ".T.", 40,  .T.}) // MV_PAR01
+    aAdd(aParameters, {1, "Qual Campo",       cTableField,  "", ".T.", "", ".T.", 60,  .T.}) // MV_PAR02
+    aAdd(aParameters, {1, "Código Inicial",   cFirstID,     "", ".T.", "", ".T.", 90,  .F.}) // MV_PAR03
+    aAdd(aParameters, {1, "Código Final",     cLastID,      "", ".T.", "", ".T.", 90,  .T.}) // MV_PAR04
+    
+    //Se a pergunta for confirmada
+    If ParamBox(aParameters, "Informe os parâmetros", /*aRet*/, /*bOk*/, /*aButtons*/, /*lCentered*/, /*nPosx*/, /*nPosy*/, /*oDlgWizard*/, /*cLoad*/, .F., .F.)
+        cTableAlias := MV_PAR01
+        cTableField := MV_PAR02
+        cFirstID := MV_PAR03
+        cLastID   := MV_PAR04
+        Processa({|| analyzeData()})
+    EndIf
+
+    FWRestArea(aArea)
+Return
+
+Static Function analyzeData()
+    Local aArea                  := FWGetArea()     As Array
+    Local cMessage               := ""              As Character
+    Local cQuery                 := ""              As Character
+    Local lJump                  := .F.             As Logical
+    Local cCurrentID             := ""              As Character
+    Local nCurrentProgressBar    := 0               As Numeric
+    Local nTotalProgressBar      := 0               As Numeric
+
+    cMessage := "Iniciando a análise do campo '" + cTableAlias + "' na tabela '" + cTableField + "':" + CRLF
+
+    //Monta a query na Tabela, buscando as informações
+    cQuery := " SELECT " + CRLF
+    cQuery += "     " + cTableField + " " + CRLF
+    cQuery += " FROM " + CRLF
+    cQuery += "     " + RetSQLName(cTableAlias) + " TAB " + CRLF
+    cQuery += " WHERE " + CRLF
+    cQuery += "     TAB.D_E_L_E_T_ = ' ' " + CRLF
+    cQuery += "     AND " + cTableField + " >= '" + cFirstID + "' " + CRLF
+    cQuery += "     AND " + cTableField + " <= '" + cLastID + "' " + CRLF
+    cQuery += " ORDER BY " + CRLF
+    cQuery += "     " + cTableField + " ASC " + CRLF
+    PLSQuery(cQuery, "QRY_AUX")
+
+    //Somente se há dados
+    If ! QRY_AUX->(EoF())
+        //Pega o primeiro código que veio da query
+        cCurrentID := QRY_AUX->(&cTableField)
+
+        //Define o tamanho da régua
+        nTotalProgressBar := Contar("QRY_AUX", ".T.")
+        ProcRegua(nTotalProgressBar)
+        QRY_AUX->(DbGoTop())
+
+        //Pula um registro para começar em +1
+        QRY_AUX->(DbSkip())
+
+        //Percorre os dados
+        While ! QRY_AUX->(EoF())
+            //Incrementa a régua
+            nCurrentProgressBar++
+            IncProc("Analisando registro " + cValToChar(nCurrentProgressBar) + " de " + cValToChar(nTotalProgressBar) + "...")
+
+            //Se o registro atual da query for diferente do atual+1, houve salto
+            If Alltrim(QRY_AUX->(&cTableField)) != Soma1(Alltrim(cCurrentID))
+                cMessage += "Houve um pulo de código do '" + Alltrim(cCurrentID) + "' para o '" + Alltrim(QRY_AUX->(&cTableField))  + "'!" + CRLF
+                lJump := .T.
+            EndIf
+            
+            //Atualiza o código atual
+            cCurrentID := QRY_AUX->(&cTableField)
+
+            QRY_AUX->(DbSkip())
+        EndDo
+
+        //Se não houve nenhum pulo
+        If ! lJump
+            cMessage += "Não houve pulo de código encontrado!"
+        EndIf
+
+    Else
+        cMessage += "Não foi encontrado dados com o filtro informado!"
+    EndIf
+    QRY_AUX->(DbCloseArea())
+
+    //Exibe a mensagem ao finalizar
+    ShowLog(cMessage)
+
+    FWRestArea(aArea)
+Return
