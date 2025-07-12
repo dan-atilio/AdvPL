@@ -1,0 +1,83 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/06/12/identificando-possiveis-erros-em-consultas-sql-via-plsquery-ti-responde-0159/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+    
+/*/{Protheus.doc} User Function video0159
+Exemplo de teste de query com PLSQuery
+@type Function
+@author Atilio
+@since 05/06/2024
+@example custom.terminal.youtube.u_video0159()
+/*/
+
+User Function video0159()
+    Local aArea         := FWGetArea()                   As Array
+    Local aParameters   := {}                            As Array
+    Local cInitID       := Space(TamSX3('B1_COD')[1])    As Character
+    Local cLastID       := StrTran(cInitID, " ", "Z")    As Character
+
+    //Adicionando os parâmetros da tela de perguntas
+    aAdd(aParameters, {1, "Produto De",         cInitID,  "",        ".T.", "SB1", ".T.", 070, .F.})
+    aAdd(aParameters, {1, "Produto Até",        cLastID, "",        ".T.", "SB1", ".T.", 070, .T.})
+
+    //Somente se a tela de parâmetros for confirmada, que será aberto a tela
+    If ParamBox(aParameters, "Informe os parâmetros", /*aRet*/, /*bOk*/, /*aButtons*/, /*lCentered*/, /*nPosx*/, /*nPosy*/, /*oDlgWizard*/, /*cLoad*/, .F., .F.)
+        runQuery()
+    EndIf
+
+    FWRestArea(aArea)
+Return
+
+Static Function runQuery()
+    Local aArea    := FWGetArea()                   As Array
+    Local cQuery   := ""                            As Character
+    Local cMessage := ""                            As Character
+
+    //Monta a Query de Produtos
+    cQuery += " SELECT " + CRLF
+    cQuery += "     B1_COD, " + CRLF
+    cQuery += "     B1_DESC " + CRLF
+    cQuery += " FROM " + CRLF
+    cQuery += "     " + RetSQLName("SB1") + " SB1 " + CRLF
+    cQuery += " WHERE " + CRLF
+    cQuery += "     B1_FILIAL = '' " + CRLF
+    cQuery += "     AND SB1.D_E_L_E_T_ = ' ' " + CRLF
+    cQuery += "     --Abaixo os parâmetros informados pelo usuário " + CRLF
+    cQuery += "     AND B1_COD >= '" + MV_PAR01 + "' " + CRLF
+    cQuery += "     AND B1_COD <= '" + MV_PAR02 + "' " + CRLF
+    //ShowLog(ChangeQuery(cQuery))
+    PlsQuery(cQuery, "QRY_PROD")
+
+    //Se houver dados
+    If ! QRY_PROD->(EoF())
+        cMessage := "Abaixo os produtos encontrados: " + CRLF + CRLF
+
+        //Percorre os dados
+        While ! QRY_PROD->(EoF())
+            //Incrementa a mensagem de log
+            cMessage += QRY_PROD->B1_COD + "|" + Alltrim(QRY_PROD->B1_DESC) + CRLF
+
+            QRY_PROD->(DbSkip())
+        EndDo
+    Else
+        cMessage := "Não há dados na Query"
+    EndIf
+    QRY_PROD->(DbCloseArea())
+
+    //Mostra o log no fim do processamento
+    ShowLog(cMessage)
+
+    FWRestArea(aArea)
+Return

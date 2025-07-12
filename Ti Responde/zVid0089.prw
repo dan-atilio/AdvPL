@@ -297,7 +297,7 @@ Static Function fProcessa()
             nTotMarc++
             
             //Posiciona no registro original
-            RecLock("SB1")
+            DbSelectArea("SB1")
             SB1->(DbGoTo((cAliasTmp)->RECNUM))
 
             //Grava a alteração

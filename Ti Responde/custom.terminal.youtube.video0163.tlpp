@@ -1,0 +1,51 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/06/26/como-gravar-as-respostas-de-perguntas-em-um-parambox-ti-responde-0163/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+    
+/*/{Protheus.doc} User Function video0163
+Exemplo de como salvar os parâmetros em um ParamBox
+@type Function
+@author Atilio
+@since 10/06/2024
+@example custom.terminal.youtube.u_video0163()
+/*/
+
+User Function video0163()
+    Local aArea       := FWGetArea()                   As Array
+    Local aParameters := {}                            As Array
+    Local cInitID     := Space(TamSX3('B1_COD')[1])    As Character
+    Local cLastID     := StrTran(cInitID, " ", "Z")    As Character
+    Local cLoadName   := "video0163"                   As Character
+    Local aAnswers    := {}                            As Array
+    Local lOK         := .F.                           As Logical
+
+    //Adicionando os parâmetros da tela de perguntas
+    aAdd(aParameters, {1, "Produto De",         cInitID,  "",        ".T.", "SB1", ".T.", 070, .F.})
+    aAdd(aParameters, {1, "Produto Até",        cLastID, "",        ".T.", "SB1", ".T.", 070, .T.})
+
+    //Mostra a tela de parâmetros
+    lOK := ParamBox(aParameters, "Informe os parâmetros", @aAnswers, /*bOk*/, /*aButtons*/, /*lCentered*/, /*nPosx*/, /*nPosy*/, /*oDlgWizard*/, cLoadName, .T., .T.)
+
+    //Somente se o usuário confirmou que vai acionar a ParamSave
+    If lOK
+        
+        //Realiza a gravação das respostas no Profile do Usuário
+        ParamSave(cLoadName, aAnswers, "1")
+        
+        FWAlertInfo("Aqui você aciona sua função...", "Atenção")
+    EndIf
+
+    FWRestArea(aArea)
+Return

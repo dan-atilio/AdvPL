@@ -1,0 +1,250 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/06/05/apagando-linhas-de-uma-fwbrowse-e-pintando-o-fundo-de-cinza-ti-responde-0157/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "TOTVS.ch"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+    
+/*/{Protheus.doc} User Function video0157
+Exemplo de exclusão de registro em uma FWBrowse
+@type Function
+@author Atilio
+@since 03/06/2024
+@example custom.terminal.youtube.u_video0157()
+/*/
+
+User Function video0157()
+    Local aArea               := GetArea()                              As Array
+    Local lOK                 := .F.                                    As Logical
+    Local cMessage            := ""                                     As Character
+    //Fontes
+    Local cFont               := "Tahoma"                               As Character
+    Local oFontBigger         := TFont():New(cFont,,-38)                As Object
+    Local oFontTitle          := TFont():New(cFont,,-20)                As Object
+    Local oFontTitleBold      := TFont():New(cFont,,-20,,.T.)           As Object
+    Local oFontDefault        := TFont():New(cFont,,-14)                As Object
+    //Janela e componentes
+    Private oDialogTest                                                 As Object
+    Private oTempTable                                                  As Object
+    Private oPanelGrid                                                  As Object
+    Private oBrowseTemp                                                 As Object
+    Private aBrowseColumns    := {}                                     As Array
+    Private cTempAlias        := GetNextAlias()                         As Character
+    //Tamanho da janela
+    Private aDialogSize       := MsAdvSize()                            As Array
+    Private nDialogWidth      := aDialogSize[5]                         As Numeric
+    Private nDialogHeight     := aDialogSize[6]                         As Numeric
+    
+    //Cria a temporária
+    oTempTable := FWTemporaryTable():New(cTempAlias)
+        
+    //Adiciona no array das colunas as que serão incluidas (Nome do Campo, Tipo do Campo, Tamanho, Decimais)
+    aFields := {}
+    aAdd(aFields, {"XXCODIGO", "C",   6, 0})
+    aAdd(aFields, {"XXDESCRI", "C",  30, 0})
+    aAdd(aFields, {"XXQUANTI", "N",   9, 2})
+    aAdd(aFields, {"XXEMISSA", "D",   8, 0})
+    aAdd(aFields, {"XXOBSERV", "C", 100, 0})
+	aAdd(aFields, {"XXREGDEL", "L",   1, 0})
+        
+    //Define as colunas usadas, adiciona indice e cria a temporaria no banco
+    oTempTable:SetFields( aFields )
+    oTempTable:AddIndex("1", {"XXCODIGO"} )
+    oTempTable:Create()
+    
+    //Monta a estrutura das colunas
+    makeColumns()
+    
+    //Montando os dados, eles devem ser montados antes de ser criado o FWBrowse
+    FWMsgRun(, {|oSay| makeData(oSay) }, "Processando", "Buscando grupos")
+    
+    //Criando a janela
+    oDialogTest := TDialog():New(0, 0, nDialogHeight, nDialogWidth, "Teste Tabela Temporária", , , , , , 16777215, , , .T.)
+
+        //Títulos e SubTítulos
+        oSayModule   := TSay():New(004, 003, {|| "FAT"                 }, oDialogTest, "", oFontBigger,    , , , .T., RGB(149, 179, 215), , 200, 30, , , , , , .F., , )
+        oSayTitle    := TSay():New(004, 050, {|| "Listagem Genérica de"}, oDialogTest, "", oFontTitle,     , , , .T., RGB(031, 073, 125), , 200, 30, , , , , , .F., , )
+        oSaySubTitle := TSay():New(014, 050, {|| "Dados Temporários"   }, oDialogTest, "", oFontTitleBold, , , , .T., RGB(031, 073, 125), , 300, 30, , , , , , .F., , )
+
+        //Botões
+        oButtonConfirm := TButton():New(006, (nDialogWidth/2-001)-(0052*02), "Confirmar",          oDialogTest, {|| lOK := .T., oDialogTest:End()}, 050, 018, , oFontDefault, , .T., , , , , , )
+        oButtonCancel  := TButton():New(006, (nDialogWidth/2-001)-(0052*01), "Fechar",             oDialogTest, {|| oDialogTest:End()}, 050, 018, , oFontDefault, , .T., , , , , , )
+    
+        //Cria o Painel e o Browse
+        oPanelGrid := tPanel():New(033, 006, "", oDialogTest, , , , RGB(000,000,000), RGB(254,254,254), (nDialogWidth/2 - 13),     (nDialogHeight/2 - 45))
+            oBrowseTemp := FWBrowse():New()
+            oBrowseTemp:DisableFilter()
+            oBrowseTemp:DisableConfig()
+            oBrowseTemp:DisableReport()
+            oBrowseTemp:DisableSeek()
+            oBrowseTemp:DisableSaveConfig()
+            oBrowseTemp:SetFontBrowse(oFontDefault)
+            oBrowseTemp:SetAlias(cTempAlias)
+            oBrowseTemp:SetDataTable()
+            oBrowseTemp:SetEditCell(.T., {|| .T.}) 
+            oBrowseTemp:lHeaderClick := .F.
+            oBrowseTemp:AddLegend(cTempAlias + "->XXQUANTI == 0", "YELLOW", "Quantidade zerada")
+            oBrowseTemp:AddLegend(cTempAlias + "->XXQUANTI <  0", "RED",    "Quantidade menor que zero")
+            oBrowseTemp:AddLegend(cTempAlias + "->XXQUANTI >  0", "GREEN",  "Quantidade maior que zero")
+            oBrowseTemp:SetColumns(aBrowseColumns)
+            oBrowseTemp:SetOwner(oPanelGrid)
+            oBrowseTemp:SetDelete(.T., {|| deleteLine()}) //Define que pode apagar as linhas
+            oBrowseTemp:SetBlkBackColor({|| changeLineColor() }) //Define as cores de fundo das linhas que vão ser exibidas no browse
+            oBrowseTemp:SetBlkColor({|| changeTextColor() }) //Define as cores de texto das linhas
+            oBrowseTemp:Activate()
+
+    //Ativa e exibe a janela
+    oDialogTest:Activate(, , , .T., , , {|| })
+    
+    //Se foi confirmado
+    If lOK
+        cMessage := "Abaixo os registros apagados da temporária (campo XXREGDEL): " + CRLF
+
+        //Percorre os dados
+        (cTempAlias)->(DbGoTop())
+        While ! (cTempAlias)->(EoF())
+            //Se tiver apagado, incrementa o log
+            If (cTempAlias)->XXREGDEL
+                cMessage += "+ Código " + (cTempAlias)->XXCODIGO + ";" + CRLF
+            EndIf
+
+            (cTempAlias)->(DbSkip())
+        EndDo
+
+        //Exibe a mensagem de log
+        ShowLog(cMessage)
+    EndIf
+
+    //Deleta a temporaria
+    oTempTable:Delete()
+    
+    RestArea(aArea)
+Return
+    
+Static Function makeColumns()
+    Local nCurrent             As Numeric
+    Local aTempColumns := {}   As Array
+    
+    //Adicionando colunas
+    //[1] - Campo da Temporaria
+    //[2] - Titulo
+    //[3] - Tipo
+    //[4] - Tamanho
+    //[5] - Decimais
+    //[6] - Máscara
+    //[7] - Editável? .T. = sim, .F. = não
+    aAdd(aTempColumns, {"XXCODIGO", "Código",     "C",   6,  0, "",              .F.})
+    aAdd(aTempColumns, {"XXDESCRI", "Descricao",  "C",  30,  0, "",              .F.})
+    aAdd(aTempColumns, {"XXQUANTI", "Quantidade", "N",   9,  2, "@E 999,999.99", .T.})
+    aAdd(aTempColumns, {"XXEMISSA", "Emissão",    "D",   8,  0, "",              .T.})
+    aAdd(aTempColumns, {"XXOBSERV", "Observação", "C", 100,  0, "",              .T.})
+    
+    //Percorrendo e criando as colunas
+    For nCurrent := 1 To Len(aTempColumns)
+        oColumn := FWBrwColumn():New()
+        oColumn:SetData(&("{|| " + cTempAlias + "->" + aTempColumns[nCurrent][1] +"}"))
+        oColumn:SetTitle(aTempColumns[nCurrent][2])
+        oColumn:SetType(aTempColumns[nCurrent][3])
+        oColumn:SetSize(aTempColumns[nCurrent][4])
+        oColumn:SetDecimal(aTempColumns[nCurrent][5])
+        oColumn:SetPicture(aTempColumns[nCurrent][6])
+  
+        //Se for ser possível ter o duplo clique
+        If aTempColumns[nCurrent][7]
+            oColumn:SetEdit(.T.)
+            oColumn:SetReadVar(aTempColumns[nCurrent][1])
+            //oColumn:SetValid({|| fSuaValid()})
+        EndIf
+  
+        aAdd(aBrowseColumns, oColumn)
+    Next
+Return
+    
+Static Function makeData(oSay)
+    Local aArea          := GetArea() As Array
+    Local nCurrent       := 0         As Numeric
+    Local nTotal         := 100       As Numeric
+    Local dRefDate       := Date()    As Date
+    Local cCurrentID     := "000000"  As Character
+    Local cDescription   := ""        As Character
+    Local nQuantity      := 0         As Numeric
+    Local dDate          := sToD("")  As Date
+    
+    //Faz um laço de repetição
+    For nCurrent := 1 To nTotal
+        //Muda a mensagem na regua
+        oSay:SetText("Adicionando registro " + cValToChar(nCurrent) + " de " + cValToChar(nTotal) + "...")
+  
+        //Pega as variáveis que vão ser gravadas
+        cCurrentID   := Soma1(cCurrentID)
+        cDescription := "[" + Time() + "] Teste - " + cCurrentID
+        nQuantity    := Randomize(-5, 5)
+        dDate        := DaySub(dRefDate, nCurrent)
+  
+        //Insere os dados na temporária
+        RecLock(cTempAlias, .T.)
+            (cTempAlias)->XXCODIGO := cCurrentID
+            (cTempAlias)->XXDESCRI := cDescription
+            (cTempAlias)->XXQUANTI := nQuantity
+            (cTempAlias)->XXEMISSA := dDate
+            (cTempAlias)->XXOBSERV := ""
+			(cTempAlias)->XXREGDEL := .F.
+        (cTempAlias)->(MsUnlock())
+    
+    Next
+    
+    RestArea(aArea)
+Return
+
+Static Function deleteLine()
+    
+	//Marca a flag de registro apagado
+    RecLock(cTempAlias, .F.)
+        (cTempAlias)->XXREGDEL := ! (cTempAlias)->XXREGDEL
+    (cTempAlias)->(MsUnlock())
+
+	//Atualiza a linha do Browse
+    oBrowseTemp:LineRefresh()
+Return .T.
+
+Static Function changeLineColor()
+	Local nLineColor := 0 As Numeric
+
+	//Se a linha estiver apagada, a cor será cinza
+	If (cTempAlias)->XXREGDEL
+		nLineColor := RGB(192, 192, 192)
+
+	Else
+		//Se a linha for Par, vai ser Azul Claro
+		If (cTempAlias)->(Recno()) % 2 == 0
+			nLineColor := RGB(178, 203, 231)
+
+		//Senão, se ela for Ímpar, vai ser Branco
+		Else
+			nLineColor := RGB(255, 255, 255)
+		EndIf
+	EndIf
+
+Return nLineColor
+
+Static Function changeTextColor()
+	Local nTextColor := 0 As Numeric
+
+	//Se a linha estiver apagada, vai ser Branco
+	If (cTempAlias)->XXREGDEL
+		nTextColor := RGB(255, 255, 255)
+
+    //Senão, vai ser Preto
+	Else
+		nTextColor := RGB(000, 000, 000)
+	EndIf
+
+Return nTextColor

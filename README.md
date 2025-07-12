@@ -319,14 +319,6 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0100.prw**: Como forçar um refresh de uma FWBrowse
    * **zVid0102.prw**: Como fazer um browse listar registros excluídos
    * **custom.terminal.youtube.video0104.tlpp**: Como usar Expressão regular no Protheus
-   * **custom.terminal.youtube.video0146.tlpp**: FWInputBox com quebra de linha
-   * **custom.terminal.youtube.video0148.tlpp**: Encontrando pulos de códigos em tabelas
-   * **custom.terminal.youtube.video0150.tlpp**: Como buscar o nome de um usuário que está bloqueando um registro via código fonte
-   * **custom.terminal.youtube.video0151.tlpp**: Validando usuários com a função FWAuthUser
-   * **custom.terminal.youtube.video0153.tlpp**: Como agrupar as informações em um Array
-   * **custom.terminal.youtube.video0154.tlpp**: Como apagar ou recuperar todas as linhas em uma Grid
-   * **custom.terminal.youtube.video0155.tlpp**: Como validar o espaço em disco disponível
-   * **custom.terminal.youtube.video0156.tlpp**: Consultar SINTEGRA direto via Dialog com TWebEngine e TWebChannel
    * **zVid0105.prw**: Quais são os botões disponíveis para usar no FormBatch
    * **zVid0106.prw**: Como colocar uma imagem em um TButton
    * **zVid0107.prw**: Como pegar o nome do Banco de Dados via código fonte
@@ -362,4 +354,20 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0143.prw**: Como manipular uma tabela em SQLITE via AdvPL
    * **zVid0144.prw**: Adicionar validação de eMail nos campos
    * **zVid0145.prw**: Como criar uma FWmBrowse com uma dimensão menor
+   * **custom.terminal.youtube.video0146.tlpp**: FWInputBox com quebra de linha
    * **zVid0147.prw**: Como fazer relatório em Paisagem e Retrato com FWPrintSetup
+   * **custom.terminal.youtube.video0148.tlpp**: Encontrando pulos de códigos em tabelas
+   * **custom.terminal.youtube.video0150.tlpp**: Como buscar o nome de um usuário que está bloqueando um registro via código fonte
+   * **custom.terminal.youtube.video0151.tlpp**: Validando usuários com a função FWAuthUser
+   * **custom.terminal.youtube.video0153.tlpp**: Como agrupar as informações em um Array
+   * **custom.terminal.youtube.video0154.tlpp**: Como apagar ou recuperar todas as linhas em uma Grid
+   * **custom.terminal.youtube.video0155.tlpp**: Como validar o espaço em disco disponível
+   * **custom.terminal.youtube.video0156.tlpp**: Consultar SINTEGRA direto via Dialog com TWebEngine e TWebChannel
+   * **custom.terminal.youtube.video0157.tlpp**: Apagando linhas de uma FWBrowse e pintando o fundo de cinza
+   * **custom.terminal.youtube.video0159.tlpp**: Identificando possíveis erros em consultas SQL via PLSQuery
+   * **zVid0161.prw**: Como extrair o código zebra ZPL de um MSCBPrinter
+   * **custom.terminal.youtube.video0162.tlpp**: Entendendo o acionamento dos parâmetros nas funções
+   * **custom.terminal.youtube.video0163.tlpp**: Como gravar as respostas de perguntas em um ParamBox
+   * **zVid0165.prw**: Como gravar um log das rotinas e módulos mais usados
+   * **custom.terminal.youtube.video0166.tlpp**: Relatório TReport com 3 seções distintas
+   * **custom.terminal.youtube.video0167.tlpp**: Exemplo de ExecAuto da rotina APDA020 (cadastro de Participantes)

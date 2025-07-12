@@ -1,0 +1,66 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/07/10/exemplo-de-execauto-da-rotina-apda020-cadastro-de-participantes-ti-responde-0167/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+    
+/*/{Protheus.doc} User Function video0167
+Exemplo de ExecAuto da função APDA020 (Participantes)
+@type Function
+@author Atilio
+@since 14/06/2024
+@example custom.terminal.youtube.u_video0167()
+/*/
+
+User Function video0167()
+    Local aArea         := FWGetArea() As Array
+    Local cTableAlias   := "RD0"       As Character
+    Local nRecNo        := 0           As Numeric  //Se for alteração ou exclusão, passar RD0->(RecNo())
+    Local nOperation    := 3           As Numeric  //3=Inclusão
+    Local lAuto         := .T.         As Logical
+    Local aData         := {}          As Array
+    Private lMsErroAuto := .F.         As Logical
+
+    //Adiciona as informações no Array
+    aAdd(aData, {"RD0_NOME",      "Teste da Silva" , Nil})
+    aAdd(aData, {"RD0_TIPO",      "1"              , Nil})
+    aAdd(aData, {"RD0_DTNASC",    sToD("20240101") , Nil})
+    aAdd(aData, {"RD0_SEXO",      "M"              , Nil})
+    aAdd(aData, {"RD0_CIC",       "44675972802"    , Nil}) //Gerado através https://www.4devs.com.br/gerador_de_cpf
+    aAdd(aData, {"RD0_UF",        "SP"             , Nil})
+
+    /*
+    //Caso você queira validar se o participante existe e se vai ser alterado, descomente o trecho abaixo e ajuste o índice e o Seek
+    DbSelectArea("RD0")
+    RD0->(DbSetOrder(1)) // RD0_FILIAL + RD0_CODIGO
+    If RD0->(MsSeek(" ... ")
+        nRecNo       := RD0->(RecNo())
+        nOperation   := 4
+    Else
+        nRecNo       := 0  
+        nOperation   := 3  
+    EndIf
+    */
+
+    //Aciona a execução automática
+    MSExecAuto({|a, b, c, d, e| APDA020(a, b, c, d, e)}, cTableAlias, nRecNo, nOperation, lAuto, aData)
+
+    //Se houve erro, mostra a mensagem
+    If lMsErroAuto   
+        MostraErro()
+    Else
+        FWAlertSuccess("Participante gravado com sucesso!", "Atenção")
+    EndIf 
+
+    FWRestArea(aArea)
+Return

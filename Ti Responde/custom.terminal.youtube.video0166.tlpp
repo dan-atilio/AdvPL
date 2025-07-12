@@ -1,0 +1,213 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/07/08/relatorio-treport-com-3-secoes-distintas-ti-responde-0166/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "TOTVS.ch" // para usar a função RGB()
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+    
+/*/{Protheus.doc} User Function video0166
+Exemplo de relatório com 3 sections (parâmetros, títulos a receber, títulos a pagar)
+@type Function
+@author Atilio
+@since 10/06/2024
+@example custom.terminal.youtube.u_video0166()
+/*/
+
+User Function video0166()
+	Local aArea          := FWGetArea() As Array
+	Local oReport                       As Object
+	Local aParameters    := {}          As Array
+	Local dInitDate      := sToD("")    As Date
+	Local dLastDate      := sToD("")    As Date
+	
+	//Adicionando os parametros do ParamBox
+	aAdd(aParameters, {1, "Vencimento De", dInitDate,  "", ".T.", "", ".T.", 80,  .T.})
+	aAdd(aParameters, {1, "Vencimento Até", dLastDate,  "", ".T.", "", ".T.", 80,  .T.})
+	
+	//Se a pergunta for confirma, cria as definicoes do relatorio
+	If ParamBox(aParameters, 'Informe os parâmetros', /*aRet*/, /*bOk*/, /*aButtons*/, /*lCentered*/, /*nPosx*/, /*nPosy*/, /*oDlgWizard*/, /*cLoad*/, .F., .F.)
+		oReport := reportDef()
+		oReport:PrintDialog()
+	EndIf
+	
+	FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} reportDef
+Definicoes do relatorio zSecoes
+@author Atilio
+@since 22/05/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function reportDef()
+	Local oReport            As Object
+    Local oSectionParameters As Object
+	Local oSectionReceive    As Object
+    Local oSectionPay        As Object
+	
+	//Criacao do componente de impressao
+	oReport := TReport():New( "video0166",;
+		"Títulos Financeiros",;
+		,;
+		{|oReport| reportPrint(oReport),};
+		)
+	oReport:SetTotalInLine(.F.)
+	oReport:lParamPage := .F.
+	oReport:oPage:SetPaperSize(9)
+	
+	//Orientacao do Relatorio
+	oReport:SetPortrait()
+	
+    // -
+
+    //Criando a secao 1
+	oSectionParameters := TRSection():New( oReport,;
+		"Parâmetros",;
+		{""})
+	oSectionParameters:SetTotalInLine(.F.)
+	
+	//Colunas do relatorio
+	TRCell():New(oSectionParameters, "XX_DESCR", "", "Descrição", /*cPicture*/, 40, /*lPixel*/, /*{|| code-block de impressao }*/, "LEFT", /*lLineBreak*/, "LEFT", /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, /*nClrFore*/, .T.)
+	TRCell():New(oSectionParameters, "XX_CONTE", "", "Conteúdo",  /*cPicture*/, 40, /*lPixel*/, /*{|| code-block de impressao }*/, "LEFT", /*lLineBreak*/, "LEFT", /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, /*nClrFore*/, .T.)
+
+    // -
+
+	//Criando a secao 2
+	oSectionReceive := TRSection():New( oReport,;
+		"Títulos a Receber",;
+		{"QRY_SEC1"})
+	oSectionReceive:SetTotalInLine(.F.)
+	
+	//Colunas do relatorio
+	TRCell():New(oSectionReceive, "E1_FILIAL",  "QRY_SEC1", "Filial",          /*cPicture*/,         4, /*lPixel*/, /*{|| code-block de impressao }*/, "LEFT",   /*lLineBreak*/, "LEFT",   /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, /*nClrFore*/,   .F.)
+	TRCell():New(oSectionReceive, "E1_NUM",     "QRY_SEC1", "Título Receber",  /*cPicture*/,         9, /*lPixel*/, /*{|| code-block de impressao }*/, "LEFT",   /*lLineBreak*/, "LEFT",   /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, /*nClrFore*/,   .F.)
+	TRCell():New(oSectionReceive, "E1_VALOR",   "QRY_SEC1", "Valor",           "@E 999,999,999.99", 12, /*lPixel*/, /*{|| code-block de impressao }*/, "RIGHT",  /*lLineBreak*/, "RIGHT",  /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, /*nClrFore*/,   .F.)
+	TRCell():New(oSectionReceive, "E1_SALDO",   "QRY_SEC1", "Saldo",           "@E 999,999,999.99", 12, /*lPixel*/, /*{|| code-block de impressao }*/, "RIGHT",  /*lLineBreak*/, "RIGHT",  /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, /*nClrFore*/,   .F.)
+	TRCell():New(oSectionReceive, "E1_VENCREA", "QRY_SEC1", "Vencimento Real", /*cPicture*/,        10, /*lPixel*/, /*{|| code-block de impressao }*/, "CENTER", /*lLineBreak*/, "CENTER", /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, RGB(0, 0, 255), .T.)
+
+    // -
+
+    //Criando a secao 3
+	oSectionPay := TRSection():New( oReport,;
+		"Títulos a Pagar",;
+		{"QRY_SEC2"})
+	oSectionPay:SetTotalInLine(.F.)
+	
+	//Colunas do relatorio
+	TRCell():New(oSectionPay, "E2_FILIAL",  "QRY_SEC2", "Filial",          /*cPicture*/,         4, /*lPixel*/, /*{|| code-block de impressao }*/, "LEFT",   /*lLineBreak*/, "LEFT",   /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, /*nClrFore*/,   .F.)
+	TRCell():New(oSectionPay, "E2_NUM",     "QRY_SEC2", "Título Pagar",    /*cPicture*/,         9, /*lPixel*/, /*{|| code-block de impressao }*/, "LEFT",   /*lLineBreak*/, "LEFT",   /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, /*nClrFore*/,   .F.)
+	TRCell():New(oSectionPay, "E2_VALOR",   "QRY_SEC2", "Valor",           "@E 999,999,999.99", 12, /*lPixel*/, /*{|| code-block de impressao }*/, "RIGHT",  /*lLineBreak*/, "RIGHT",  /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, /*nClrFore*/,   .F.)
+	TRCell():New(oSectionPay, "E2_SALDO",   "QRY_SEC2", "Saldo",           "@E 999,999,999.99", 12, /*lPixel*/, /*{|| code-block de impressao }*/, "RIGHT",  /*lLineBreak*/, "RIGHT",  /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, /*nClrFore*/,   .F.)
+	TRCell():New(oSectionPay, "E2_VENCREA", "QRY_SEC2", "Vencimento Real", /*cPicture*/,        10, /*lPixel*/, /*{|| code-block de impressao }*/, "CENTER", /*lLineBreak*/, "CENTER", /*lCellBreak*/, /*nColSpace*/, /*lAutoSize*/, /*nClrBack*/, RGB(255, 0, 0), .T.)
+	
+Return oReport
+
+/*/{Protheus.doc} reportPrint
+Impressao do relatorio zSecoes
+@author Atilio
+@since 22/05/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function reportPrint(oReport)
+	Local aArea              := FWGetArea() As Array
+	Local cQueryReceive      := ""          As Character
+    Local cQueryPay          := ""          As Character
+    Local oSectionParameters := Nil         As Object
+	Local oSectionReceive    := Nil         As Object
+    Local oSectionPay        := Nil         As Object
+	Local nCurrent           := 0           As Numeric
+	Local nTotal             := 0           As Numeric
+	
+	//Pegando as secoes do relatorio
+    oSectionParameters := oReport:Section(1)
+	oSectionReceive    := oReport:Section(2)
+    oSectionPay      := oReport:Section(3)
+
+    //Pega a section de parâmetros
+    oSectionParameters:Init()
+    oSectionParameters:Cell("XX_DESCR"):SetValue("Vencimento De")
+    oSectionParameters:Cell("XX_CONTE"):SetValue(dToC(MV_PAR01))
+    oSectionParameters:PrintLine()
+    oSectionParameters:Cell("XX_DESCR"):SetValue("Vencimento Ate")
+    oSectionParameters:Cell("XX_CONTE"):SetValue(dToC(MV_PAR02))
+    oSectionParameters:PrintLine()
+    oSectionParameters:Finish()
+	
+	//Montando consulta de dados
+	cQueryReceive += "SELECT E1_FILIAL, E1_NUM, E1_VALOR, E1_SALDO, E1_VENCREA "		+ CRLF
+	cQueryReceive += "FROM SE1990 SE1 "		+ CRLF
+	cQueryReceive += "WHERE E1_VENCREA >= '" + dToS(MV_PAR01) + "' AND E1_VENCREA <= '" + dToS(MV_PAR02) + "' AND SE1.D_E_L_E_T_ = ' '"		+ CRLF
+	
+	//Executando consulta e setando o total da regua
+	PlsQuery(cQueryReceive, "QRY_SEC1")
+	DbSelectArea("QRY_SEC1")
+	Count to nTotal
+	oReport:SetMeter(nTotal)
+	
+	//Enquanto houver dados
+	oSectionReceive:Init()
+	QRY_SEC1->(DbGoTop())
+	While ! QRY_SEC1->(Eof())
+	
+		//Incrementando a regua
+		nCurrent++
+		oReport:SetMsgPrint("Imprimindo registro " + cValToChar(nCurrent) + " de " + cValToChar(nTotal) + "...")
+		oReport:IncMeter()
+		
+		//Imprimindo a linha atual
+		oSectionReceive:PrintLine()
+		
+		QRY_SEC1->(DbSkip())
+	EndDo
+	oSectionReceive:Finish()
+	QRY_SEC1->(DbCloseArea())
+
+    //Montando consulta de dados
+	cQueryPay += "SELECT E2_FILIAL, E2_NUM, E2_VALOR, E2_SALDO, E2_VENCREA "		+ CRLF
+	cQueryPay += "FROM SE2990 SE2 "		+ CRLF
+	cQueryPay += "WHERE E2_VENCREA >= '" + dToS(MV_PAR01) + "' AND E2_VENCREA <=  '" + dToS(MV_PAR02) + "' AND SE2.D_E_L_E_T_ = ' '"		+ CRLF
+	
+	//Executando consulta e setando o total da regua
+	PlsQuery(cQueryPay, "QRY_SEC2")
+	DbSelectArea("QRY_SEC2")
+	Count to nTotal
+	oReport:SetMeter(nTotal)
+	
+	//Enquanto houver dados
+	oSectionPay:Init()
+	QRY_SEC2->(DbGoTop())
+	While ! QRY_SEC2->(Eof())
+	
+		//Incrementando a regua
+		nCurrent++
+		oReport:SetMsgPrint("Imprimindo registro " + cValToChar(nCurrent) + " de " + cValToChar(nTotal) + "...")
+		oReport:IncMeter()
+		
+		//Imprimindo a linha atual
+		oSectionPay:PrintLine()
+		
+		QRY_SEC2->(DbSkip())
+	EndDo
+	oSectionPay:Finish()
+	QRY_SEC2->(DbCloseArea())
+	
+	FWRestArea(aArea)
+Return

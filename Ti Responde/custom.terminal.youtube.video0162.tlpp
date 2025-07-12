@@ -1,0 +1,86 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/06/24/entendendo-o-acionamento-dos-parametros-nas-funcoes-ti-responde-0162/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+//Constantes
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function video0162
+Exemplo de como acionar parâmetros nas funções
+@type Function
+@author Atilio
+@since 12/03/2024
+@see https://tdn.totvs.com/pages/viewpage.action?pageId=776520543
+@example custom.terminal.youtube.u_video0162()
+/*/
+
+User Function video0162()
+    Local aArea     := FWGetArea()                 As Array
+    Local cName     := "Daniel"                    As Character
+    Local cSurName  := "Atilio"                    As Character
+    Local cURL      := "terminaldeinforamcao.com"  As Character
+
+    //Aciona do modo clássico, passando cada parâmetro em uma posição
+    showEmployeeMessage(cName + "1", , cSurName, , cURL)
+
+
+    //Aciona do modo clássico, comentando os parâmetros
+    showEmployeeMessage(cName + "2", /*dBirthDay*/, cSurName, /*cPhoneNumber*/, cURL)
+
+
+    //Aciona do modo clássico, quebrando as linhas
+    showEmployeeMessage(;
+        cName + "3",; // cEmployeeName
+        ,;            // dBirthDay
+        cSurName,;    // cEmployeeSurName
+        ,;            // cPhoneNumber
+        cURL;         // cURL
+    )
+
+
+    //Aciona do modo passando os parâmetros nomeados (inclusive em outra ordem, recurso exclusivo TLPP)
+    showEmployeeMessage(cURL = cURL, cEmployeeSurName = cSurName, cEmployeeName = cName + "4")
+
+    FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} showEmployeeMessage
+Função criada de teste para exibir uma mensagem conforme os parâmetros vindos no acionamento
+@type  Static Function
+@author Atilio
+@since 12/03/2024
+/*/
+
+Static Function showEmployeeMessage(cEmployeeName, dBirthDay, cEmployeeSurName, cPhoneNumber, cURL)
+    Local aArea                := FWGetArea() As Array
+    Local cMessage             := ""          As Character
+    Default cEmployeeName      := ""
+    Default dBirthDay          := sToD("")
+    Default cEmployeeSurName   := ""
+    Default cPhoneNumber       := ""
+    Default cURL               := ""
+
+    //Monta a mensagem que será exibida
+    cMessage := "Informações vindas nos parâmetros: " + CRLF
+    cMessage += "--"                                  + CRLF
+    cMessage += "Nome:      " + cEmployeeName      + CRLF
+    cMessage += "Dt. Nasc.: " + dToS(dBirthDay)       + CRLF
+    cMessage += "SobreNome: " + cEmployeeSurName + CRLF
+    cMessage += "WhatsApp:  " + cPhoneNumber       + CRLF
+    cMessage += "Site:      " + cURL            + CRLF
+
+    //Exibe a mensagem
+    ShowLog(cMessage)
+
+    FWRestArea(aArea)
+Return
