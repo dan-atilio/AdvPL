@@ -1,0 +1,44 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/08/07/como-fazer-para-num-fwinputbox-aceitar-apenas-numeros-ti-responde-0175/ 
+    
+*/
+
+
+//Bibliotecas TLPP
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function video0175
+Função para que só permita digitar valores numéricos em um FWInputBox
+@type  Function
+@author Atilio
+@since 14/06/2024
+@example custom.terminal.youtube.u_video0175()
+/*/
+
+User Function video0175()
+    Local aArea       := FWGetArea()   As Array
+    Local cInputText  := ""            As Character
+    Local nValue      := 0             As Numeric
+
+    //Faz um laço infinito
+    While .T.
+        //Pega o valor
+        cInputText := FWInputBox("Coloque um valor:")
+
+        //Se tiver conteúdo e só números, encerra o laço
+        If ! Empty(cInputText) .And. IsNumeric(cInputText)
+            Exit
+        EndIf
+    EndDo
+
+    //Converte o valor e mostra numa mensagem
+    nValue := Val(cInputText)
+    FWAlertInfo(FormatStr("Valor digitado: %n", {nValue}), "Resultado")
+
+    FWRestArea(aArea)
+Return

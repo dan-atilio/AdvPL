@@ -371,3 +371,11 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0165.prw**: Como gravar um log das rotinas e módulos mais usados
    * **custom.terminal.youtube.video0166.tlpp**: Relatório TReport com 3 seções distintas
    * **custom.terminal.youtube.video0167.tlpp**: Exemplo de ExecAuto da rotina APDA020 (cadastro de Participantes)
+   * **zVid0168.prw**: Copiar filtros no profile de usuários
+   * **custom.terminal.youtube.video0169.tlpp**: Criando um FWMarkBrowse dentro de um TToolBox
+   * **custom.terminal.youtube.video0170.tlpp**: Como fazer um box dinâmico em FWMSPrinter
+   * **custom.terminal.youtube.video0171.tlpp**: Como usar o IN no FWPreparedStatement
+   * **zVid0172.prw**: Solicitar um motivo na Exclusão de NF de Saída através do p.e. SF2520E
+   * **custom.terminal.youtube.video0173.tlpp**: Importar um CSV mostrando uma tela antes de confirmar
+   * **custom.terminal.youtube.video0175.tlpp**: Como fazer para num FWInputBox aceitar apenas números
+   * **zVid0176.prw**: Criando um campo editável apenas por usuários de um determinado Grupo

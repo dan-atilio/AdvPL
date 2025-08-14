@@ -1,0 +1,240 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/07/22/como-fazer-um-box-dinamico-em-fwmsprinter-ti-responde-0170/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "Totvs.ch"
+#Include "TopConn.ch"
+#Include "RPTDef.ch"
+#Include "FWPrintSetup.ch"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+//Alinhamentos
+#Define PAD_LEFT    0
+#Define PAD_RIGHT   1
+#Define PAD_CENTER  2
+#Define PAD_JUSTIFY 3 //Opção disponível somente a partir da versão 1.6.2 da TOTVS Printer
+
+//Cor(es)
+Static nColorGrey  := RGB(110, 110, 110) As Numeric
+Static nColorGreen := RGB(000, 208, 028) As Numeric
+
+/*/{Protheus.doc} User Function video0170
+Testes de Box Dinâmico que cresce conforme número de linhas
+@author Atilio
+@since 30/07/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+@example custom.terminal.youtube.u_video0170()
+/*/
+
+User Function video0170()
+	Local aArea := FWGetArea() As Array
+	
+	//Cria as o relatorio
+	Processa({|| printReport()})
+	
+	FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} print
+Faz a impressão do relatório video0170
+@author Atilio
+@since 30/07/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function printReport()
+    Local aArea                  := FWGetArea()                                             As Array
+    Local cFileName              := ''                                                      As Character
+    Local cInputText             := ''                                                      As Character
+    Local aTextLines             := {}                                                      As Array
+    Local nTextLine              := 0                                                       As Numeric
+    Local nMaxPerLine            := 100                                                     As Numeric
+    Private oPrintPDF                                                                       As Object
+    Private oLineBrush           := TBrush():New(, RGB(000, 000, 000))                      As Object
+    Private cReportTime          := Time()                                                  As Character
+    Private nCurrentPage         := 1                                                       As Numeric
+    Private cCompanyLogo         := retCompanyLogo()                                          As Character
+    //Linhas e colunas
+    Private nLineHeight          := 10                                                      As Numeric
+    Private nPrintCurrentLine    := 0                                                       As Numeric
+    Private nPrintMaxLine        := 800                                                     As Numeric
+    Private nPrintLeftMargin     := 010                                                     As Numeric
+    Private nPrintRightMargin    := 580                                                     As Numeric
+    Private nPrintMiddlePosition := (nPrintRightMargin - nPrintLeftMargin) / 2              As Numeric
+    //Declarando as fontes
+    Private cFontName            := 'Arial'                                                 As Character
+    Private oFontDetail          := TFont():New(cFontName, /*uPar2*/, -11, /*uPar4*/, .F.)  As Object
+    Private oFontFooter          := TFont():New(cFontName, /*uPar2*/, -8,  /*uPar4*/, .F.)  As Object
+    Private oFontTitle           := TFont():New(cFontName, /*uPar2*/, -15, /*uPar4*/, .T.)  As Object
+
+    //Define o nome do relatório em PDF
+    cFileName  := 'video0170_'+RetCodUsr()+'_' + dToS(Date()) + '_' + StrTran(cReportTime, ':', '-') + '.pdf'
+     
+    //Criando o objeto de impressao
+    oPrintPDF := FWMSPrinter():New(;
+        cFileName,;    // cFilePrinter
+        IMP_PDF,;     // nDevice
+        .F.,;         // lAdjustToLegacy
+        ,;            // cPathInServer
+        .T.,;         // lDisabeSetup
+        ,;            // lTReport
+        @oPrintPDF,;  // oPrintSetup
+        ,;            // cPrinter
+        ,;            // lServer
+        ,;            // lParam10
+        ,;            // lRaw
+        .T.;          // lViewPDF
+    )
+    oPrintPDF:cPathPDF := GetTempPath()
+    oPrintPDF:SetResolution(72)
+    oPrintPDF:SetPortrait()
+    oPrintPDF:SetPaperSize(DMPAPER_A4)
+    oPrintPDF:SetMargin(0, 0, 0, 0)
+
+    //Inicia a página imprimindo o cabeçalho
+    printHeader()
+
+    //Captura um texto através da Aviso
+    Aviso("Atenção", @cInputText, {"OK"}, 3, "Informe um texto qualquer:", , , .T.)
+    If ! Empty(cInputText)
+
+        //Necessário baixar a zMemoToA em - https://terminaldeinformacao.com/2016/11/29/funcao-quebra-um-campo-memo-em-varias-linhas-para-impressao-em-advpl/
+        aTextLines := u_zMemoToA(cInputText, nMaxPerLine, /*cQuebra*/, .T.)
+
+        //Percorre as linhas
+        initBox()
+        For nTextLine := 1 To Len(aTextLines)
+
+            //Imprime a linha atual e incrementa
+            oPrintPDF:SayAlign(nPrintCurrentLine, nPrintLeftMargin + 5, aTextLines[nTextLine], oFontDetail, (nPrintRightMargin - nPrintLeftMargin) - 10, nLineHeight, /*nClrText*/, PAD_LEFT, /*nAlignVert*/)
+            incrementBox()
+        Next
+        endBox()
+
+    EndIf
+    
+    //Imprime o último rodapé e abre o PDF
+    printFooter()
+    oPrintPDF:Preview()
+     
+    FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} retCompanyLogo
+Função que retorna o logo da empresa conforme configuração da DANFE
+@author Atilio
+@since 30/07/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function retCompanyLogo()
+    Local cLogo       := "\x_imagens\logo.png" As Character
+Return cLogo
+
+/*/{Protheus.doc} printHeader
+Função que imprime o cabeçalho do relatório
+@author Atilio
+@since 30/07/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function printHeader()
+    Local cAuxText     := ''  As Character
+    Local nHeaderLine  := 015 As Numeric
+     
+    //Iniciando Pagina
+    oPrintPDF:StartPage()
+    
+    //Imprime o logo
+    If File(cCompanyLogo)
+        oPrintPDF:SayBitmap(005, nPrintLeftMargin, cCompanyLogo, 030, 030)
+    EndIf
+     
+    //Cabecalho
+    cAuxText := 'Teste Box Dinâmico'
+    oPrintPDF:SayAlign(nHeaderLine, nPrintMiddlePosition-200, cAuxText, oFontTitle, 400, 20, nColorGreen, PAD_CENTER, /*nAlignVert*/)
+     
+    //Linha Separatoria
+    nHeaderLine += 020
+    oPrintPDF:Line(nHeaderLine,   nPrintLeftMargin, nHeaderLine,   nPrintRightMargin, nColorGreen)
+     
+    //Atualizando a linha inicial do relatorio
+    nPrintCurrentLine := nHeaderLine + 45
+Return
+
+/*/{Protheus.doc} printFooter
+Função que imprime o rodapé e encerra a página
+@author Atilio
+@since 30/07/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function printFooter()
+    Local nLinhaRodape := nPrintMaxLine As Numeric
+    Local cAuxText     := ''            As Character
+ 
+    //Linha Separatoria
+    oPrintPDF:Line(nLinhaRodape,   nPrintLeftMargin, nLinhaRodape,   nPrintRightMargin, nColorGreen)
+    nLinhaRodape += 3
+     
+    //Dados da Esquerda
+    cAuxText := dToC(dDataBase) + '     ' + cReportTime + '     ' + FunName() + ' (video0170)     ' + UsrRetName(RetCodUsr())
+    oPrintPDF:SayAlign(nLinhaRodape, nPrintLeftMargin, cAuxText, oFontFooter, 500, 10, /*nClrText*/, PAD_LEFT, /*nAlignVert*/)
+     
+    //Direita
+    cAuxText := 'Pagina '+cValToChar(nCurrentPage)
+    oPrintPDF:SayAlign(nLinhaRodape, nPrintRightMargin-40, cAuxText, oFontFooter, 040, 10, /*nClrText*/, PAD_RIGHT, /*nAlignVert*/)
+     
+    //Finalizando a pagina e somando mais um
+    oPrintPDF:EndPage()
+    nCurrentPage++
+Return
+
+// Faz a barra da esquerda, a da direita e o topo
+Static Function initBox()
+	oPrintPDF:Line(nPrintCurrentLine-nLineHeight,   nPrintLeftMargin,    nPrintCurrentLine-nLineHeight,   nPrintRightMargin)
+	oPrintPDF:Line(nPrintCurrentLine-nLineHeight,   nPrintLeftMargin,    nPrintCurrentLine,               nPrintLeftMargin)
+	oPrintPDF:Line(nPrintCurrentLine-nLineHeight,   nPrintRightMargin,   nPrintCurrentLine,               nPrintRightMargin)
+Return
+
+// Faz a barra da esquerda, a da direita
+Static Function incrementBox()
+	nPrintCurrentLine += nLineHeight
+	oPrintPDF:Line(nPrintCurrentLine-nLineHeight,   nPrintLeftMargin,    nPrintCurrentLine,   nPrintLeftMargin)
+	oPrintPDF:Line(nPrintCurrentLine-nLineHeight,   nPrintRightMargin,   nPrintCurrentLine,   nPrintRightMargin)
+
+	If nPrintCurrentLine + (nLineHeight + 5) > nPrintMaxLine
+		endBox()
+		printFooter()
+		printHeader()
+		initBox()
+	EndIf
+Return
+
+// Faz a barra da esquerda, a da direita e o fundo
+Static Function endBox()
+	oPrintPDF:Line(nPrintCurrentLine,   nPrintLeftMargin, nPrintCurrentLine,   nPrintRightMargin)
+Return

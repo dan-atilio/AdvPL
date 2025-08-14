@@ -1,0 +1,286 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/07/17/criando-um-fwmarkbrowse-dentro-de-um-ttoolbox-ti-responde-0169/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "TOTVS.ch" //para utilizar a função RGB()
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+    
+/*/{Protheus.doc} User Function video0169
+Exemplo de MarkBrowse dentro de um ToolBox
+@type Function
+@author Atilio
+@since 28/08/2024
+@example custom.terminal.youtube.u_video0169()
+/*/
+
+User Function video0169()
+    Local aArea            := FWGetArea()                         As Array
+    Local nDialogHeight    := 500                                 As Numeric
+    Local nDialogWidth     := 800                                 As Numeric
+    Local cDialogTitle     := 'Exemplo TToolBox com FWMarkBrowse' As Character
+    Local lUseInPixels     := .T.                                 As Logical
+    Local lCentralized     := .T.                                 As Logical
+    Local nObjectLine      := 0                                   As Numeric
+    Local nObjectColumn    := 0                                   As Numeric
+    Local nObjectWidth     := 0                                   As Numeric
+    Local nObjectHeight    := 0                                   As Numeric
+    Local lClickOnConfirm  := .F.                                 As Logical
+    Local lHasButton       := .T.                                 As Logical
+    Private cFontName      := 'Tahoma'                            As Character
+    Private oFontDefault   := TFont():New(cFontName, , -12)       As Object
+    Private oDialog                                               As Object
+    Private bInitBlock := {|| /*fSuaFuncao()*/ }                  As CodeBlock
+    //TToolBox e suas os Paineis dentro das guias
+    Private oToolBox                                              As Object
+    Private oPanelFilter                                          As Object
+    Private oPanelProducts                                        As Object
+    Private oPanelAbout                                           As Object
+    //Guia Filtros
+    Private oSayInitProduct                                       As Object
+    Private cSayInitProduct  := "Produto De:"                     As Character
+    Private oGetInitProduct                                       As Object
+    Private cGetInitProduct  := Space(TamSX3("B1_COD")[1])        As Character
+    Private oSayLastProduct                                       As Object                  
+    Private cSayLastProduct := "Produto Até:"                     As Character
+    Private oGetLastProduct                                       As Object
+    Private cGetLastProduct := StrTran(cGetInitProduct, " ", "Z") As Character
+    Private oButtonFilter                                         As Object
+    Private cButtonFilter := 'Filtrar'                            As Character
+    Private bButtonFilter := {|| tempFilter()}                    As CodeBlock
+    //Guia Produtos
+    Private oMarkBrowse                                           As Object
+    Private cTempAlias  := GetNextAlias()                         As Character
+    Private aTempFields := {}                                     As Array
+    Private oTempTable   := Nil                                   As Object
+    Private aBrowseColumns    := {}                               As Array
+    //Guia Sobre
+    Private oSayAbout                                                                                                                                                 As Object
+    Private cSayAbout := "Exemplo de Teste<br>Foi usado as classes FWMarkBrowse e TToolBox<br><br><strong>Terminal de Informação (terminaldeinformacao.com)</strong>" As Character
+    //Botões
+    Private oButtonCancel                                                    As Object
+    Private cButtonCancel      := 'Cancelar'                                 As Character
+    Private bButtonCancel      := {|| lClickOnConfirm := .F., oDialog:End()} As CodeBlock
+    Private oButtonConfirm                                                   As Object
+    Private cButtonConfirmar   := 'Confirmar'                                As Character
+    Private bButtonConfirmar   := {|| lClickOnConfirm := .T., oDialog:End()} As CodeBlock
+
+    //Adiciona as colunas que serão criadas na temporária
+    aAdd(aTempFields, { 'OK',      'C',                    2, 0}) //Flag para marcação
+    aAdd(aTempFields, { 'B1_COD',  'C', TamSX3('B1_COD')[1] , 0}) //Código
+    aAdd(aTempFields, { 'B1_DESC', 'C', TamSX3('B1_DESC')[1], 0}) //Descrição
+
+    //Cria a tabela temporária
+    oTempTable:= FWTemporaryTable():New(cTempAlias)
+    oTempTable:SetFields( aTempFields )
+    oTempTable:Create()  
+
+    //Popula a tabela temporária
+    Processa({|| insertOnTemporary()}, 'Processando...')
+
+    //Adiciona as colunas que serão exibidas no FWMarkBrowse
+    aBrowseColumns := createBrowseColumns()
+    
+    //Cria a dialog
+    oDialog := TDialog():New(0, 0, nDialogHeight, nDialogWidth, cDialogTitle, , , , , , , , , lUseInPixels)
+        //Cria os paineis que estarão no ToolBox
+        oPanelFilter  := TPanel():New(0, 0, "", oDialog, , , , , , 0, 0)
+        oPanelProducts := TPanel():New(0, 0, "", oDialog, , , , , , 0, 0)
+        oPanelAbout    := TPanel():New(0, 0, "", oDialog, , , , , , 0, 0)
+    
+        //Cria o ToolBox com os paineis
+        oToolBox := TToolBox():New(1, 1, oDialog, nDialogWidth/2 - 1, nDialogHeight/2 - 20)
+        oToolBox:AddGroup( oPanelFilter,  'Filtros',   Nil )
+        oToolBox:AddGroup( oPanelProducts, 'Produtos',  Nil )
+        oToolBox:AddGroup( oPanelAbout,    'Sobre',     Nil )
+
+        //Parte 1 - Filtrar
+            nObjectLine   := 003
+            nObjectColumn  := 003
+            nObjectWidth := 100
+            nObjectHeight  := 015
+            oSayInitProduct  := TSay():New(nObjectLine, nObjectColumn, {|| cSayInitProduct}, oPanelFilter, /*cPicture*/, oFontDefault, , , , lUseInPixels, /*nClrText*/, /*nClrBack*/, nObjectWidth, nObjectHeight, , , , , , /*lHTML*/)
+
+            nObjectLine   := 001
+            nObjectColumn  := 073
+            nObjectWidth := 120
+            nObjectHeight  := 015
+            oGetInitProduct  := TGet():New(nObjectLine, nObjectColumn, {|u| Iif(PCount() > 0 , cGetInitProduct := u, cGetInitProduct)}, oPanelFilter, nObjectWidth, nObjectHeight, /*cPict*/, /*bValid*/, /*nClrFore*/, /*nClrBack*/, oFontDefault, , , lUseInPixels, /*uParam15*/, /*uParam16*/, /*bWhen*/, /*uParam18*/, /*uParam19*/, /*bChange*/, /*lReadOnly*/, /*lPassword*/, /*uParam23*/, /*cReadVar*/, /*uParam25*/, /*uParam26*/, /*uParam27*/, lHasButton)
+            oGetInitProduct:cF3  := 'SB1'
+            oGetInitProduct:SetCSS("TGet{ color: #000000; selection-background-color: #369CB5;    background-color: #FFFFFF;     padding-left: 3px;     padding-right: 3px;     border-top-left-radius:3px;    border-bottom-left-radius:3px;    border: 1px solid #C5C9CA;    border-right: 0px; }QPushButton{ border: 1px solid #C5C9CA;   background-color: #FFFFFF;    border-left: 0px;   border-top-right-radius:3px;   border-bottom-right-radius:3px;    outline: none; }TGet:disabled { color: #000000;     border: 1px solid #E8EBF21;    border-right: 0px;    border-top-right-radius: 0px;    border-bottom-right-radius: 0px;    background-color: #E8EBF1;}QPushButton:disabled{ background-color: #E8EBF1; }tLabel{color: #000000;}")
+
+            nObjectLine   := 023
+            nObjectColumn  := 003
+            nObjectWidth := 100
+            nObjectHeight  := 015
+            oSayLastProduct := TSay():New(nObjectLine, nObjectColumn, {|| cSayLastProduct}, oPanelFilter, /*cPicture*/, oFontDefault, , , , lUseInPixels, /*nClrText*/, /*nClrBack*/, nObjectWidth, nObjectHeight, , , , , , /*lHTML*/)
+
+            nObjectLine   := 021
+            nObjectColumn  := 073
+            nObjectWidth := 120
+            nObjectHeight  := 015
+            oGetLastProduct := TGet():New(nObjectLine, nObjectColumn, {|u| Iif(PCount() > 0 , cGetLastProduct := u, cGetLastProduct)}, oPanelFilter, nObjectWidth, nObjectHeight, /*cPict*/, /*bValid*/, /*nClrFore*/, /*nClrBack*/, oFontDefault, , , lUseInPixels, /*uParam15*/, /*uParam16*/, /*bWhen*/, /*uParam18*/, /*uParam19*/, /*bChange*/, /*lReadOnly*/, /*lPassword*/, /*uParam23*/, /*cReadVar*/, /*uParam25*/, /*uParam26*/, /*uParam27*/, lHasButton)
+            oGetLastProduct:cF3  := 'SB1'
+            oGetLastProduct:SetCSS("TGet{ color: #000000; selection-background-color: #369CB5;    background-color: #FFFFFF;     padding-left: 3px;     padding-right: 3px;     border-top-left-radius:3px;    border-bottom-left-radius:3px;    border: 1px solid #C5C9CA;    border-right: 0px; }QPushButton{ border: 1px solid #C5C9CA;   background-color: #FFFFFF;    border-left: 0px;   border-top-right-radius:3px;   border-bottom-right-radius:3px;    outline: none; }TGet:disabled { color: #000000;     border: 1px solid #E8EBF21;    border-right: 0px;    border-top-right-radius: 0px;    border-bottom-right-radius: 0px;    background-color: #E8EBF1;}QPushButton:disabled{ background-color: #E8EBF1; }tLabel{color: #000000;}")
+
+            nObjectLine   := 043
+            nObjectColumn  := 003
+            nObjectWidth := 060
+            nObjectHeight  := 015
+            oButtonFilter := TButton():New(nObjectLine, nObjectColumn, cButtonFilter, oPanelFilter, bButtonFilter, nObjectWidth, nObjectHeight, , oFontDefault, , lUseInPixels)
+
+        //Parte 2 - MarkBrowse
+            oMarkBrowse := FWMarkBrowse():New()
+            oMarkBrowse:SetAlias(cTempAlias)                
+            oMarkBrowse:SetDescription('Listagem de Produtos')
+            oMarkBrowse:DisableFilter()
+            oMarkBrowse:DisableConfig()
+            oMarkBrowse:DisableSeek()
+            oMarkBrowse:DisableSaveConfig()
+            oMarkBrowse:DisableReport()
+            oMarkBrowse:SetFontBrowse(oFontDefault)
+            oMarkBrowse:SetFieldMark('OK')
+            oMarkBrowse:SetTemporary(.T.)
+            oMarkBrowse:SetColumns(aBrowseColumns)
+            oMarkBrowse:SetOwner(oPanelProducts)
+            oMarkBrowse:SetIgnoreARotina(.T.)
+            oMarkBrowse:Activate()
+
+        //Parte 3 - Sobre
+            nObjectLine   := 003
+            nObjectColumn  := 003
+            nObjectWidth := 200
+            nObjectHeight  := 45
+            oSayAbout      := TSay():New(nObjectLine, nObjectColumn, {|| cSayAbout}, oPanelAbout, /*cPicture*/, oFontDefault, , , , lUseInPixels, /*nClrText*/, /*nClrBack*/, nObjectWidth, nObjectHeight, , , , , , .T.)
+
+        //Cria os botões fora das guias
+        nObjectLine     := nDialogHeight/2 - 17
+        nObjectColumn    := 10
+        nObjectWidth   := 100
+        nObjectHeight    := 15
+        oButtonCancel  := TButton():New(nObjectLine, nObjectColumn, cButtonCancel, oDialog, bButtonCancel, nObjectWidth, nObjectHeight, , oFontDefault, , lUseInPixels)
+
+        nObjectLine     := nDialogHeight/2 - 17
+        nObjectColumn    := 120
+        nObjectWidth   := 100
+        nObjectHeight    := 15
+        oButtonConfirm  := TButton():New(nObjectLine, nObjectColumn, cButtonConfirmar, oDialog, bButtonConfirmar, nObjectWidth, nObjectHeight, , oFontDefault, , lUseInPixels)
+        oButtonConfirm:SetCSS("TButton { font: bold;     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #3DAFCC, stop: 1 #0D9CBF);    color: #FFFFFF;     border-width: 1px;     border-style: solid;     border-radius: 3px;     border-color: #369CB5; }TButton:focus {    padding:0px; outline-width:1px; outline-style:solid; outline-color: #51DAFC; outline-radius:3px; border-color:#369CB5;}TButton:hover {    color: #FFFFFF;     background-color : qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #3DAFCC, stop: 1 #1188A6);    border-width: 1px;     border-style: solid;     border-radius: 3px;     border-color: #369CB5; }TButton:pressed {    color: #FFF;     background-color : qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #1188A6, stop: 1 #3DAFCC);    border-width: 1px;     border-style: solid;     border-radius: 3px;     border-color: #369CB5; }TButton:disabled {    color: #FFFFFF;     background-color: #4CA0B5; }")
+    
+    //Ativa e exibe a janela
+    oDialog:Activate(, , , lCentralized, , , bInitBlock)
+
+    //Se foi clicado no botão confirmar
+    If lClickOnConfirm
+        Processa({|| confirmAfterClose()}, 'Processando...')
+    EndIf
+
+    //Deleta a temporária e desativa a tela de marcação
+    oTempTable:Delete()
+    oMarkBrowse:DeActivate()
+    
+    FWRestArea(aArea)
+Return
+
+Static Function insertOnTemporary()
+    Local cQuerySB1  := ''                As Character
+    Local cTableSB1  := RetSQLName("SB1") As Character
+
+    //Vamos inserir todos os estados na temporária
+    //Obs.: Baixe o zExecQry nesse link - https://terminaldeinformacao.com/2021/04/21/como-fazer-um-update-via-advpl/
+    cQuerySB1 := ""
+    cQuerySB1 += " INSERT INTO " + oTempTable:GetRealName() + CRLF
+    cQuerySB1 += " (B1_COD, B1_DESC) " + CRLF
+    cQuerySB1 += " SELECT B1_COD, B1_DESC FROM " + cTableSB1 + " WHERE B1_FILIAL = '" + FWxFilial("SB1") + "' AND B1_MSBLQL != '1' AND " + cTableSB1 + ".D_E_L_E_T_ = ' ' "
+    u_zExecQry(cQuerySB1, .T.)
+    (cTempAlias)->(DbGoTop())
+Return
+
+Static Function createBrowseColumns()
+    Local nCurrent           := 0  As Numeric
+    Local aBrowseColumns     := {} As Array
+    Local aTmpEstrutColumns  := {} As Array
+    Local oColumn                  As Object
+    
+    //Adicionando campos que serão mostrados na tela
+    //[1] - Campo da Temporaria
+    //[2] - Titulo
+    //[3] - Tipo
+    //[4] - Tamanho
+    //[5] - Decimais
+    //[6] - Máscara
+    aAdd(aTmpEstrutColumns, { 'B1_COD',  'Código',    'C', TamSX3('B1_COD')[1],  0, ''})
+    aAdd(aTmpEstrutColumns, { 'B1_DESC', 'Descrição', 'C', TamSX3('B1_DESC')[1], 0, ''})
+
+    //Percorrendo todos os campos da estrutura
+    For nCurrent := 1 To Len(aTmpEstrutColumns)
+        //Cria a coluna
+        oColumn := FWBrwColumn():New()
+        oColumn:SetData(&('{|| ' + cTempAlias + '->' + aTmpEstrutColumns[nCurrent][1] +'}'))
+        oColumn:SetTitle(aTmpEstrutColumns[nCurrent][2])
+        oColumn:SetType(aTmpEstrutColumns[nCurrent][3])
+        oColumn:SetSize(aTmpEstrutColumns[nCurrent][4])
+        oColumn:SetDecimal(aTmpEstrutColumns[nCurrent][5])
+        oColumn:SetPicture(aTmpEstrutColumns[nCurrent][6])
+
+        //Adiciona a coluna
+        aAdd(aBrowseColumns, oColumn)
+    Next
+Return aBrowseColumns
+
+Static Function tempFilter()
+    Local cFilter := "" As Character
+
+    //Monta o filtro e aplica
+    cFilter := " B1_COD >= '" + cGetInitProduct + "' .And. B1_COD <= '" + cGetLastProduct + "' "
+    oMarkBrowse:CleanFilter()
+    oMarkBrowse:SetFilterDefault(cFilter)
+    oMarkBrowse:Refresh()
+
+    FWAlertSuccess("Filtro aplicado!", "Atenção")
+Return
+
+Static Function confirmAfterClose()
+    Local aArea         := FWGetArea()        As Array
+    Local cMark         := oMarkBrowse:Mark() As Character
+    Local nCurrent      := 0                  As Numeric
+    Local nTotal        := 0                  As Numeric
+    Local nTotalMark    := 0                  As Numeric
+    Local cMessage      := ""                 As Character
+    
+    //Define o tamanho da régua
+    DbSelectArea(cTempAlias)
+    (cTempAlias)->(DbGoTop())
+    Count To nTotal
+    ProcRegua(nTotal)
+    
+    //Percorrendo os registros
+    (cTempAlias)->(DbGoTop())
+    While ! (cTempAlias)->(EoF())
+        nCurrent++
+        IncProc('Analisando registro ' + cValToChar(nCurrent) + ' de ' + cValToChar(nTotal) + '...')
+    
+        //Caso esteja marcado
+        If oMarkBrowse:IsMark(cMark)
+            cMessage += "Produto " + (cTempAlias)->B1_COD + CRLF
+            nTotalMark++
+        EndIf
+         
+        (cTempAlias)->(DbSkip())
+    EndDo
+    
+    //Mostra a mensagem de término
+    cMessage := 'Dos [' + cValToChar(nTotal) + '] registros, foram processados [' + cValToChar(nTotalMark) + '] registros, lista de produtos: ' + CRLF + CRLF + cMessage
+    ShowLog(cMessage)
+
+    FWRestArea(aArea)
+Return

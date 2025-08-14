@@ -1,0 +1,458 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/07/31/importar-um-csv-mostrando-uma-tela-antes-de-confirmar-ti-responde-0173/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "TOTVS.ch"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function video0173
+Importação de Produtos
+@author Atilio
+@since 16/09/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+    Exemplo Do CSV:
+
+    produto;descricao;tipo;um;armazem;grupo;
+    F0001;Batata;PA;KG;01;G001;
+    Y0001;Teste Importacao;PA;KG;01;G002;
+    Y0002;Teste 2;PA;KG;07;G00Y;
+
+@see http://autumncodemaker.com
+@example custom.terminal.youtube.u_video0173()
+/*/
+
+User Function video0173()
+	Local aArea := FWGetArea() As Array
+	
+	//Chama a tela
+	createDialog()
+	
+	FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} createDialog
+Monta a tela com a marcação de dados
+@author Atilio
+@since 16/09/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function createDialog()
+    Local aArea              := FWGetArea()                                                             As Array
+    Local aBrowseColumns     := {}                                                                      As Array
+    Local oTempTable         := Nil                                                                     As Object
+    Local aFields            := {}                                                                      As Array
+    Local cFontDefault       := 'Tahoma'                                                                As Character
+    Local oFontGrid          := TFont():New(cFontDefault, /*uPar2*/, -14)                               As Object
+    //Barra de Botões
+    Local bConfirm           := {|| lClickOnConfirm := .T., oDialogBrowse:End()}                        As CodeBlock
+    Local bCancel            := {|| lClickOnConfirm := .F., oDialogBrowse:End()}                        As CodeBlock
+    Local bInit              := {|| }                                                                   As CodeBlock
+    Private lClickOnConfirm  := .F.                                                                     As Logical
+    //Cabeçalho
+    Private oSayBigText                                                                                 As Object
+    Private oSayTitle                                                                                   As Object
+    Private oSaySubTitle                                                                                As Object
+    Private cSayBigText  := 'TST'                                                                       As Character
+    Private cSayTitle    := 'Exemplo de Tela'                                                           As Character
+    Private cSaySubTitle := 'Usando FWBrowse com FWLayer'                                               As Character
+    //Janela e componentes
+    Private oDialogBrowse                                                                               As Object
+    Private oFwLayer                                                                                    As Object
+    Private oPanelTitle                                                                                 As Object
+    Private oPanelButtons                                                                               As Object
+    Private oPanelBrowse                                                                                As Object
+    Private oFWBrowse                                                                                   As Object
+    Private cAliasTemp       := GetNextAlias()                                                          As Character
+    //Fontes
+    Private cFontUti         := 'Tahoma'                                                                As Character
+    Private oFontBig         := TFont():New(cFontUti, /*uPar2*/, -38)                                   As Object
+    Private oFontTitle       := TFont():New(cFontUti, /*uPar2*/, -20)                                   As Object
+    Private oFontTitleBold   := TFont():New(cFontUti, /*uPar2*/, -20, /*uPar4*/, .T.)                   As Object
+    Private oFontDefault     := TFont():New(cFontUti, /*uPar2*/, -14)                                   As Object
+    //Tamanho da janela
+    Private aDialogSize      := MsAdvSize()                                                             As Array
+    Private nDialogWidth     := aDialogSize[5]                                                          As Numeric
+    Private nDialogHeight    := aDialogSize[6]                                                          As Numeric 
+    Private nButtonWidth     := 50                                                                      As Numeric
+    
+    //Adiciona as colunas que serão criadas na temporária
+    aAdd(aFields, { 'B1_COD',    'C', TamSX3('B1_COD'   )[1], 0}) //Produto
+    aAdd(aFields, { 'B1_DESC',   'C', TamSX3('B1_DESC'  )[1], 0}) //Descrição
+    aAdd(aFields, { 'B1_TIPO',   'C', TamSX3('B1_TIPO'  )[1], 0}) //Tipo
+    aAdd(aFields, { 'B1_UM',     'C', TamSX3('B1_UM'    )[1], 0}) //Unid. Med.
+    aAdd(aFields, { 'B1_LOCPAD', 'C', TamSX3('B1_LOCPAD')[1], 0}) //Armazém Padr.
+    aAdd(aFields, { 'B1_GRUPO',  'C', TamSX3('B1_GRUPO' )[1], 0}) //Grupo
+
+    //Cria a tabela temporária
+    oTempTable:= FWTemporaryTable():New(cAliasTemp)
+    oTempTable:SetFields( aFields )
+    oTempTable:Create()  
+
+    //Popula a tabela temporária
+    If chooseFileToImport()
+
+        //Adiciona as colunas que serão exibidas no FWBrowse
+        aBrowseColumns := createBrowseColumns()
+        
+        //Criando a janela
+        oDialogBrowse := TDialog():New(0, 0, nDialogHeight, nDialogWidth, 'Tela para Consulta de Dados - Autumn Code Maker', , , , , , /*nCorFundo*/, , , .T.)
+            //Criando as camadas
+            oFwLayer := FwLayer():New()
+            oFwLayer:init(oDialogBrowse,.F.)
+            
+            //Adicionando 3 linhas, a de título, a superior e a do corpo
+            oFWLayer:addLine('TITULO', 010, .F.)
+            oFWLayer:addLine('CORPO',  088, .F.)
+            oFWLayer:addLine('RODAPE', 002, .F.)
+            
+            //Adicionando as colunas das linhas
+            oFWLayer:addCollumn('HEADERTEXT',   050, .T., 'TITULO')
+            oFWLayer:addCollumn('BLANK',        020, .T., 'TITULO')
+            oFWLayer:addCollumn('BUTTONS',      030, .T., 'TITULO')
+            
+            oFWLayer:addCollumn('BLANKANTES',   001, .T., 'CORPO')
+            oFWLayer:addCollumn('COLGRID',      098, .T., 'CORPO')
+            oFWLayer:addCollumn('BLANKDEPOIS',  001, .T., 'CORPO')
+            
+            //Criando os paineis
+            oPanHeader  := oFWLayer:GetColPanel('HEADERTEXT', 'TITULO')
+            oPanelButtons  := oFWLayer:GetColPanel('BUTTONS',    'TITULO')
+            oPanelBrowse    := oFWLayer:GetColPanel('COLGRID',    'CORPO')
+            
+            //Títulos e SubTítulos
+            oSayBigText := TSay():New(004, 003, {|| cSayBigText}, oPanHeader, '', oFontBig,  , , , .T., RGB(149, 179, 215), , 200, 30, , , , , , .F., , )
+            oSayTitle := TSay():New(004, 045, {|| cSayTitle}, oPanHeader, '', oFontTitle,  , , , .T., RGB(031, 073, 125), , 200, 30, , , , , , .F., , )
+            oSaySubTitle := TSay():New(014, 045, {|| cSaySubTitle}, oPanHeader, '', oFontTitleBold, , , , .T., RGB(031, 073, 125), , 300, 30, , , , , , .F., , )
+            
+            //Botões
+            oBtnConfirm := TButton():New(003, 001 + ((nButtonWidth+2)*0), 'Confirmar', oPanelButtons, bConfirm,  nButtonWidth, 018, /*uParam8*/, oFontDefault, /*uParam10*/, .T.)
+            oBtnCancel  := TButton():New(003, 001 + ((nButtonWidth+2)*1), 'Fechar',    oPanelButtons, bCancel,   nButtonWidth, 018, /*uParam8*/, oFontDefault, /*uParam10*/, .T.)
+
+            //Dados
+            oFWBrowse := FWBrowse():New()
+            oFWBrowse:DisableFilter()
+            oFWBrowse:DisableConfig()
+            oFWBrowse:DisableReport()
+            oFWBrowse:DisableSeek()
+            oFWBrowse:DisableSaveConfig()
+            oFWBrowse:SetFontBrowse(oFontGrid)
+            oFWBrowse:SetAlias(cAliasTemp)
+            oFWBrowse:SetDataTable()
+            oFWBrowse:SetEditCell(.T., {|| .T.}) 
+            oFWBrowse:lHeaderClick := .F.
+            
+            //Define as colunas, vincula ao painel e exibe
+            oFWBrowse:SetColumns(aBrowseColumns)
+            oFWBrowse:SetOwner(oPanelBrowse)
+            oFWBrowse:Activate()
+            
+        oDialogBrowse:Activate(, , , .T., , , bInit)
+    EndIf
+
+    If lClickOnConfirm
+        Processa({|| createSB1AfterConfirm() }, 'Incluindo produtos...')
+    EndIf
+    
+    //Deleta a temporária e desativa a tela de marcação
+    oTempTable:Delete()
+    oFWBrowse:DeActivate()
+    
+    FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} createBrowseColumns
+Função que gera as colunas usadas no browse (similar ao antigo aHeader)
+@author Atilio
+@since 16/09/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function createBrowseColumns()
+    Local nCurrent             := 0   As Numeric
+    Local aBrowseColumns       := {}  As Array
+    Local aStructTempColumns   := {}  As Array
+    Local oColumn                     As Object
+    
+    //Adicionando campos que serão mostrados na tela
+    //[1] - Campo da Temporaria
+    //[2] - Titulo
+    //[3] - Tipo
+    //[4] - Tamanho
+    //[5] - Decimais
+    //[6] - Máscara
+    //[7] - Editável? .T. = sim, .F. = não
+    //[8] - Código da Consulta Padrão
+    //[9] - Bloco de Código usado na Validação (ex.: {|| fSuaValid()} )
+    aAdd(aStructTempColumns, { 'B1_COD',    'Produto',       'C', TamSX3('B1_COD'   )[1], 0, '@!', .F., Nil,   Nil})
+    aAdd(aStructTempColumns, { 'B1_DESC',   'Descrição',     'C', TamSX3('B1_DESC'  )[1], 0, '',   .T., Nil,   Nil})
+    aAdd(aStructTempColumns, { 'B1_TIPO',   'Tipo',          'C', TamSX3('B1_TIPO'  )[1], 0, '@!', .T., "02",  Nil})
+    aAdd(aStructTempColumns, { 'B1_UM',     'Unid. Med.',    'C', TamSX3('B1_UM'    )[1], 0, '@!', .T., "SAH", Nil})
+    aAdd(aStructTempColumns, { 'B1_LOCPAD', 'Armazém Padr.', 'C', TamSX3('B1_LOCPAD')[1], 0, '@!', .T., "NNR", Nil})
+    aAdd(aStructTempColumns, { 'B1_GRUPO',  'Grupo',         'C', TamSX3('B1_GRUPO' )[1], 0, '@!', .T., "SBM", Nil})
+
+    //Percorrendo todos os campos da estrutura
+    For nCurrent := 1 To Len(aStructTempColumns)
+        //Cria a coluna
+        oColumn := FWBrwColumn():New()
+        oColumn:SetData(&('{|| ' + cAliasTemp + '->' + aStructTempColumns[nCurrent][1] +'}'))
+        oColumn:SetTitle(aStructTempColumns[nCurrent][2])
+        oColumn:SetType(aStructTempColumns[nCurrent][3])
+        oColumn:SetSize(aStructTempColumns[nCurrent][4])
+        oColumn:SetDecimal(aStructTempColumns[nCurrent][5])
+        oColumn:SetPicture(aStructTempColumns[nCurrent][6])
+
+        //Se for ser possível ter o duplo clique para editar
+        If aStructTempColumns[nCurrent][7]
+        	oColumn:SetEdit(.T.)
+        	oColumn:SetReadVar(cAliasTemp + "->" + aStructTempColumns[nCurrent][1])
+        	
+        	//Se tiver Consulta Padrão
+        	If ! Empty(aStructTempColumns[nCurrent][8])
+        		oColumn:xF3 := aStructTempColumns[nCurrent][8]
+        	EndIf
+        	
+        	//Se tiver Validação
+        	If ! Empty(aStructTempColumns[nCurrent][9])
+        		oColumn:SetValid(aStructTempColumns[nCurrent][9])
+        	EndIf
+        EndIf
+        
+        //Adiciona a coluna
+        aAdd(aBrowseColumns, oColumn)
+    Next
+Return aBrowseColumns
+
+/*/{Protheus.doc} chooseFileToImport
+Popula a Temporária
+@author Atilio
+@since 16/09/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function chooseFileToImport()
+	Local aArea         := FWGetArea()                                                                         As Array
+	Local cInitFolder   := GetTempPath()                                                                       As Character
+	Local cTypeFilter   := 'Arquivos com separações (*.csv) | Arquivos texto (*.txt) | Todas extensões (*.*)'  As Character
+	Local cTitle        := 'Seleção de Arquivos para Processamento'                                            As Character
+	Local lSaveButton   := .F.                                                                                 As Logical
+	Local cChooseFile   := ''                                                                                  As Character
+    Local lContinue     := .F.                                                                                 As Logical
+ 
+	//Se não estiver sendo executado via job
+	If ! IsBlind()
+ 
+	    //Chama a função para buscar arquivos
+	    cChooseFile := tFileDialog(;
+	        cTypeFilter,;  // Filtragem de tipos de arquivos que serão selecionados
+	        cTitle,;  // Título da Janela para seleção dos arquivos
+	        ,;         // Compatibilidade
+	        cInitFolder,;  // Diretório inicial da busca de arquivos
+	        lSaveButton,;  // Se for .T., será uma Save Dialog, senão será Open Dialog
+	        ;          // Se não passar parâmetro, irá pegar apenas 1 arquivo; Se for informado GETF_MULTISELECT será possível pegar mais de 1 arquivo; Se for informado GETF_RETDIRECTORY será possível selecionar o diretório
+	    )
+
+	    //Se tiver o arquivo selecionado e ele existir
+	    If ! Empty(cChooseFile) .And. File(cChooseFile)
+            lContinue := .T.
+	        Processa({|| importFileToTempTable(cChooseFile) }, 'Importando...')
+	    EndIf
+	EndIf
+	
+	FWRestArea(aArea)
+Return lContinue
+	
+/*/{Protheus.doc} importFileToTempTable
+Função que processa o arquivo e realiza a importação para o sistema
+@author Atilio
+@since 16/09/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function importFileToTempTable(cChooseFile)
+	Local nTotalLines    := 0                                                                As Numeric
+	Local cLineContent   := ''                                                               As Character
+	Local nCurrentLine   := 0                                                                As Numeric
+	Local aLine          := {}                                                               As Array
+	Local oFile                                                                              As Object
+	Local lIgnoreLine1   := FWAlertYesNo('Deseja ignorar a linha 1 do arquivo?', 'Ignorar?') As Logical
+	Local cSeparator     := ';'                                                              As Character
+
+	//Definindo o arquivo a ser lido
+	oFile := FWFileReader():New(cChooseFile)
+
+	//Se o arquivo pode ser aberto
+	If (oFile:Open())
+
+		//Se não for fim do arquivo
+		If ! (oFile:EoF())
+
+			//Definindo o tamanho da régua
+			aLines := oFile:GetAllLines()
+			nTotalLines := Len(aLines)
+			ProcRegua(nTotalLines)
+
+			//Método GoTop não funciona (dependendo da versão da LIB), deve fechar e abrir novamente o arquivo
+			oFile:Close()
+			oFile := FWFileReader():New(cChooseFile)
+			oFile:Open()
+
+            //Enquanto tiver linhas
+            While (oFile:HasLine())
+
+                //Incrementa na tela a mensagem
+                nCurrentLine++
+                IncProc('Analisando linha ' + cValToChar(nCurrentLine) + ' de ' + cValToChar(nTotalLines) + '...')
+
+                //Pegando a linha atual e transformando em array
+                cLineContent := oFile:GetLine()
+                aLine  := Separa(cLineContent, cSeparator)
+
+                //Se estiver configurado para pular a linha 1, e for a linha 1
+                If lIgnoreLine1 .And. nCurrentLine == 1
+                    Loop
+
+                //Se houver posições no array
+                ElseIf Len(aLine) > 0 
+                    
+                    //Transformando os campos caractere, adicionando espaços a direita conforme tamanho do campo no dicionário
+                    aLine[1] := AvKey(aLine[1], 'B1_COD')
+                    aLine[2] := AvKey(aLine[2], 'B1_DESC')
+                    aLine[3] := AvKey(aLine[3], 'B1_TIPO')
+                    aLine[4] := AvKey(aLine[4], 'B1_UM')
+                    aLine[5] := AvKey(aLine[5], 'B1_LOCPAD')
+                    aLine[6] := AvKey(aLine[6], 'B1_GRUPO')
+                    
+                    RecLock(cAliasTemp, .T.)
+                        B1_COD    := aLine[1]
+                        B1_DESC   := aLine[2]
+                        B1_TIPO   := aLine[3]
+                        B1_UM     := aLine[4]
+                        B1_LOCPAD := aLine[5]
+                        B1_GRUPO  := aLine[6]
+                    (cAliasTemp)->(MsUnlock())
+
+                EndIf
+
+            EndDo
+
+		Else
+			FWAlertError('Arquivo não tem conteúdo!', 'Atenção')
+		EndIf
+
+		//Fecha o arquivo
+		oFile:Close()
+	Else
+		FWAlertError('Arquivo não pode ser aberto!', 'Atenção')
+	EndIf
+
+Return
+
+Static Function createSB1AfterConfirm()
+    Local cTempFolder       := GetTempPath()                                                         As Character
+	Local cLogFile          := 'produtos_' + dToS(Date()) + '_' + StrTran(Time(), ':', '-') + '.log' As Character
+	Local nTotal            := 0                                                                     As Numeric
+	Local nCurrent          := 0                                                                     As Numeric
+	Local cLogContent       := ''                                                                    As Character
+	Local cErrorFolder      := '\x_logs\'                                                            As Character
+	Local cErrorFile        := ''                                                                    As Character
+	Local cErrorText        := ''                                                                    As Character
+	Local aErrorLog         := {}                                                                    As Array
+	Local nErrorLine        := 0                                                                     As Numeric
+	//Variáveis do ExecAuto
+	Private aData           := {}                                                                    As Array
+	Private lMSHelpAuto     := .T.                                                                   As Logical
+	Private lAutoErrNoFile  := .T.                                                                   As Logical
+	Private lMsErroAuto     := .F.                                                                   As Logical
+	//Variáveis da Importação
+	Private cAliasSB1  := 'SB1'                                                                 As Character
+
+	//Abre as tabelas que serão usadas
+	DbSelectArea(cAliasSB1)
+	(cAliasSB1)->(DbSetOrder(1))
+	(cAliasSB1)->(DbGoTop())
+
+
+    //Definindo o tamanho da régua
+    DbSelectArea(cAliasTemp)
+    Count To nTotal
+    ProcRegua(nTotal)
+    (cAliasTemp)->(DbGoTop())
+
+    //Enquanto tiver linhas
+    While ! (cAliasTemp)->(EoF())
+
+        //Incrementa na tela a mensagem
+        nCurrent++
+        IncProc('Analisando linha ' + cValToChar(nCurrent) + ' de ' + cValToChar(nTotal) + '...')
+
+        //Adiciona as informações no array
+        aData := {}
+        aAdd(aData, {'B1_COD',    (cAliasTemp)->B1_COD,    Nil})
+        aAdd(aData, {'B1_DESC',   (cAliasTemp)->B1_DESC,   Nil})
+        aAdd(aData, {'B1_TIPO',   (cAliasTemp)->B1_TIPO,   Nil})
+        aAdd(aData, {'B1_UM',     (cAliasTemp)->B1_UM,     Nil})
+        aAdd(aData, {'B1_LOCPAD', (cAliasTemp)->B1_LOCPAD, Nil})
+        aAdd(aData, {'B1_GRUPO',  (cAliasTemp)->B1_GRUPO,  Nil})
+
+        lMsErroAuto := .F.
+        MSExecAuto({|x, y| MATA010(x, y)}, aData, 3)
+
+        //Se houve erro, gera o log
+        If lMsErroAuto
+            cErrorFolder := '\x_logs\'
+            cErrorFile  := 'erro_' + cAliasSB1 + '_lin_' + cValToChar(nCurrent) + '_' + dToS(Date()) + '_' + StrTran(Time(), ':', '-') + '.txt'
+
+            //Se a pasta de erro não existir, cria ela
+            If ! ExistDir(cErrorFolder)
+                MakeDir(cErrorFolder)
+            EndIf
+
+            //Pegando log do ExecAuto, percorrendo e incrementando o texto
+            aErrorLog := GetAutoGRLog()
+            cErrorText := ''
+            For nErrorLine := 1 To Len(aErrorLog)
+                cErrorText += aErrorLog[nErrorLine] + CRLF
+            Next
+
+            //Criando o arquivo txt e incrementa o log
+            MemoWrite(cErrorFolder + cErrorFile, cErrorText)
+            cLogContent += '- Falha ao incluir registro, linha [' + cValToChar(nCurrent) + '], arquivo de log em ' + cErrorFolder + cErrorFile + CRLF
+        Else
+            cLogContent += '+ Sucesso no Execauto na linha ' + cValToChar(nCurrent) + ';' + CRLF
+        EndIf
+       
+        (cAliasTemp)->(DbSkip())
+    EndDo
+
+    //Se tiver log, mostra ele
+    If ! Empty(cLogContent)
+        MemoWrite(cTempFolder + cLogFile, cLogContent)
+        ShellExecute('OPEN', cLogFile, '', cTempFolder, 1)
+    EndIf
+
+Return

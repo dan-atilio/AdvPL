@@ -1,0 +1,45 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/07/24/como-usar-o-in-no-fwpreparedstatement-ti-responde-0171/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function video0171
+Exemplo de como testar o IN com FWPreparedStatement
+@type  Function
+@author Atilio
+@since 17/06/2023
+@example custom.terminal.youtube.u_video0171()
+/*/
+
+User Function video0171()
+	Local aArea          := FWGetArea() As Array
+    Local oPreparedQuery := Nil         As Object
+    Local cOriginalQuery := ""          As Character
+    Local cNewQuery      := ""          As Character
+    
+    //Prepara a query original
+    cOriginalQuery := "SELECT * FROM " + RetSQLName("SB1") + " SB1 WHERE B1_TIPO IN ( ? ) AND B1_LOCPAD = ? AND SB1.D_E_L_E_T_ = ' '"
+
+    //Começa a montar a query
+    oPreparedQuery := FWPreparedStatement():New()
+    
+    //Define a query e define o conteúdo das interrogações
+    oPreparedQuery:SetQuery(cOriginalQuery)
+    oPreparedQuery:SetIn(1, {"PA", "PI", "MP"})
+    oPreparedQuery:SetString(2, "01")
+    
+    //Busca a query formatada
+    cNewQuery := oPreparedQuery:GetFixQuery()
+    ShowLog(cNewQuery)
+
+    RestArea(aArea)
+Return
