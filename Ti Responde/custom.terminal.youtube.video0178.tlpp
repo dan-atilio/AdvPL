@@ -1,0 +1,93 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/08/19/abrindo-a-tela-de-pedido-de-compras-preenchendo-a-grid-com-informacoes-ti-responde-0178/ 
+    
+*/
+
+
+//Bibliotecas TLPP
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function video0178
+Função para abrir o pedido de compra já preenchido
+@type  Function
+@author Atilio
+@since 15/08/2024
+@example custom.terminal.youtube.u_video0178()
+/*/
+
+User Function video0178()
+    Local aArea              := FWGetArea()                          As Array
+    Local cSupplierId        := "F00001"                             As Character
+    Local cSupplierStore     := "01"                                 As Character
+    Local cPaymentCondition  := "C01"                                As Character
+    Local dDate              := Date()                               As Date
+    Local nCurrent           := 0                                    As Numeric
+    Local aProducts          := {}                                   As Array
+    Local aSC7Header         := {}                                   As Array
+    Local aTempLine          := {}                                   As Array
+    Local aSC7Lines          := {}                                   As Array
+    Local cCurrentItem       := Replicate("0", TamSX3("C7_ITEM")[1]) As Character
+    Private lMsErroAuto      := .F.                                  As Logical
+
+    //Adiciona alguns produtos
+    aAdd(aProducts, {"F0001", 2, 1.99})
+    aAdd(aProducts, {"F0003", 7, 5.99})
+
+    //Cabeçalho do pedido de compras
+    aSC7Header := {;
+        {"C7_FILIAL"  , cFilAnt	             , Nil},;
+        {"C7_FORNECE" , cSupplierId    , Nil},;
+        {"C7_LOJA"    , cSupplierStore      , Nil},;
+        {"C7_COND"    , cPaymentCondition   , Nil},;
+        {"C7_EMISSAO" , dDate      , Nil},;
+        {'C7_MOEDA'	  , 1		             , Nil},;
+        {"C7_CONTATO" , ""                   , Nil},;
+        {"C7_FILENT"  , cFilAnt	             , Nil},;
+        {"C7_TIPO"    , "1"                  , Nil},;
+        {'C7_TXMOEDA' ,  0                   , Nil};
+    }
+
+    //Percorre os produtos
+    For nCurrent := 1 To Len(aProducts)
+        cCurrentItem := Soma1(cCurrentItem)
+
+        aTempLine := {}
+        aAdd(aTempLine, {"C7_ITEM"    , cCurrentItem     		                        , Nil} )
+        aAdd(aTempLine, {"C7_PRODUTO" , aProducts[nCurrent][1]                        , Nil} )
+        aAdd(aTempLine, {"C7_QUANT"   , aProducts[nCurrent][2]                        , Nil} )
+        aAdd(aTempLine, {"C7_PRECO"   , aProducts[nCurrent][3]                        , Nil} )
+        aAdd(aTempLine, {"C7_TOTAL"   , aProducts[nCurrent][2] * aProducts[nCurrent][3] , Nil} )
+        aAdd(aSC7Lines, aClone(aTempLine))
+    Next
+
+    //Inicia o controle de transações
+    Begin Transaction
+
+        //Aciona a criação do pedido de compras
+        MSExecAuto({|v, x, y, z, w| MATA120(v, x, y, z, w) }, ;
+            1,;               //nFuncao    = 1 - Ped. Compra; 2 - Aut. Entrega
+            aSC7Header,;   //xAutoCab   = Campos do Cabeçalho
+            aSC7Lines,;       //xAutoItens = Campos dos Itens
+            3,;               //nOpcAuto   = 3 - Inclusão; 4 - Alteração; 5 - Exclusão
+            .T.;              //lWhenGet   = .T. abre a tela; .F. faz a operação sem abrir a tela
+        )
+
+        //Se houve falha
+        If lMsErroAuto
+            MostraErro()
+            DisarmTransaction()
+
+        //Senão, exibe a mensagem
+        Else
+            FWAlertSuccess("Pedido " + SC7->C7_NUM + " incluido com sucesso!", "Sucesso")
+        EndIf
+        
+    End Transaction
+
+    FWRestArea(aArea)
+Return

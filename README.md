@@ -379,3 +379,10 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **custom.terminal.youtube.video0173.tlpp**: Importar um CSV mostrando uma tela antes de confirmar
    * **custom.terminal.youtube.video0175.tlpp**: Como fazer para num FWInputBox aceitar apenas números
    * **zVid0176.prw**: Criando um campo editável apenas por usuários de um determinado Grupo
+   * **custom.terminal.youtube.video0177.tlpp**: Como fazer disparo de vários registros gravando flag do que já foi processado
+   * **custom.terminal.youtube.video0178.tlpp**: Abrindo a tela de Pedido de Compras preenchendo a grid com informações
+   * **custom.terminal.youtube.video0179.tlpp**: Realizando quebra em um Excel através da FWPrinterXLSX
+   * **zVid0180.prw**: Como fazer para que a senha de um usuário nunca expire no Protheus
+   * **zVid0181.prw**: ExecAuto no Cadastro de Filiais (tabela SM0)
+   * **custom.terminal.youtube.video0182.tlpp**: Como transformar um campo em Date em uma query executada no Protheus
+   * **custom.terminal.youtube.video0183.tlpp**: O que significa os Asteriscos ao visualizar um campo

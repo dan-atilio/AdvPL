@@ -1,0 +1,42 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/09/04/o-que-significa-os-asteriscos-ao-visualizar-um-campo-ti-responde-0183/ 
+    
+*/
+
+
+//Bibliotecas TLPP
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function video0183
+Função para exemplificar a visualização de asteriscos ao aplicar uma máscara
+@type  Function
+@author Atilio
+@since 19/06/2024
+@example custom.terminal.youtube.u_video0183()
+/*/
+
+User Function video0183()
+    Local aArea             := FWGetArea()    As Array
+    Local nTestValue        := 1234.567       As Numeric
+    Local cPicture01        := "@E 9,999.999" As Character
+    Local cPicture02        := "@E 999.99"    As Character
+    Local cPicture03        := "@E 9,999.99"  As Character
+    Local cMessage          := ""             As Character
+
+    //Monta a mensagem, aplicando as máscaras
+    cMessage += "Teste 01 - " + PadR(cPicture01, 15) + ": " + PadL(Transform(nTestValue, cPicture01), 10) + CRLF
+    cMessage += "Teste 02 - " + PadR(cPicture02, 15) + ": " + PadL(Transform(nTestValue, cPicture02), 10) + CRLF
+    cMessage += "Teste 03 - " + PadR(cPicture03, 15) + ": " + PadL(Transform(nTestValue, cPicture03), 10) + CRLF
+
+    //Exibe a mensagem
+    ShowLog(cMessage)
+
+    FWRestArea(aArea)
+Return

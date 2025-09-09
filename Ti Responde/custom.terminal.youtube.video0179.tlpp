@@ -1,0 +1,266 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/08/21/realizando-quebra-em-um-excel-atraves-da-fwprinterxlsx-ti-responde-0179/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "Totvs.ch"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function video0179
+Grupos e Produtos
+@author Atilio
+@since 28/06/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+@example custom.terminal.youtube.u_video0179()
+/*/
+
+User Function video0179()
+	Local aArea       := FWGetArea()                   As Array
+	Local aParameters := {}                            As Array
+	Local cInitID     := Space(TamSX3('B1_COD')[1])    As Character
+	Local cLastID     := StrTran(cInitID, " ", "Z")    As Character
+	
+	//Adicionando os parametros do ParamBox
+	aAdd(aParameters, {1, "Produto De",  cInitID,   "", ".T.", "SB1", ".T.", 80,  .F.})
+	aAdd(aParameters, {1, "Produto Até", cLastID,  "", ".T.", "SB1", ".T.", 80,  .T.})
+	
+	//Se a pergunta for confirmada, chama o preenchimento dos dados do .dot
+	If ParamBox(aParameters, 'Informe os parâmetros', /*aRet*/, /*bOk*/, /*aButtons*/, /*lCentered*/, /*nPosx*/, /*nPosy*/, /*oDlgWizard*/, /*cLoad*/, .F., .F.)
+		Processa({|| createExcel()})
+	EndIf
+	
+	FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} createExcel
+Criacao do arquivo Excel na funcao video0179
+@author Atilio
+@since 28/06/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function createExcel()
+	Local aArea                     := FWGetArea()                                                                                       As Array
+	Local oPrinterXlsx                                                                                                                   As Object
+	Local dCurrentDate              := Date()                                                                                            As Date
+	Local cCurrentTime              := Time()                                                                                            As Character
+	Local cFileName                 := GetTempPath() + 'video0179' + dToS(dCurrentDate) + '_' + StrTran(cCurrentTime, ':', '-') + '.rel' As Character
+	Local cQuery                    := ''                                                                                                As Character
+    Local nCurrentColumn            := 0                                                                                                 As Numeric
+    Local nCurrentLine              := 0                                                                                                 As Numeric
+	Local nLineTotal                := 0                                                                                                 As Numeric
+	Local aColumns                  := {}                                                                                                As Array
+	Local oExcel                                                                                                                         As Object
+	Local cFont                     := FwPrinterFont():Arial()                                                                           As Character
+	Local nFontSize                 := 12                                                                                                As Numeric
+	Local lItalic                   := .F.                                                                                               As Logical
+	Local lBold                     := .T.                                                                                               As Logical
+	Local lUnderline                := .F.                                                                                               As Logical
+	Local nCurrentField             := 0                                                                                                 As Numeric
+	Local oHorizontalCell           := FwXlsxCellAlignment():Horizontal()                                                                As Object
+	Local oVerticalCell             := FwXlsxCellAlignment():Vertical()                                                                  As Object
+	Local cHorizontalAlign          := ''                                                                                                As Character
+	Local cVerticalAlign            := ''                                                                                                As Character
+	Local lLineBreak                := .F.                                                                                               As Logical
+	Local nRotation                 := 0                                                                                                 As Numeric
+	Local cCustomFormat             := ''                                                                                                As Character
+	Local cFieldName                := ''                                                                                                As Character
+	Local cFieldType                := ''                                                                                                As Character
+	Local cBackgroundColor          := ''                                                                                                As Character
+	Local cBlackColor               := '000000'                                                                                          As Character
+	Local cWhiteColor               := 'FFFFFF'                                                                                          As Character
+	Local cHeaderTextColor          := '22B14C'                                                                                          As Character
+	Local cDefaultBackgroundColor   := 'EBF1DE'                                                                                          As Character
+    Local cCurrentGroup             := ""                                                                                                As Character
+    Local nExcelLine                := 1                                                                                                 As Numeric
+	
+	//Montando consulta de dados
+	cQuery += "SELECT BM_GRUPO, BM_DESC, B1_COD, B1_DESC "		+ CRLF
+	cQuery += "FROM " + RetSQLName("SBM") + " SBM "		+ CRLF
+	cQuery += "INNER JOIN " + RetSQLName("SB1") + " SB1 ON ( "		+ CRLF
+	cQuery += " B1_FILIAL = '" + FWxFilial("SB1") + "' "		+ CRLF
+	cQuery += " AND B1_GRUPO = BM_GRUPO "		+ CRLF
+	cQuery += " AND B1_COD >= '" + MV_PAR01 + "' "		+ CRLF
+	cQuery += " AND B1_COD <= '" + MV_PAR02 + "' "		+ CRLF
+	cQuery += " AND SB1.D_E_L_E_T_ = ' ' "		+ CRLF
+	cQuery += ") "		+ CRLF
+	cQuery += "WHERE BM_FILIAL = '" + FWxFilial("SBM") + "' "		+ CRLF
+	cQuery += "AND SBM.D_E_L_E_T_ = ' ' "		+ CRLF
+	cQuery += "ORDER BY "		+ CRLF
+	cQuery += " BM_GRUPO"		+ CRLF
+	
+	//Executando consulta e setando o total da regua
+	PlsQuery(cQuery, "QRY")
+	DbSelectArea("QRY")
+	
+	//Somente se houver dados
+	If ! QRY->(EoF())
+
+		//Definindo o tamanho da regua
+		Count To nLineTotal
+		ProcRegua(nLineTotal)
+		QRY->(DbGoTop())
+
+		//Vamos agora adicionar as colunas no Excel, sendo as posições:
+		//  [1] Nome do Campo
+		//  [2] Tipo do Campo
+		//  [3] Título a ser exibido
+		//  [4] Largura em pixels, sendo que o ideal é o tamanho do campo * 1.5 (se o campo for muito pequeno, considere o tamanho minimo como 10 * 1.5)
+		//  [5] Alinhamento (0 = esquerda, 1 = direita, 2 = centralizado)
+		//  [6] Máscara aplicada em campos numéricos
+		aAdd(aColumns, { 'B1_COD'  , 'C'  , 'Produto'  , Len(QRY->B1_COD) * 1.5  , 0  , ''  })
+		aAdd(aColumns, { 'B1_DESC'  , 'C'  , 'Descrição'  , Len(QRY->B1_DESC) * 1.5  , 0  , ''  })
+	
+		//Instancia a classe, e tenta criar o arquivo .rel
+		oPrinterXlsx := FwPrinterXlsx():New()
+		If oPrinterXlsx:Activate(cFileName)
+
+			//Adiciona uma worksheet
+			oPrinterXlsx:AddSheet('Produtos')
+
+            //Percorrendo os dados da query
+			While !(QRY->(EoF()))
+
+                //Se o grupo Atual for diferente
+                If cCurrentGroup != QRY->BM_GRUPO
+                    //Se existia grupo, incrementa 3 linhas
+                    If ! Empty(cCurrentGroup)
+                        nExcelLine += 3
+                    EndIf
+
+                    //Atualiza o grupo
+                    cCurrentGroup := QRY->BM_GRUPO
+
+                    //Reseta a formatação
+					oPrinterXlsx:ResetCellsFormat()
+
+                    //Define a fonte para imprimir os dados do grupo
+                    nFontSize := 12
+                    lBold  := .T.
+                    oPrinterXlsx:SetFont(cFont, nFontSize, lItalic, lBold, lUnderline)
+
+                    //Imprime os textos e incrementa uma linha
+                    oPrinterXlsx:SetText(nExcelLine, 1, cCurrentGroup)
+                    oPrinterXlsx:SetText(nExcelLine, 2, Alltrim(QRY->BM_DESC))
+                    nExcelLine++
+
+                    //Reseta a formatação
+					oPrinterXlsx:ResetCellsFormat()
+
+                    //Depois de imprimir os textos do cabeçalho, vamos colocar a fonte como normal
+                    nFontSize := 10
+                    lBold  := .F.
+                    oPrinterXlsx:SetFont(cFont, nFontSize, lItalic, lBold, lUnderline)
+                    
+                    //Na primeira linha do cabeçalho, vamos definir como tudo centralizado, a cor do texto verde e de fundo branca
+                    cHorizontalAlign  := oHorizontalCell:Center()
+                    cVerticalAlign  := oVerticalCell:Center()
+                    oPrinterXlsx:SetCellsFormat(cHorizontalAlign, cVerticalAlign, lLineBreak, nRotation, cHeaderTextColor, cWhiteColor, cCustomFormat)
+
+                    //Percorre agora as colunas e vem setando o tamanho delas e colocando o nome
+                    For nCurrentColumn := 1 To Len(aColumns)
+                        oPrinterXlsx:SetColumnsWidth(nCurrentColumn, nCurrentColumn, aColumns[nCurrentColumn][4])
+                        oPrinterXlsx:SetText(nExcelLine, nCurrentColumn, aColumns[nCurrentColumn][3])
+                    Next
+                EndIf
+				
+				//Incrementando a regua
+				nCurrentLine++
+				IncProc('Adicionando registro ' + cValToChar(nCurrentLine) + ' de ' + cValToChar(nLineTotal) + '...')
+
+				//Se for ímpar, o fundo vai ser verde claro, senão vai ser branco
+				If nCurrentLine % 2 != 0
+					cBackgroundColor := cDefaultBackgroundColor
+				Else
+					cBackgroundColor := cWhiteColor
+				EndIf
+
+				//Incrementa a linha no Excel
+				nExcelLine++
+
+				//Percorre as colunas
+				For nCurrentField := 1 To Len(aColumns)
+					cFieldName := aColumns[nCurrentField][1]
+					cFieldType     := aColumns[nCurrentField][2]
+					xConteud  := &('QRY->' + cFieldName)
+
+					//Se for data, vai ser centralizado
+					If cFieldType == 'D'
+						xConteud := dToC(xConteud)
+
+					//Se for numérico, vai ser a direita
+					ElseIf cFieldType == 'N'
+						//Se tem máscara, aplica num transform
+						If ! Empty(aColumns[nCurrentField][6])
+							xConteud := Alltrim(Transform(xConteud, aColumns[nCurrentField][6]))
+
+						//Senão converte de numérico para texto
+						Else
+							xConteud := cValToChar(xConteud)
+						EndIf
+
+					//Senão, apenas tira espaços do campo
+					Else
+						xConteud := Alltrim(xConteud)
+					EndIf
+
+					//Se o alinhamento for a direita
+					If aColumns[nCurrentField][5] == 1
+						cHorizontalAlign := oHorizontalCell:Right()
+
+					//Se for centralizado
+					ElseIf aColumns[nCurrentField][5] == 2
+						cHorizontalAlign := oHorizontalCell:Center()
+
+					//Senão, será a esquerda
+					Else
+						cHorizontalAlign := oHorizontalCell:Left()
+					EndIf
+
+					//Reseta a formatação
+					oPrinterXlsx:ResetCellsFormat()
+
+					//Em seguida, define a formatação da coluna, sendo que o texto será preto
+					oPrinterXlsx:SetCellsFormat(cHorizontalAlign, cVerticalAlign, lLineBreak, nRotation, cBlackColor, cBackgroundColor, cCustomFormat)
+					
+					//Adiciona a informação na linha do excel na coluna do campo
+					oPrinterXlsx:SetText(nExcelLine, nCurrentField, xConteud)
+				Next
+				
+				QRY->(DbSkip())
+			EndDo
+
+			//Vamos finalizar o arquivo
+			oPrinterXlsx:ToXlsx()
+			oPrinterXlsx:DeActivate()
+
+			//E agora vamos abrir ele
+			cFileName := ChgFileExt(cFileName, '.xlsx')
+			If File(cFileName)
+				oExcel := MsExcel():New()
+				oExcel:WorkBooks:Open(cFileName)
+				oExcel:SetVisible(.T.)
+				oExcel:Destroy()
+			EndIf
+		EndIf
+
+	Else
+		FWAlertError('Não foi encontrado registros com os filtros informados!', 'Falha')
+	EndIf
+	QRY->(DbCloseArea())
+	
+	FWRestArea(aArea)
+Return

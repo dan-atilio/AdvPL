@@ -1,0 +1,54 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/09/02/como-transformar-um-campo-em-date-em-uma-query-executada-no-protheus-ti-responde-0182/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "TopConn.ch"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+//Constantes
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function video0182
+Exemplo de como transformar uma coluna no tipo Data
+@type Function
+@author Atilio
+@since 21/06/2024
+@example custom.terminal.youtube.u_video0182()
+/*/
+
+User Function video0182()
+    Local aArea     := FWGetArea()      As Array
+    Local cQuery    := ""               As Character
+    Local cMessage  := ""               As Character
+
+    //Monta uma query simples, buscando informações da SC5, pegando um campo de Data
+    cQuery += " SELECT TOP 5 " + CRLF
+    cQuery += "     C5_EMISSAO AS DTEMIS " + CRLF
+    cQuery += " FROM " + CRLF
+    cQuery += "     " + RetSQLName("SC5") + " SC5 " + CRLF
+    cQuery += " WHERE " + CRLF
+    cQuery += "     C5_FILIAL = '" + FWxFilial("SC5") + "' " + CRLF
+    cQuery += "     AND SC5.D_E_L_E_T_ = ' ' " + CRLF
+    TCQuery cQuery New Alias "QRY_SC5"
+
+    //Vamos ver como que está o conteúdo
+    cMessage += "Tipo: " + ValType(QRY_SC5->DTEMIS) + " | Conteúdo: " + QRY_SC5->DTEMIS + CRLF
+
+    //Será transformado no tipo Data, e vamos incrementar a mensagem
+    TCSetField("QRY_SC5", "DTEMIS", "D")
+    cMessage += "Tipo: " + ValType(QRY_SC5->DTEMIS) + " | Conteúdo: " + dToC(QRY_SC5->DTEMIS) + CRLF
+
+    //Exibe a mensagem
+    ShowLog(cMessage)
+    QRY_SC5->(DbCloseArea())
+    
+    FWRestArea(aArea)
+Return

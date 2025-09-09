@@ -1,0 +1,137 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/08/14/como-fazer-disparo-de-varios-registros-gravando-flag-do-que-ja-foi-processado-ti-responde-0177/ 
+    
+*/
+
+
+//Bibliotecas TLPP
+#Include "tlpp-core.th"
+#Include "TopConn.ch"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+//Constantes
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+
+/*/{Protheus.doc} User Function video0177
+Função para percorrer uma tabela e ir disparando emails se o campo de flag não estiver preenchido
+@type  Function
+@author Atilio
+@since 14/06/2024
+@example custom.terminal.youtube.u_video0177()
+/*/
+
+User Function video0177()
+    Local aArea             := FWGetArea()   As Array
+    
+    //Somente se a pergunta for confirmada
+    If FWAlertYesNo("Deseja enviar eMails das NFs que não foram ainda?", "Continua?")
+        Processa({|| sendEmail()})
+    EndIf
+
+    FWRestArea(aArea)
+Return
+
+Static Function sendEmail()
+    Local aArea        := FWGetArea()               As Array
+    Local cQuery       := ""                        As Character
+    Local lDanfe       := ExistBlock("zGerDanfe")   As Logical
+    Local nCurrent     := 0                         As Numeric
+    Local nTotal       := 0                         As Numeric
+    Local cTo          := ""                        As Character
+    Local cSubject     := ""                        As Character
+    Local cBody        := ""                        As Character
+    Local aAttach      := {}                        As Array
+    Local cDanfeFolder := ""                        As Character
+    Local cDanfeFile   := ""                        As Character
+    Local lEmailSend   := .F.                       As Logical
+
+    //Busca as notas que não foram enviadas ainda
+    cQuery := " SELECT  " + CRLF
+    cQuery += "     F2_DOC, " + CRLF
+    cQuery += "     F2_SERIE, " + CRLF
+    cQuery += "     F2_CLIENTE, " + CRLF
+    cQuery += "     F2_EMISSAO, " + CRLF
+    cQuery += "     F2_VALMERC, " + CRLF
+    cQuery += "     A1_NOME, " + CRLF
+    cQuery += "     A1_EMAIL " + CRLF
+    cQuery += " FROM  " + CRLF
+    cQuery += "     " + RetSQLName("SF2") + " SF2 " + CRLF
+    cQuery += "     INNER JOIN " + RetSQLName("SA1") + " SA1 ON ( " + CRLF
+    cQuery += "         A1_FILIAL = '" + FWxFilial("SA1") + "' " + CRLF
+    cQuery += "         AND A1_COD = F2_CLIENTE " + CRLF
+    cQuery += "         AND A1_LOJA = F2_LOJA " + CRLF
+    cQuery += "         AND SA1.D_E_L_E_T_ = ' ' " + CRLF
+    cQuery += "     ) " + CRLF
+    cQuery += " WHERE " + CRLF
+    cQuery += "     F2_FILIAL = '" + FWxFilial("SF2") + "' " + CRLF
+    cQuery += "     AND F2_TIPO NOT IN ('B', 'D') " + CRLF
+    cQuery += "     AND SF2.D_E_L_E_T_ = ' ' " + CRLF
+    cQuery += "     AND F2_X_JAFOI != 'S' " + CRLF
+    TCQuery cQuery New Alias "QRY_SF2"
+    TCSetField("QRY_SF2", "F2_EMISSAO", "D")
+
+    //Define o tamanho da régua
+    Count To nTotal
+    ProcRegua(nTotal)
+    QRY_SF2->(DbGoTop())
+
+    //Enquanto houver dados
+    While ! QRY_SF2->(EoF())
+        //Incrementa a régua
+        nCurrent++
+        IncProc("Analisando NF " + cValToChar(nCurrent) + " de " + cValToChar(nTotal) + "...")
+
+        //Define o destinatário, assunto e corpo do eMail
+        aAttach   := {}
+        cTo     := Alltrim(QRY_SF2->A1_EMAIL)
+        cSubject  := "NF de número " + Alltrim(QRY_SF2->F2_DOC)
+        cBody := "<p>Olá <strong>" + Alltrim(QRY_SF2->A1_NOME) + "</strong>.</p>"
+        cBody += "<p>Obrigado por comprar conosco.</p>"
+        cBody += "<p>Segue um resumo da NF:</p>"
+        cBody += "<ul>"
+        cBody += "<li>Documento / Série: " + Alltrim(QRY_SF2->F2_DOC) + " / " + Alltrim(QRY_SF2->F2_SERIE) + "</li>"
+        cBody += "<li>Data Emissão: " + dToC(QRY_SF2->F2_EMISSAO) + "</li>"
+        cBody += "<li>Valor Mercadorias: " + Alltrim(Transform(QRY_SF2->F2_VALMERC, "@E 999,999,999.99")) + "</li>"
+        cBody += "</ul>"
+
+        //Se tiver o fonte da danfe compilado
+        If lDanfe
+            cDanfeFolder := "C:\spool\"
+            cDanfeFile := "nfe_" + Alltrim(QRY_SF2->F2_DOC) + "_" + Alltrim(QRY_SF2->F2_SERIE) + ".pdf"
+            u_zGerDanfe(Alltrim(QRY_SF2->F2_DOC), Alltrim(QRY_SF2->F2_SERIE), cDanfeFolder, cDanfeFile)
+
+            //Se o arquivo foi gerado com sucesso
+            If File(cDanfeFolder + cDanfeFile)
+                __CopyFile(cDanfeFolder + cDanfeFile, "\spool\" + cDanfeFile)
+                aAdd(aAttach, "\spool\" + cDanfeFile)
+                cBody += "<p>Em anexo segue o arquivo da DANFE referente a essa NF!</p>"
+            EndIf
+        EndIf
+
+        //Faz o envio do eMail
+        lEmailSend := GPEMail(cSubject, cBody, cTo, aAttach, .F.)
+
+        //Se deu certo o disparo, grava a flag
+        If lEmailSend
+            DbSelectArea("SF2")
+            SF2->(DbSetOrder(1)) // F2_FILIAL + F2_DOC + F2_SERIE + F2_CLIENTE + F2_LOJA + F2_FORMUL + F2_TIPO
+
+            If SF2->(MsSeek(FWxFilial("SF2") + QRY_SF2->F2_DOC + QRY_SF2->F2_SERIE ))
+                RecLock("SF2", .F.)
+                    SF2->F2_X_JAFOI := "S"
+                SF2->(MsUnlock())
+            EndIf
+        EndIf
+
+        QRY_SF2->(DbSkip())
+    EndDo
+    QRY_SF2->(DbCloseArea())
+
+    FWAlertInfo("Processo finalizado!", "Atenção")
+
+    FWRestArea(aArea)
+Return
