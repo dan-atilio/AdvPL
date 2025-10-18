@@ -1,0 +1,232 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/09/23/fazendo-linhas-mais-grossas-em-fwmsprinter-ti-responde-0188/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "Totvs.ch"
+#Include "TopConn.ch"
+#Include "RPTDef.ch"
+#Include "FWPrintSetup.ch"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+//Alinhamentos
+#Define PAD_LEFT    0
+#Define PAD_RIGHT   1
+#Define PAD_CENTER  2
+#Define PAD_JUSTIFY 3 //Opção disponível somente a partir da versão 1.6.2 da TOTVS Printer
+
+//Cor(es)
+Static nColorGrey  := RGB(110, 110, 110) As Numeric
+Static nColorGreen := RGB(000, 208, 028) As Numeric
+
+/*/{Protheus.doc} User Function video0188
+Testes de linhas
+@author Atilio
+@since 28/02/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+@example custom.terminal.youtube.u_video0188()
+/*/
+
+User Function video0188()
+	Local aArea := FWGetArea() As Array
+	
+	//Cria as o relatorio
+	Processa({|| printReport()})
+	
+	FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} printReport
+Faz a impressão do relatório video0188
+@author Atilio
+@since 28/02/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function printReport()
+    Local aArea               := FWGetArea()                                             As Array
+    Local cFile               := ''                                                      As Character
+    Private oPrintPDF                                                                    As Object
+    Private oBrush            := TBrush():New(, RGB(000, 000, 000))                      As Object
+    Private cTimeReport       := Time()                                                  As Character
+    Private nCurrentPage      := 1                                                       As Numeric
+    Private cCompanyLogo      := defineCompanyLogo()                                          As Character
+    //Linhas e colunas
+    Private nCurrentLine      := 0                                                       As Numeric
+    Private nBottomMargin     := 800                                                     As Numeric
+    Private nLeftMargin       := 010                                                     As Numeric
+    Private nRightMargin      := 580                                                     As Numeric
+    Private nMiddleColumn     := (nRightMargin - nLeftMargin) / 2                        As Numeric
+    //Declarando as fontes
+    Private cFont             := 'Arial'                                                 As Character
+    Private oDetailFont       := TFont():New(cFont, /*uPar2*/, -11, /*uPar4*/, .F.)      As Object
+    Private oFooterFont       := TFont():New(cFont, /*uPar2*/, -8,  /*uPar4*/, .F.)      As Object
+    Private oTitleFont        := TFont():New(cFont, /*uPar2*/, -15, /*uPar4*/, .T.)      As Object
+
+    //Define o nome do relatório em PDF
+    cFile  := 'video0188_'+RetCodUsr()+'_' + dToS(Date()) + '_' + StrTran(cTimeReport, ':', '-') + '.pdf'
+     
+    //Criando o objeto de impressao
+    oPrintPDF := FWMSPrinter():New(;
+        cFile,;    // cFilePrinter
+        IMP_PDF,;     // nDevice
+        .F.,;         // lAdjustToLegacy
+        ,;            // cPathInServer
+        .T.,;         // lDisabeSetup
+        ,;            // lTReport
+        @oPrintPDF,;  // oPrintSetup
+        ,;            // cPrinter
+        ,;            // lServer
+        ,;            // lParam10
+        ,;            // lRaw
+        .T.;          // lViewPDF
+    )
+    oPrintPDF:cPathPDF := GetTempPath()
+    oPrintPDF:SetResolution(72)
+    oPrintPDF:SetPortrait()
+    oPrintPDF:SetPaperSize(DMPAPER_A4)
+    oPrintPDF:SetMargin(0, 0, 0, 0)
+
+    //Inicia a página imprimindo o cabeçalho
+    printHeader()
+
+    //Linha comum
+    oPrintPDF:SayAlign(nCurrentLine, nMiddleColumn-200, "Line Comum (default -2)", oTitleFont, 400, 20, nColorGrey, PAD_CENTER, /*nAlignVert*/)
+    nCurrentLine += 20
+    oPrintPDF:Line(nCurrentLine, nLeftMargin + 50, nCurrentLine, nRightMargin - 50, /*nColor*/, /*cPixel*/)
+
+    //Linha -1
+    nCurrentLine += 30
+    oPrintPDF:SayAlign(nCurrentLine, nMiddleColumn-200, "Line -1", oTitleFont, 400, 20, nColorGrey, PAD_CENTER, /*nAlignVert*/)
+    nCurrentLine += 20
+    oPrintPDF:Line(nCurrentLine, nLeftMargin + 50, nCurrentLine, nRightMargin - 50, /*nColor*/, "-1")
+
+    //Linha -5
+    nCurrentLine += 30
+    oPrintPDF:SayAlign(nCurrentLine, nMiddleColumn-200, "Line -5", oTitleFont, 400, 20, nColorGrey, PAD_CENTER, /*nAlignVert*/)
+    nCurrentLine += 20
+    oPrintPDF:Line(nCurrentLine, nLeftMargin + 50, nCurrentLine, nRightMargin - 50, /*nColor*/, "-5")
+
+    //FillRect com 7 Pixels
+    nCurrentLine += 30
+    oPrintPDF:SayAlign(nCurrentLine, nMiddleColumn-200, "FillRect com 7 pixels", oTitleFont, 400, 20, nColorGrey, PAD_CENTER, /*nAlignVert*/)
+    nCurrentLine += 20
+    oPrintPDF:FillRect({nCurrentLine, nLeftMargin + 50, nCurrentLine + 7, nRightMargin - 50}, oBrush)
+
+    //FillRect com 10 Pixels
+    nCurrentLine += 30
+    oPrintPDF:SayAlign(nCurrentLine, nMiddleColumn-200, "FillRect com 10 pixels", oTitleFont, 400, 20, nColorGrey, PAD_CENTER, /*nAlignVert*/)
+    nCurrentLine += 20
+    oPrintPDF:FillRect({nCurrentLine, nLeftMargin + 50, nCurrentLine + 10, nRightMargin - 50}, oBrush)
+
+    //FillRect com 13 Pixels
+    nCurrentLine += 30
+    oPrintPDF:SayAlign(nCurrentLine, nMiddleColumn-200, "FillRect com 13 pixels", oTitleFont, 400, 20, nColorGrey, PAD_CENTER, /*nAlignVert*/)
+    nCurrentLine += 20
+    oPrintPDF:FillRect({nCurrentLine, nLeftMargin + 50, nCurrentLine + 13, nRightMargin - 50}, oBrush)
+
+    //FillRect com 16 Pixels
+    nCurrentLine += 30
+    oPrintPDF:SayAlign(nCurrentLine, nMiddleColumn-200, "FillRect com 16 pixels", oTitleFont, 400, 20, nColorGrey, PAD_CENTER, /*nAlignVert*/)
+    nCurrentLine += 20
+    oPrintPDF:FillRect({nCurrentLine, nLeftMargin + 50, nCurrentLine + 16, nRightMargin - 50}, oBrush)
+    
+    //Imprime o último rodapé e abre o PDF
+    printFooter()
+    oPrintPDF:Preview()
+     
+    FWRestArea(aArea)
+Return
+
+/*/{Protheus.doc} defineCompanyLogo
+Função que retorna o logo da empresa conforme configuração da DANFE
+@author Atilio
+@since 28/02/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function defineCompanyLogo()
+    Local cLogo       := "\x_imagens\logo.png" As Character
+Return cLogo
+
+/*/{Protheus.doc} printHeader
+Função que imprime o cabeçalho do relatório
+@author Atilio
+@since 28/02/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function printHeader()
+    Local cTexto           := ''  As Character
+    Local nLinhaCabecalho  := 015 As Numeric
+     
+    //Iniciando Pagina
+    oPrintPDF:StartPage()
+    
+    //Imprime o logo
+    If File(cCompanyLogo)
+        oPrintPDF:SayBitmap(005, nLeftMargin, cCompanyLogo, 030, 030)
+    EndIf
+     
+    //Cabecalho
+    cTexto := 'Testes Linhas'
+    oPrintPDF:SayAlign(nLinhaCabecalho, nMiddleColumn-200, cTexto, oTitleFont, 400, 20, nColorGreen, PAD_CENTER, /*nAlignVert*/)
+     
+    //Linha Separatoria
+    nLinhaCabecalho += 020
+    oPrintPDF:Line(nLinhaCabecalho,   nLeftMargin, nLinhaCabecalho,   nRightMargin, nColorGreen)
+     
+    //Atualizando a linha inicial do relatorio
+    nCurrentLine := nLinhaCabecalho + 5
+Return
+
+/*/{Protheus.doc} printFooter
+Função que imprime o rodapé e encerra a página
+@author Atilio
+@since 28/02/2024
+@version 1.0
+@type function
+@obs Codigo gerado automaticamente pelo Autumn Code Maker
+@see http://autumncodemaker.com
+/*/
+
+Static Function printFooter()
+    Local nLinhaRodape := nBottomMargin As Numeric
+    Local cTexto       := ''          As Character
+ 
+    //Linha Separatoria
+    oPrintPDF:Line(nLinhaRodape,   nLeftMargin, nLinhaRodape,   nRightMargin, nColorGreen)
+    nLinhaRodape += 3
+     
+    //Dados da Esquerda
+    cTexto := dToC(dDataBase) + '     ' + cTimeReport + '     ' + FunName() + ' (video0188)     ' + UsrRetName(RetCodUsr())
+    oPrintPDF:SayAlign(nLinhaRodape, nLeftMargin, cTexto, oFooterFont, 500, 10, /*nClrText*/, PAD_LEFT, /*nAlignVert*/)
+     
+    //Direita
+    cTexto := 'Pagina '+cValToChar(nCurrentPage)
+    oPrintPDF:SayAlign(nLinhaRodape, nRightMargin-40, cTexto, oFooterFont, 040, 10, /*nClrText*/, PAD_RIGHT, /*nAlignVert*/)
+     
+    //Finalizando a pagina e somando mais um
+    oPrintPDF:EndPage()
+    nCurrentPage++
+Return
+

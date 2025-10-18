@@ -386,3 +386,15 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0181.prw**: ExecAuto no Cadastro de Filiais (tabela SM0)
    * **custom.terminal.youtube.video0182.tlpp**: Como transformar um campo em Date em uma query executada no Protheus
    * **custom.terminal.youtube.video0183.tlpp**: O que significa os Asteriscos ao visualizar um campo
+   * **custom.terminal.youtube.video0184.tlpp**: Buscar o próximo sequencial de NF de uma série com a função NxtSX5Nota
+   * **zVid0185.prw**: Alterar Fornecedor de um Pedido de Compras
+   * **zVid0187.prw**: Validar se uma Grid esta Vazia em um Ponto de Entrada em MVC
+   * **custom.terminal.youtube.video0186.tlpp**: Alterar a Cor de uma Coluna em um Browse
+   * **custom.terminal.youtube.video0188.tlpp**: Fazendo linhas mais grossas em FWMSPrinter
+   * **zVid0189.prw**: Criando um Log de Disparo de eMails
+   * **custom.terminal.youtube.video0190.tlpp**: Fazendo um Try … Catch em um controle de transações 
+   * **custom.terminal.youtube.video0191.tlpp**: Como mudar a cor dentro de uma aba de um TFolder
+   * **custom.terminal.youtube.video0192.tlpp**: Executando a validação do modo de edição via código fonte com a função X3WhenGet
+   * **zVid0193.prw**: Implementando a Autenticação em Dois Fatores (2FA) no Login do Protheus
+   * **zVid0194.prw**: Campo MEMO um do lado do outro em MVC
+   * **custom.terminal.youtube.video0195.tlpp**: Realçar célula posicionada de um FWBrowse

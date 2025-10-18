@@ -1,0 +1,37 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/09/09/buscar-o-proximo-sequencial-de-nf-de-uma-serie-com-a-funcao-nxtsx5nota-ti-responde-0184/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+    
+/*/{Protheus.doc} User Function video0184
+Exemplo de como buscar a próxima numeração de NF de uma série (usando SX5)
+@type Function
+@author Atilio
+@since 03/06/2024
+@example custom.terminal.youtube.u_video0184()
+/*/
+
+User Function video0184()
+    Local aArea        := FWGetArea() As Array
+    Local cSeries      := "1"         As Character
+    Local cNextInvoice := ""          As Character
+    Local cMessage     := ""          As Character
+
+    //Aciona a próxima numeração de NF para a série informada
+    cNextInvoice := NxtSX5Nota(cSeries)
+
+    //Monta a mensagem que será exibida
+    cMessage := FormatStr("Para a série %c , a próxima numeração é %c ", {cSeries, cNextInvoice})
+    FWAlertInfo(cMessage, "Teste de NxtSX5Nota")
+
+    FWRestArea(aArea)
+Return

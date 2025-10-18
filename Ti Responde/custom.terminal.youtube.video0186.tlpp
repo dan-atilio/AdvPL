@@ -1,0 +1,209 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/09/16/alterar-a-cor-de-uma-coluna-em-um-browse-ti-responde-0186/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "TOTVS.ch"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+    
+/*/{Protheus.doc} User Function video0186
+Exemplo de mudança de cor de coluna usando FWBrowse
+@type Function
+@author Atilio
+@since 03/06/2024
+@example custom.terminal.youtube.u_video0186()
+/*/
+
+User Function video0186()
+    Local aArea               := GetArea()                              As Array
+    Local lOk                 := .F.                                    As Logical
+    Local cMessage            := ""                                     As Character
+    //Fontes
+    Local cFont               := "Tahoma"                               As Character
+    Local oFontBigger         := TFont():New(cFont,,-38)                As Object
+    Local oFontTitle          := TFont():New(cFont,,-20)                As Object
+    Local oFontTitleBold      := TFont():New(cFont,,-20,,.T.)           As Object
+    Local oFontButtons        := TFont():New(cFont,,-14)                As Object
+    //Janela e componentes
+    Private oDialogTest                                                 As Object
+    Private oTempTable                                                  As Object
+    Private oPanelGrid                                                  As Object
+    Private oBrowseTemp                                                 As Object
+    Private aColumns          := {}                                     As Array
+    Private cTempAlias        := GetNextAlias()                         As Character
+    //Tamanho da janela
+    Private aDialogSize       := MsAdvSize()                            As Array
+    Private nDialogWidth      := aDialogSize[5]                         As Numeric
+    Private nDialogHeight     := aDialogSize[6]                         As Numeric
+    
+    //Cria a temporária
+    oTempTable := FWTemporaryTable():New(cTempAlias)
+        
+    //Adiciona no array das colunas as que serão incluidas (Nome do Campo, Tipo do Campo, Tamanho, Decimais)
+    aFields := {}
+    aAdd(aFields, {"XXCODIGO", "C",   6, 0})
+    aAdd(aFields, {"XXDESCRI", "C",  30, 0})
+    aAdd(aFields, {"XXQUANTI", "N",   9, 2})
+    aAdd(aFields, {"XXEMISSA", "D",   8, 0})
+    aAdd(aFields, {"XXOBSERV", "C", 100, 0})
+	aAdd(aFields, {"XXREGDEL", "L",   1, 0})
+        
+    //Define as colunas usadas, adiciona indice e cria a temporaria no banco
+    oTempTable:SetFields( aFields )
+    oTempTable:AddIndex("1", {"XXCODIGO"} )
+    oTempTable:Create()
+    
+    //Monta a estrutura das colunas
+    createColumns()
+    
+    //Montando os dados, eles devem ser montados antes de ser criado o FWBrowse
+    FWMsgRun(, {|oSay| insertDataIntoTemporary(oSay) }, "Processando", "Buscando grupos")
+    
+    //Criando a janela
+    oDialogTest := TDialog():New(0, 0, nDialogHeight, nDialogWidth, "Teste Tabela Temporária", , , , , , 16777215, , , .T.)
+
+        //Títulos e SubTítulos
+        oSayBigger   := TSay():New(004, 003, {|| "FAT"                 }, oDialogTest, "", oFontBigger,  , , , .T., RGB(149, 179, 215), , 200, 30, , , , , , .F., , )
+        oSayTitle    := TSay():New(004, 050, {|| "Listagem Genérica de"}, oDialogTest, "", oFontTitle,  , , , .T., RGB(031, 073, 125), , 200, 30, , , , , , .F., , )
+        oSaySubtitle := TSay():New(014, 050, {|| "Dados Temporários"   }, oDialogTest, "", oFontTitleBold, , , , .T., RGB(031, 073, 125), , 300, 30, , , , , , .F., , )
+
+        //Botões
+        oButtonOk     := TButton():New(006, (nDialogWidth/2-001)-(0052*02), "Confirmar",          oDialogTest, {|| lOk := .T., oDialogTest:End()}, 050, 018, , oFontButtons, , .T., , , , , , )
+        oButtonCancel := TButton():New(006, (nDialogWidth/2-001)-(0052*01), "Fechar",             oDialogTest, {|| oDialogTest:End()}, 050, 018, , oFontButtons, , .T., , , , , , )
+    
+        //Cria o Painel e o Browse
+        oPanelGrid := tPanel():New(033, 006, "", oDialogTest, , , , RGB(000,000,000), RGB(254,254,254), (nDialogWidth/2 - 13),     (nDialogHeight/2 - 45))
+            oBrowseTemp := FWBrowse():New()
+            oBrowseTemp:DisableFilter()
+            oBrowseTemp:DisableConfig()
+            oBrowseTemp:DisableReport()
+            oBrowseTemp:DisableSeek()
+            oBrowseTemp:DisableSaveConfig()
+            oBrowseTemp:SetFontBrowse(oFontButtons)
+            oBrowseTemp:SetAlias(cTempAlias)
+            oBrowseTemp:SetDataTable()
+            oBrowseTemp:SetEditCell(.T., {|| .T.}) 
+            oBrowseTemp:lHeaderClick := .F.
+            oBrowseTemp:AddLegend(cTempAlias + "->XXQUANTI == 0", "YELLOW", "Quantidade zerada")
+            oBrowseTemp:AddLegend(cTempAlias + "->XXQUANTI <  0", "RED",    "Quantidade menor que zero")
+            oBrowseTemp:AddLegend(cTempAlias + "->XXQUANTI >  0", "GREEN",  "Quantidade maior que zero")
+            oBrowseTemp:SetColumns(aColumns)
+            oBrowseTemp:SetOwner(oPanelGrid)
+            oBrowseTemp:Activate()
+
+            //Define as cores de uma coluna (herança com a TGrid - https://tdn.totvs.com/display/tec/TGrid)
+            oBrowseTemp:oBrowse:SetColumnColor(;
+                1,;                 //Número da Coluna
+                RGB(0,   255, 0),;  //Cor de Fundo
+                RGB(100, 100, 100); //Cor do Texto
+            )
+
+    //Ativa e exibe a janela
+    oDialogTest:Activate(, , , .T., , , {|| })
+    
+    //Se foi confirmado
+    If lOk
+        cMessage := "Abaixo os registros apagados da temporária (campo XXREGDEL): " + CRLF
+
+        //Percorre os dados
+        (cTempAlias)->(DbGoTop())
+        While ! (cTempAlias)->(EoF())
+            //Se tiver apagado, incrementa o log
+            If (cTempAlias)->XXREGDEL
+                cMessage += "+ Código " + (cTempAlias)->XXCODIGO + ";" + CRLF
+            EndIf
+
+            (cTempAlias)->(DbSkip())
+        EndDo
+
+        //Exibe a mensagem de log
+        ShowLog(cMessage)
+    EndIf
+
+    //Deleta a temporaria
+    oTempTable:Delete()
+    
+    RestArea(aArea)
+Return
+    
+Static Function createColumns()
+    Local nAtual             As Numeric
+    Local aColunasTemp := {} As Array
+    
+    //Adicionando colunas
+    //[1] - Campo da Temporaria
+    //[2] - Titulo
+    //[3] - Tipo
+    //[4] - Tamanho
+    //[5] - Decimais
+    //[6] - Máscara
+    //[7] - Editável? .T. = sim, .F. = não
+    aAdd(aColunasTemp, {"XXCODIGO", "Código",     "C",   6,  0, "",              .F.})
+    aAdd(aColunasTemp, {"XXDESCRI", "Descricao",  "C",  30,  0, "",              .F.})
+    aAdd(aColunasTemp, {"XXQUANTI", "Quantidade", "N",   9,  2, "@E 999,999.99", .T.})
+    aAdd(aColunasTemp, {"XXEMISSA", "Emissão",    "D",   8,  0, "",              .T.})
+    aAdd(aColunasTemp, {"XXOBSERV", "Observação", "C", 100,  0, "",              .T.})
+    
+    //Percorrendo e criando as colunas
+    For nAtual := 1 To Len(aColunasTemp)
+        oColumn := FWBrwColumn():New()
+        oColumn:SetData(&("{|| " + cTempAlias + "->" + aColunasTemp[nAtual][1] +"}"))
+        oColumn:SetTitle(aColunasTemp[nAtual][2])
+        oColumn:SetType(aColunasTemp[nAtual][3])
+        oColumn:SetSize(aColunasTemp[nAtual][4])
+        oColumn:SetDecimal(aColunasTemp[nAtual][5])
+        oColumn:SetPicture(aColunasTemp[nAtual][6])
+  
+        //Se for ser possível ter o duplo clique
+        If aColunasTemp[nAtual][7]
+            oColumn:SetEdit(.T.)
+            oColumn:SetReadVar(aColunasTemp[nAtual][1])
+            //oColumn:SetValid({|| fSuaValid()})
+        EndIf
+  
+        aAdd(aColumns, oColumn)
+    Next
+Return
+    
+Static Function insertDataIntoTemporary(oSay)
+    Local aArea            := GetArea() As Array
+    Local nAtual           := 0         As Numeric
+    Local nTotal           := 50        As Numeric
+    Local dDataReferencia  := Date()    As Date
+    Local cCodigoAtual     := "000000"  As Character
+    Local cDescricao       := ""        As Character
+    Local nQuantidade      := 0         As Numeric
+    Local dDataEmissao     := sToD("")  As Date
+    
+    //Faz um laço de repetição
+    For nAtual := 1 To nTotal
+        //Muda a mensagem na regua
+        oSay:SetText("Adicionando registro " + cValToChar(nAtual) + " de " + cValToChar(nTotal) + "...")
+  
+        //Pega as variáveis que vão ser gravadas
+        cCodigoAtual := Soma1(cCodigoAtual)
+        cDescricao := "[" + Time() + "] Teste - " + cCodigoAtual
+        nQuantidade := Randomize(-5, 5)
+        dDataEmissao := DaySub(dDataReferencia, nAtual)
+  
+        //Insere os dados na temporária
+        RecLock(cTempAlias, .T.)
+            (cTempAlias)->XXCODIGO := cCodigoAtual
+            (cTempAlias)->XXDESCRI := cDescricao
+            (cTempAlias)->XXQUANTI := nQuantidade
+            (cTempAlias)->XXEMISSA := dDataEmissao
+            (cTempAlias)->XXOBSERV := ""
+			(cTempAlias)->XXREGDEL := .F.
+        (cTempAlias)->(MsUnlock())
+    
+    Next
+    
+    RestArea(aArea)
+Return

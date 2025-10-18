@@ -1,0 +1,132 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/10/02/como-mudar-a-cor-dentro-de-uma-aba-de-um-tfolder-ti-responde-0191/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "TOTVS.ch" //devido a função RGB()
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function video0191
+Exemplo de mudança de cor nas abas
+@type Function
+@author Atilio
+@since 09/07/2024
+@see https://tdn.totvs.com/display/tec/TFolder
+@example custom.terminal.youtube.u_video0191()
+/*/
+
+User Function video0191()
+    Local aArea                := FWGetArea()                           As Array
+    Local nBackgroundColor     := RGB(238, 238, 238)                    As Numeric
+    Local nDialogHeight        := 248                                   As Numeric
+    Local nDialogWidth         := 655                                   As Numeric
+    Local cDialogTitle         := 'Exemplo TFolder'                     As Character
+    Local lUsePixels           := .T.                                   As Logical
+    Local lCentered            := .T.                                   As Logical
+    Local nObjectRow           := 0                                     As Numeric
+    Local nObjectColumn        := 0                                     As Numeric
+    Local nObjectWidth         := 0                                     As Numeric
+    Local nObjectHeight        := 0                                     As Numeric
+    Private cFont              := 'Tahoma'                              As Character
+    Private oFontDefault       := TFont():New(cFont, , -12)             As Object
+    Private oTestDialog                                                 As Object
+    Private bInitBlock         := {|| /*fSuaFuncao()*/ }                As CodeBlock
+    Private oConfirmButton                                              As Object
+    Private cConfirmButton     := 'Confirmar'                           As Character
+    Private bConfirmButton     := {|| Alert("Clicou no Confirmar!")}    As CodeBlock
+    Private oSayFieldA                                                  As Object
+    Private cSayFieldA         := 'Campo A:'                            As Character
+    Private oGetFieldA                                                  As Object
+    Private cGetFieldA         := Space(10)                             As Character
+    Private oSayFieldB                                                  As Object
+    Private cSayFieldB         := 'Campo B:'                            As Character
+    Private oGetFieldB                                                  As Object
+    Private cGetFieldB         := Space(10)                             As Character
+    Private oSayFieldC                                                  As Object
+    Private cSayFieldC         := 'Campo C:'                            As Character
+    Private oGetFieldC                                                  As Object
+    Private cGetFieldC         := Space(10)                             As Character
+    Private oFolder                                                     As Object
+    Private aTabs              := {"Cadastro", "Complemento", "Outros"} As Array
+    
+    //Cria a dialog
+    oTestDialog := TDialog():New(0, 0, nDialogHeight, nDialogWidth, cDialogTitle, , , , , , nBackgroundColor, , , lUsePixels)
+    
+        //objeto0 - usando a classe TButton
+        nObjectRow := 106
+        nObjectColumn := 5
+        nObjectWidth := 75
+        nObjectHeight := 15
+        oConfirmButton  := TButton():New(nObjectRow, nObjectColumn, cConfirmButton, oTestDialog, bConfirmButton, nObjectWidth, nObjectHeight, , oFontDefault, , lUsePixels)
+
+        //Cria as abas
+        oFolder := TFolder():New(001, 001, aTabs, /*aDialogs*/, oTestDialog, /*nOption*/, /*nClrFore*/, /*uParam8*/, lUsePixels, /*uParam10*/, (nDialogWidth/2)-1, (nDialogHeight/2)-30)
+
+        /* Aba 1 */
+
+            //objeto1 - usando a classe TSay
+            nObjectRow := 7
+            nObjectColumn := 2
+            nObjectWidth := 28
+            nObjectHeight := 6
+            oSayFieldA  := TSay():New(nObjectRow, nObjectColumn, {|| cSayFieldA}, oFolder:aDialogs[1], /*cPicture*/, oFontDefault, , , , lUsePixels, /*nClrText*/, /*nClrBack*/, nObjectWidth, nObjectHeight, , , , , , /*lHTML*/)
+
+            //objeto2 - usando a classe TGet
+            nObjectRow := 5
+            nObjectColumn := 37
+            nObjectWidth := 50
+            nObjectHeight := 10
+            oGetFieldA  := TGet():New(nObjectRow, nObjectColumn, {|u| Iif(PCount() > 0 , cGetFieldA := u, cGetFieldA)}, oFolder:aDialogs[1], nObjectWidth, nObjectHeight, /*cPict*/, /*bValid*/, /*nClrFore*/, /*nClrBack*/, oFontDefault, , , lUsePixels)
+            oGetFieldA:Picture      := '@!'                        //Mascara / Picture do campo
+
+        /* Aba 2 */
+
+            //objeto1 - usando a classe TSay
+            nObjectRow := 7
+            nObjectColumn := 2
+            nObjectWidth := 28
+            nObjectHeight := 6
+            oSayFieldB  := TSay():New(nObjectRow, nObjectColumn, {|| cSayFieldB}, oFolder:aDialogs[2], /*cPicture*/, oFontDefault, , , , lUsePixels, /*nClrText*/, /*nClrBack*/, nObjectWidth, nObjectHeight, , , , , , /*lHTML*/)
+
+            //objeto2 - usando a classe TGet
+            nObjectRow := 5
+            nObjectColumn := 37
+            nObjectWidth := 100
+            nObjectHeight := 10
+            oGetFieldB  := TGet():New(nObjectRow, nObjectColumn, {|u| Iif(PCount() > 0 , cGetFieldB := u, cGetFieldB)}, oFolder:aDialogs[2], nObjectWidth, nObjectHeight, /*cPict*/, /*bValid*/, /*nClrFore*/, /*nClrBack*/, oFontDefault, , , lUsePixels)
+            oGetFieldB:Picture      := '@!'                        //Mascara / Picture do campo
+
+        /* Aba 3 */
+
+            //objeto1 - usando a classe TSay
+            nObjectRow := 7
+            nObjectColumn := 2
+            nObjectWidth := 28
+            nObjectHeight := 6
+            oSayFieldC  := TSay():New(nObjectRow, nObjectColumn, {|| cSayFieldC}, oFolder:aDialogs[3], /*cPicture*/, oFontDefault, , , , lUsePixels, /*nClrText*/, /*nClrBack*/, nObjectWidth, nObjectHeight, , , , , , /*lHTML*/)
+
+            //objeto2 - usando a classe TGet
+            nObjectRow := 5
+            nObjectColumn := 37
+            nObjectWidth := 150
+            nObjectHeight := 10
+            oGetFieldC  := TGet():New(nObjectRow, nObjectColumn, {|u| Iif(PCount() > 0 , cGetFieldC := u, cGetFieldC)}, oFolder:aDialogs[3], nObjectWidth, nObjectHeight, /*cPict*/, /*bValid*/, /*nClrFore*/, /*nClrBack*/, oFontDefault, , , lUsePixels)
+            oGetFieldC:Picture      := '@!'                        //Mascara / Picture do campo
+
+        //Atualiza as cores das abas conforme compatibilidade com a TPanelCSS - https://tdn.totvs.com/display/tec/TPanelCSS
+        oFolder:aDialogs[1]:SetCss("QFrame{ background-color:#FFE5E9 }")
+        oFolder:aDialogs[2]:SetCss("QFrame{ background-color:#E7FFE5 }")
+        oFolder:aDialogs[3]:SetCss("QFrame{ background-color:#E5ECFF }")
+
+    //Ativa e exibe a janela
+    oTestDialog:Activate(, , , lCentered, , , bInitBlock)
+    
+    FWRestArea(aArea)
+Return

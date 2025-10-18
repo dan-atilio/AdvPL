@@ -1,0 +1,72 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/09/30/fazendo-um-try-catch-em-um-controle-de-transacoes-ti-responde-0190/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+/*/{Protheus.doc} User Function video0190
+Aciona tratativa e erro nos códigos usando Transaction
+@type Function
+@author Atilio
+@since 12/03/2024
+@see https://tdn.totvs.com/display/tec/Try...Catch
+@example custom.terminal.youtube.u_video0190()
+/*/
+
+User Function video0190()
+    Local aArea         := FWGetArea() As Array
+    Local aData         := {}          As Array
+    Private oError      := Nil         As Object
+    Private lMsErroAuto := .F.         As Logical
+
+    //Inicia o controle de transações
+    Begin Transaction
+
+        //Tenta executar os comandos
+        TRY
+            //Adiciona os campos
+            aAdd(aData, {"B1_COD",    "E0003",        Nil})
+            aAdd(aData, {"B1_DESC",   "Caneta Preta", Nil})
+            aAdd(aData, {"B1_TIPO",   "PA",           Nil})
+            aAdd(aData, {"B1_UM",     "UN",           Nil})
+            aAdd(aData, {"B1_LOCPAD", "01",           Nil})
+            aAdd(aData, {"B1_GRUPO",  "G002",         Nil})
+
+            //Chama a inclusão
+            MsExecAuto({|x, y| MATA010(x, y)}, aData, 3)
+            
+            //Se houve erro, mostra a mensagem e aborta o try
+            If lMsErroAuto
+                MostraErro()
+                forceError()
+            EndIf
+
+            //Mostra mensagem
+            FWAlertSuccess("Sucesso na execução do Try com Transaction", "Teste Try ... Catch")
+
+        //Caso houve falha, captura e exibe
+        CATCH oError
+            FWAlertError("Erro gerado: " + oError:Description , "Teste Try ... Catch")
+        ENDTRY
+
+    End Transaction
+  
+    FWRestArea(aArea)
+Return
+
+Static Function forceError()
+    DisarmTransaction()
+
+    oError := ErrorClass():New()
+    oError:genCode := 19584
+    oError:description := "Erro forçado dentro da função forceError()"
+    THROW oError
+Return

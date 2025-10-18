@@ -1,0 +1,56 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/10/07/executando-a-validacao-do-modo-de-edicao-via-codigo-fonte-com-a-funcao-x3whenget-ti-responde-0192/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+    
+/*/{Protheus.doc} User Function video0192
+Exemplo de como testar o modo de edição direto via código fonte
+@type Function
+@author Atilio
+@since 15/07/2024
+@example custom.terminal.youtube.u_video0192()
+@obs Foi utilizado RecLock com a SB1, mas não é recomendado fazer isso em tabelas padrões, esse foi apenas
+    um exemplo para demonstrar a função X3WhenGet
+/*/
+
+User Function video0192()
+    Local aArea            := FWGetArea() As Array
+    Local cProductId       := ""          As Character
+    Local nOption          := 4           As Numeric    //3 = Inclusão; 4 = Alteração
+
+    //Solicita para o usuário informar o código
+    cProductId := FWInputBox("Informe o código do produto (B1_COD):")
+
+    //Tenta posicionar no cliente
+    DbSelectArea("SB1")
+    SB1->(DbSetOrder(1)) // B1_FILIAL + B1_COD
+    If SB1->(MsSeek(FWxFilial("SB1") + cProductId))
+
+        //Altera a variável em memória
+        INCLUI := .F.
+
+        //Valida se o campo de descrição pode receber informação
+        If X3WhenGet("B1_DESC", nOption)
+            RecLock("SB1", .F.)
+                SB1->B1_DESC := FWInputBox("Informe a Descrição do Produto:", Alltrim(SB1->B1_DESC))
+            SB1->(MsUnlock())
+
+        Else
+            FWAlertError("Campo B1_DESC não pode ser editável!", "Falha")
+        EndIf
+
+    Else
+        FWAlertError("Produto não encontrado!", "Falha")
+    EndIf
+
+    FWRestArea(aArea)
+Return
