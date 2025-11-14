@@ -1,0 +1,92 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/10/23/como-fazer-uma-query-com-campos-dinamicos-conforme-algumas-regras-ti-responde-0197/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "TopConn.ch"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+    
+/*/{Protheus.doc} User Function video0197
+Exemplo de query com campos dinâmicos
+@type Function
+@author Atilio
+@since 07/08/2024
+@example custom.terminal.youtube.u_video0197()
+/*/
+
+User Function video0197()
+    Local aArea            := FWGetArea()                      As Array
+    Local cFields          := " A1_COD , A1_NOME , A1_EMAIL "  As Character
+    Local cFieldsEmbedded  := ""                               As Character
+    Local cQuery           := ""                               As Character
+    Local oStatementQuery  := Nil                              As Object
+
+    //Se a pergunta for confirmada, incrementa para exibir mais campos
+    If FWAlertYesNo("Deseja buscar também informações de compras?", "Confirma?")
+        cFields += " , A1_MCOMPRA , A1_METR , A1_PRICOM , A1_ULTCOM , A1_NROCOM "
+    EndIf
+
+    // --------
+
+    //Forma 1, usando query direta em uma variável
+    cQuery := " SELECT " + cFields + CRLF
+    cQuery += " FROM " + RetSQLName("SA1") + " SA1 " + CRLF
+    cQuery += " WHERE " + RetSQLCond("SA1") + CRLF
+    TCQuery cQuery New Alias "QRY_SA1"
+
+    //Se tiver dados
+    If ! QRY_SA1->(EoF())
+        ShowLog("Query forma 1 executada com sucesso: " + CRLF + CRLF + cQuery)
+    EndIf
+    QRY_SA1->(DbCloseArea())
+
+    // --------
+
+    //Forma 2, usando Embedded SQL
+    cFieldsEmbedded := "%" + cFields + "%"
+    BeginSQL Alias "QRY_SA1"
+        SELECT %Exp:cFieldsEmbedded%
+        FROM %table:SA1% SA1 
+        WHERE A1_FILIAL  = %xFilial:SA1% AND SA1.%notDel%
+    EndSQL
+
+    //Se tiver dados
+    If ! QRY_SA1->(EoF())
+        ShowLog("Query forma 2 executada com sucesso: " + CRLF + CRLF + GetLastQuery()[2])
+    EndIf
+    QRY_SA1->(DbCloseArea())
+
+    // --------
+
+    //Forma 3, usando FWPreparedStatement    
+    //Define a query e define o conteúdo das interrogações (obs: tem o método SetFields, mas nesse exemplo foi usado o SetNumeric)
+    cQuery := " SELECT ? " + CRLF
+    cQuery += " FROM ? SA1 " + CRLF
+    cQuery += " WHERE ? " + CRLF
+    oStatementQuery := FWPreparedStatement():New()
+    oStatementQuery:SetQuery(cQuery)
+    oStatementQuery:SetNumeric(1, cFields)
+    oStatementQuery:SetNumeric(2, RetSQLName("SA1"))
+    oStatementQuery:SetNumeric(3, RetSQLCond("SA1"))
+    
+    //Busca a query formatada
+    cQuery := oStatementQuery:GetFixQuery()
+    TCQuery cQuery New Alias "QRY_SA1"
+
+    //Se tiver dados
+    If ! QRY_SA1->(EoF())
+        ShowLog("Query forma 3 preparada com sucesso: " + CRLF + CRLF + cQuery)
+    EndIf
+    QRY_SA1->(DbCloseArea())
+
+    FWRestArea(aArea)
+Return

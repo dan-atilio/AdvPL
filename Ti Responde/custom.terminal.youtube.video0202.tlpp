@@ -1,0 +1,53 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/11/11/preparando-ambiente-com-rpcsetenv-e-getmv-ti-responde-0202/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+    
+/*/{Protheus.doc} User Function video0202
+Exemplo de como usar o RPCSetEnv com senha de parâmetro
+@type Function
+@author Atilio
+@since 12/08/2024
+@example custom.terminal.youtube.u_video0202()
+/*/
+
+User Function video0202()
+    Local aArea                           As Array
+    Local cRpcCompany  := "99"            As Character
+    Local cRpcBranch   := "01"            As Character
+    Local cRpcUser     := "daniel.atilio" As Character
+    Local cRpcPass     := ""              As Character
+    Local lAutomatic   := .F.             As Logical
+
+    //Se não estiver preparado o ambiente
+    If Select("SX2") == 0
+        //Primeiro a gente prepara o ambiente só para buscar o conteúdo do parâmetro
+        RPCSetEnv(cRpcCompany, cRpcBranch, "", "", "", "")
+        cRpcPass := SuperGetMV("MV_X_RPCSE", .F., "tst123")
+        RPCClearEnv()
+
+        //Ai sim fazemos a preparação do ambiente
+        RPCSetEnv(cRpcCompany, cRpcBranch, cRpcUser, cRpcPass, "", "")
+        
+        //Define que veio de um processo sem tela, um processo automático
+        lAutomatic := .T.
+    EndIf
+
+    //Agora sim armazena o backup do alias
+    aArea := FWGetArea()
+
+    // ... sua lógica da customização ...
+
+    FWRestArea(aArea)
+Return

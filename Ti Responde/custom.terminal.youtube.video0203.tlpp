@@ -1,0 +1,48 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/11/13/buscando-o-resultado-de-uma-query-atraves-da-mpsysexecscalar-ti-responde-0203/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+    
+/*/{Protheus.doc} User Function video0203
+Exemplo de como buscar o total de uma query direto para uma variável
+@type Function
+@author Atilio
+@since 12/08/2024
+@example custom.terminal.youtube.u_video0203()
+/*/
+
+User Function video0203()
+    Local aArea         := FWGetArea()      As Array
+    Local cQuery        := ""               As Character
+    Local nTotalValue   := 0                As Numeric
+    Local dDateRef      := sToD("20230101") As Date
+
+    //Busca todos os itens a partir de uma data de corte
+    cQuery := " SELECT  " + CRLF
+    cQuery += "     SUM(D2_TOTAL) AS VALOR_TOT " + CRLF
+    cQuery += " FROM  " + CRLF
+    cQuery += "     " + RetSQLName("SD2") + " SD2 " + CRLF
+    cQuery += " WHERE " + CRLF
+    cQuery += "     D2_FILIAL = '" + FWxFilial("SD2") +  "' " + CRLF
+    cQuery += "     AND D2_EMISSAO >= '" + dToS(dDateRef) + "' " + CRLF
+    cQuery += "     AND SD2.D_E_L_E_T_ = ' ' " + CRLF
+
+    //Executa a query e pega o campo e retorna para uma variável
+    nTotalValue := MPSysExecScalar(cQuery, "VALOR_TOT")
+
+    //Exibe uma mensagem
+    FWAlertInfo("O valor total encontrado é de <strong>" + cValToChar(nTotalValue) + "</strong>!", "Teste MPSysExecScalar")
+
+    FWRestArea(aArea)
+Return

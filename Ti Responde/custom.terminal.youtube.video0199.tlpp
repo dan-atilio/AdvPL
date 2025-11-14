@@ -1,0 +1,241 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/10/30/criando-um-markbrowse-com-mais-de-uma-coluna-de-legenda-ti-responde-0199/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+#Include "TOTVS.ch"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+    
+/*/{Protheus.doc} User Function video0199
+Teste de grid com marcação com mais de uma legenda
+@type Function
+@author Atilio
+@since 03/06/2024
+@example custom.terminal.youtube.u_video0199()
+/*/
+
+User Function video0199()
+	Local aArea       := FWGetArea()                   As Array
+	Local aParameters := {}                            As Array
+	Local cInitId     := Space(TamSX3('B1_COD')[1])    As Character
+	Local cLastId     := StrTran(cInitId, " ", "Z")    As Character
+	
+	//Adicionando os parametros do ParamBox
+	aAdd(aParameters, {1, "Produto De",  cInitId,   "", ".T.", "SB1", ".T.", 80,  .F.})
+	aAdd(aParameters, {1, "Produto Até", cLastId,  "", ".T.", "SB1", ".T.", 80,  .T.})
+	
+	//Se a pergunta for confirmada, chama o preenchimento dos dados do .dot
+	If ParamBox(aParameters, 'Informe os parâmetros', /*aRet*/, /*bOk*/, /*aButtons*/, /*lCentered*/, /*nPosx*/, /*nPosy*/, /*oDlgWizard*/, /*cLoad*/, .F., .F.)
+		Processa({|| createDialog()})
+	EndIf
+	
+	FWRestArea(aArea)
+Return
+
+Static Function createDialog()
+    Local aArea             := FWGetArea()                  As Array
+    Local lOk               := .F.                          As Logical
+    Local cMessageLog       := ""                           As Character
+    //Fontes
+    Local cFont             := "Tahoma"                     As Character
+    Local oFontBigger       := TFont():New(cFont,,-38)      As Object
+    Local oFontTitle        := TFont():New(cFont,,-20)      As Object
+    Local oFontSubtitle     := TFont():New(cFont,,-20,,.T.) As Object
+    Local oFontButtons      := TFont():New(cFont,,-14)      As Object
+    //Janela e componentes
+    Private oTestDialog                                     As Object
+    Private oTempTable                                      As Object
+    Private oPanelBrowse                                    As Object
+    Private oTempBrowse                                     As Object
+    Private aGridColumns    := {}                           As Array
+    Private cTempAlias      := GetNextAlias()               As Character
+    //Tamanho da janela
+    Private aDialogSize     := MsAdvSize()                  As Array
+    Private nDialogWidth    := aDialogSize[5]               As Numeric
+    Private nDialogHeight   := aDialogSize[6]               As Numeric
+    
+    //Cria a temporária
+    oTempTable := FWTemporaryTable():New(cTempAlias)
+        
+    //Adiciona no array das colunas as que serão incluidas (Nome do Campo, Tipo do Campo, Tamanho, Decimais)
+    aFields := {}
+    aAdd(aFields, { 'FLAG_OK', 'L', 1,                       0}) //Flag para marcação
+    aAdd(aFields, { 'B1_COD',  'C', TamSX3('B1_COD')[1],     0}) //Produto
+    aAdd(aFields, { 'B1_TIPO', 'C', TamSX3('B1_TIPO')[1],    0}) //Tipo
+    aAdd(aFields, { 'B1_UM',   'C', TamSX3('B1_UM')[1],      0}) //Unid. Med.
+    aAdd(aFields, { 'B1_DESC', 'C', TamSX3('B1_DESC')[1],    0}) //Descrição
+    aAdd(aFields, { 'B1_MSBLQL','C', TamSX3('B1_MSBLQL')[1], 0}) //Bloqueio
+    aAdd(aFields, { 'RECNUM',  'N', 16,                      0}) //RecNo da SB1
+        
+    //Define as colunas usadas, adiciona indice e cria a temporaria no banco
+    oTempTable:SetFields( aFields )
+    oTempTable:AddIndex("1", {"B1_COD"} )
+    oTempTable:Create()
+    
+    //Monta a estrutura das colunas
+    mountColumns()
+    
+    //Montando os dados, eles devem ser montados antes de ser criado o FWBrowse
+    FWMsgRun(, {|oSay| insertInTemporary(oSay) }, "Processando", "Buscando grupos")
+    
+    //Criando a janela
+    oTestDialog := TDialog():New(0, 0, nDialogHeight, nDialogWidth, "Teste Tabela Temporária", , , , , , 16777215, , , .T.)
+
+        //Títulos e SubTítulos
+        oSayBigger   := TSay():New(004, 003, {|| "FAT"                 }, oTestDialog, "", oFontBigger,  , , , .T., RGB(149, 179, 215), , 200, 30, , , , , , .F., , )
+        oSayTitle    := TSay():New(004, 050, {|| "Listagem Genérica de"}, oTestDialog, "", oFontTitle,  , , , .T., RGB(031, 073, 125), , 200, 30, , , , , , .F., , )
+        oSaySubtitle := TSay():New(014, 050, {|| "Dados Temporários"   }, oTestDialog, "", oFontSubtitle, , , , .T., RGB(031, 073, 125), , 300, 30, , , , , , .F., , )
+
+        //Botões
+        oBtnOk     := TButton():New(006, (nDialogWidth/2-001)-(0052*02), "Confirmar",          oTestDialog, {|| lOk := .T., oTestDialog:End()}, 050, 018, , oFontButtons, , .T., , , , , , )
+        oBtnCancel := TButton():New(006, (nDialogWidth/2-001)-(0052*01), "Fechar",             oTestDialog, {|| oTestDialog:End()}, 050, 018, , oFontButtons, , .T., , , , , , )
+    
+        //Cria o Painel e o Browse
+        oPanelBrowse := tPanel():New(033, 006, "", oTestDialog, , , , RGB(000,000,000), RGB(254,254,254), (nDialogWidth/2 - 13),     (nDialogHeight/2 - 45))
+            oTempBrowse := FWBrowse():New()
+            oTempBrowse:DisableFilter()
+            oTempBrowse:DisableConfig()
+            oTempBrowse:DisableReport()
+            oTempBrowse:DisableSeek()
+            oTempBrowse:DisableSaveConfig()
+            oTempBrowse:SetFontBrowse(oFontButtons)
+            oTempBrowse:SetAlias(cTempAlias)
+            oTempBrowse:SetDataTable()
+            oTempBrowse:SetEditCell(.T., {|| .T.}) 
+            oTempBrowse:lHeaderClick := .F.
+            oTempBrowse:AddMarkColumns(;
+                {|| Iif((cTempAlias)->FLAG_OK, 'LBOK', 'LBNO') },;             //ícones
+                {|| (cTempAlias)->FLAG_OK := ! (cTempAlias)->FLAG_OK};   //ao dar duplo clique
+            )
+            
+            //Adicionando as Legendas (coluna 1)
+            oTempBrowse:AddLegend(cTempAlias + "->B1_MSBLQL == '1'",          'BR_CANCEL',   'Produto Bloqueado',     '1')
+            oTempBrowse:AddLegend(cTempAlias + "->B1_MSBLQL != '1'",          'CHECKED',     'Produto Ativo',         '1')
+
+            //Adicionando as Legendas (coluna 2)
+            oTempBrowse:AddLegend(cTempAlias + "->B1_TIPO == 'PA'",           'GREEN',       'Produto Acabado',       '2')
+            oTempBrowse:AddLegend(cTempAlias + "->B1_TIPO == 'PI'",           'RED',         'Produto Intermediário', '2')
+            oTempBrowse:AddLegend("! " + cTempAlias + "->B1_TIPO $ 'PA;PI;'", 'WHITE',       'Outros Tipos',          '2')
+
+            //Adicionando as Legendas (coluna 3)
+            oTempBrowse:AddLegend(cTempAlias + "->B1_UM == 'UN'",             'YELLOW',      'Unitário (UN)',         '3')
+            oTempBrowse:AddLegend(cTempAlias + "->B1_UM == 'KG'",             'BLACK',       'Quilograma (KG)',       '3')
+            oTempBrowse:AddLegend("! " +cTempAlias + "->B1_UM $ 'UN;KG;'",    'PINK',        'Outras Unidades',       '3')
+
+            //Define as colunas, vincula ao painel e exibe
+            oTempBrowse:SetColumns(aGridColumns)
+            oTempBrowse:SetOwner(oPanelBrowse)
+            oTempBrowse:Activate()
+
+    //Ativa e exibe a janela
+    oTestDialog:Activate(, , , .T., , , {|| })
+    
+    //Se foi confirmado
+    If lOk
+        cMessageLog := "Abaixo os registros marcados da temporária: " + CRLF
+
+        //Percorre os dados
+        (cTempAlias)->(DbGoTop())
+        While ! (cTempAlias)->(EoF())
+            //Se tiver apagado, incrementa o log
+            If (cTempAlias)->FLAG_OK
+                cMessageLog += "+ Código " + (cTempAlias)->B1_COD + ";" + CRLF
+            EndIf
+
+            (cTempAlias)->(DbSkip())
+        EndDo
+
+        //Exibe a mensagem de log
+        ShowLog(cMessageLog)
+    EndIf
+
+    //Deleta a temporaria
+    oTempTable:Delete()
+    
+    FWRestArea(aArea)
+Return
+    
+Static Function mountColumns()
+    Local nCurrent           As Numeric
+    Local aTempColumns := {} As Array
+    
+    //Adicionando colunas
+    //[1] - Campo da Temporaria
+    //[2] - Titulo
+    //[3] - Tipo
+    //[4] - Tamanho
+    //[5] - Decimais
+    //[6] - Máscara
+    //[7] - Editável? .T. = sim, .F. = não
+    aAdd(aTempColumns, { 'B1_COD',  'Produto',    'C', TamSX3('B1_COD')[1],  0, '',     .F.})
+    aAdd(aTempColumns, { 'B1_TIPO', 'Tipo',       'C', TamSX3('B1_TIPO')[1], 0, '',     .F.})
+    aAdd(aTempColumns, { 'B1_UM',   'Unid. Med.', 'C', TamSX3('B1_UM')[1],   0, '',     .F.})
+    aAdd(aTempColumns, { 'B1_DESC', 'Descrição',  'C', TamSX3('B1_DESC')[1], 0, '',     .T.})
+    
+    //Percorrendo e criando as colunas
+    For nCurrent := 1 To Len(aTempColumns)
+        oColumn := FWBrwColumn():New()
+        oColumn:SetData(&("{|| " + cTempAlias + "->" + aTempColumns[nCurrent][1] +"}"))
+        oColumn:SetTitle(aTempColumns[nCurrent][2])
+        oColumn:SetType(aTempColumns[nCurrent][3])
+        oColumn:SetSize(aTempColumns[nCurrent][4])
+        oColumn:SetDecimal(aTempColumns[nCurrent][5])
+        oColumn:SetPicture(aTempColumns[nCurrent][6])
+  
+        //Se for ser possível ter o duplo clique
+        If aTempColumns[nCurrent][7]
+            oColumn:SetEdit(.T.)
+            oColumn:SetReadVar(aTempColumns[nCurrent][1])
+            //oColumn:SetValid({|| fSuaValid()})
+        EndIf
+  
+        aAdd(aGridColumns, oColumn)
+    Next
+Return
+    
+Static Function insertInTemporary(oSay)
+    Local cQuery   := '' As Character
+    Local nTotal   := 0  As Numeric
+    Local nCurrent := 0  As Numeric
+
+    //Monta a consulta
+    cQuery += "SELECT B1_COD, B1_TIPO, B1_UM, B1_DESC, SB1.R_E_C_N_O_ AS SB1REC, B1_MSBLQL "		+ CRLF
+    cQuery += "FROM SB1990 SB1 "		+ CRLF
+    cQuery += "WHERE B1_FILIAL = '' AND B1_COD >= '" + MV_PAR01 + "' AND B1_COD <= '" + MV_PAR02 + "' AND SB1.D_E_L_E_T_ = ' ' "		+ CRLF
+    cQuery += "ORDER BY B1_COD"		+ CRLF
+    PLSQuery(cQuery, 'QRYTMP')
+
+    //Definindo o tamanho da régua
+    DbSelectArea('QRYTMP')
+    Count to nTotal
+    ProcRegua(nTotal)
+    QRYTMP->(DbGoTop())
+
+    //Enquanto houver registros, adiciona na temporária
+    While ! QRYTMP->(EoF())
+        nCurrent++
+        IncProc('Analisando registro ' + cValToChar(nCurrent) + ' de ' + cValToChar(nTotal) + '...')
+
+        RecLock(cTempAlias, .T.)
+            (cTempAlias)->FLAG_OK   := .F.
+            (cTempAlias)->B1_COD    := QRYTMP->B1_COD
+            (cTempAlias)->B1_TIPO   := QRYTMP->B1_TIPO
+            (cTempAlias)->B1_UM     := QRYTMP->B1_UM
+            (cTempAlias)->B1_DESC   := QRYTMP->B1_DESC
+            (cTempAlias)->RECNUM    := QRYTMP->SB1REC
+            (cTempAlias)->B1_MSBLQL := QRYTMP->B1_MSBLQL
+        (cTempAlias)->(MsUnlock())
+
+        QRYTMP->(DbSkip())
+    EndDo
+    QRYTMP->(DbCloseArea())
+    (cTempAlias)->(DbGoTop())
+Return
+

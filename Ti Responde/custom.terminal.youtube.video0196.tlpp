@@ -1,0 +1,89 @@
+/*
+    
+    Esse é um exemplo disponibilizado no Terminal de Informação 
+    Confira o artigo sobre esse assunto, no seguinte link: https://terminaldeinformacao.com/2025/10/21/usando-a-funcao-ma410impos-para-buscar-o-total-do-pedido-com-impostos-ti-responde-0196/ 
+    
+*/
+
+
+//Bibliotecas
+#Include "tlpp-core.th"
+
+//Declaração da namespace
+Namespace custom.terminal.youtube
+
+#Define CRLF Chr(13) + Chr(10) //Carriage Return Line Feed
+    
+/*/{Protheus.doc} User Function video0196
+Buscando o valor total do pedido sem precisar usar manualmente as MaFis*
+@type Function
+@author Atilio
+@since 14/08/2024
+@example custom.terminal.youtube.u_video0196()
+/*/
+
+User Function video0196()
+	Local aArea          := FWGetArea()                                                                    As Array
+	Local aParameters    := {}                                                                             As Array
+	Local cOrderId       := Space(TamSX3('C5_NUM')[1])                                                     As Character
+    Local nTotalValue    := 0                                                                              As Numeric
+    Local nOption        := 2                                                                              As Numeric
+    Local lReturnTotal   := .T.                                                                            As Logical
+    Local aReferences    := {}                                                                             As Array
+    //Variáveis abaixo usadas no FillGetDados
+    Local cSeek          := ""                                                                             As Character
+    Local bWhile         := {|| }                                                                          As CodeBlock
+    Local aNoFields      := {"C6_NUM", "C6_QTDEMP", "C6_QTDENT", "C6_QTDEMP2", "C6_QTDENT2", "C6_INFAD"}   As Array
+    Local bCond          := {|| .T.}                                                                       As CodeBlock
+    Local bAction1       := {|| .T.}                                                                       As CodeBlock
+    Local bAction2       := {|| .T.}                                                                       As CodeBlock
+    Private aHeader      := {}                                                                             As Array
+    Private aCols        := {}                                                                             As Array
+	
+	//Adicionando os parametros do ParamBox
+	aAdd(aParameters, {1, "Número do Pedido", cOrderId,  "", "ExistCPO('SC5')", "SC5", ".T.", 60,  .T.})
+	
+	//Se a pergunta for confirmada
+	If ParamBox(aParameters, 'Informe os parâmetros', /*aRet*/, /*bOk*/, /*aButtons*/, /*lCentered*/, /*nPosx*/, /*nPosy*/, /*oDlgWizard*/, /*cLoad*/, .F., .F.)
+        cOrderId := MV_PAR01
+
+        //Abre os itens do pedido e posiciona no pedido de venda
+        DbSelectArea("SC6")
+        SC6->(DbSetOrder(1)) // C6_FILIAL + C6_NUM + C6_ITEM + C6_PRODUTO
+        DbSelectArea("SC5")
+        SC5->(DbSetOrder(1)) // C5_FILIAL + C5_NUM
+        SC5->(MsSeek(FWxFilial("SC5") + cOrderId))
+
+        //Monta as variáveis usadas no FillGetDados
+        cSeek  := FWxFilial("SC6") + SC5->C5_NUM
+        bWhile := {|| C6_FILIAL + C6_NUM }
+        cQuery := "SELECT * " + CRLF
+		cQuery += "FROM " + RetSqlName("SC6") + " SC6 " + CRLF
+		cQuery += "WHERE SC6.C6_FILIAL = '" + FWxFilial("SC6") + "' AND " + CRLF
+		cQuery += "SC6.C6_NUM = '" + SC5->C5_NUM + "' AND " + CRLF
+		cQuery += "SC6.D_E_L_E_T_ = ' ' " + CRLF
+		cQuery += "ORDER BY "+SqlOrder(SC6->(IndexKey())) + CRLF
+
+        //Gera o aHeader e aCols, conforme documentação do TDN: https://tdn.totvs.com/display/public/framework/FillGetDados
+        FillGetDados(nOption, "SC6", 1, cSeek, bWhile, {{bCond, bAction1, bAction2}}, aNoFields, /*aYesFields*/, /*lOnlyYes*/, cQuery, /*bMontCols*/, .F., /*aHeaderAux*/, /*aColsAux*/, /*bAfterCols*/, /*bBeforeCols*/, /*bAfterHeader*/, "SC6")
+
+        //Coloca a pergunta padrão da tela do pedido em memória, altera as flags de INCLUI e ALTERA e joga a tabela SC5 para a memória (M->)
+        Pergunte("MTA410",.F.)
+        INCLUI := .F.
+        ALTERA := .F.
+        RegToMemory("SC5", .F.)
+
+        //Busca o valor total do pedido de venda
+        //Caso utilize o array aReferences, essas são as posições (igual Aba Rentabilidade da opção Outras Ações > Planilha):
+        //  [01] = Código do Produto
+        //  [02] = Valor Total
+        //  [03] = C.M.V.
+        //  [04] = Valor Presente
+        //  [05] = Lucro Bruto
+        //  [06] = Margem de Contribuição em %
+		nTotalValue := Ma410Impos(nOption, lReturnTotal, @aReferences)
+        FWAlertInfo("Valor total do pedido '" + cOrderId + "' é de " + cValToChar(nTotalValue), "Atenção")
+	EndIf
+	
+	FWRestArea(aArea)
+Return

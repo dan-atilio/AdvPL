@@ -398,3 +398,9 @@ Dentro dessa pasta, terá um arquivo em Excel com uma lista de links úteis, e 5
    * **zVid0193.prw**: Implementando a Autenticação em Dois Fatores (2FA) no Login do Protheus
    * **zVid0194.prw**: Campo MEMO um do lado do outro em MVC
    * **custom.terminal.youtube.video0195.tlpp**: Realçar célula posicionada de um FWBrowse
+   * **custom.terminal.youtube.video0196.tlpp**: Usando a função Ma410Impos para Buscar o Total do Pedido com Impostos
+   * **custom.terminal.youtube.video0197.tlpp**: Como fazer uma Query com Campos Dinâmicos conforme algumas regras
+   * **custom.terminal.youtube.video0199.tlpp**: Criando um MarkBrowse com Mais de uma Coluna de Legenda
+   * **zVid0200.prw**: Bloquear Operações em Todas Telas de Cadastro em uma Filial
+   * **custom.terminal.youtube.video0202.tlpp**: Preparando ambiente com RPCSetEnv e GetMV
+   * **custom.terminal.youtube.video0203.tlpp**: Buscando o Resultado de uma Query através da MPSysExecScalar
